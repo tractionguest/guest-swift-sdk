@@ -44,12 +44,15 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AuditLogsAPI* | [**getAuditLog**](docs/AuditLogsAPI.md#getauditlog) | **GET** /audit_logs/{audit_log_id} | Get an AuditLog
 *AuditLogsAPI* | [**getAuditLogs**](docs/AuditLogsAPI.md#getauditlogs) | **GET** /audit_logs | List all AuditLogs
+*BatchesAPI* | [**batchDeleteInvites**](docs/BatchesAPI.md#batchdeleteinvites) | **POST** /invites/batch_delete | Delete Multiple Invites
+*BatchesAPI* | [**getBatch**](docs/BatchesAPI.md#getbatch) | **GET** /batches/{batch_id} | Get a BatchJob
 *CapacitiesAPI* | [**getCapacity**](docs/CapacitiesAPI.md#getcapacity) | **GET** /locations/{location_id}/capacities | Get the current capacity details for a location
 *CapacitiesAPI* | [**getCapacityForecast**](docs/CapacitiesAPI.md#getcapacityforecast) | **GET** /locations/{location_id}/capacity_forecasts | Get the capacity details for a location
 *EmailTemplatesAPI* | [**getEmailTemplates**](docs/EmailTemplatesAPI.md#getemailtemplates) | **GET** /email_templates | List all EmailTemplates
 *HostsAPI* | [**createHost**](docs/HostsAPI.md#createhost) | **POST** /hosts | Create a Host
 *HostsAPI* | [**createHosts**](docs/HostsAPI.md#createhosts) | **POST** /hosts/batch | Create multiple Hosts
 *HostsAPI* | [**getHosts**](docs/HostsAPI.md#gethosts) | **GET** /hosts | List all Hosts
+*InvitesAPI* | [**batchDeleteInvites**](docs/InvitesAPI.md#batchdeleteinvites) | **POST** /invites/batch_delete | Delete Multiple Invites
 *InvitesAPI* | [**createLocationInvite**](docs/InvitesAPI.md#createlocationinvite) | **POST** /locations/{location_id}/invites | Create an Invite
 *InvitesAPI* | [**createRegistrationInvite**](docs/InvitesAPI.md#createregistrationinvite) | **POST** /registrations/{registration_id}/invites | Create an Invite from a Registration
 *InvitesAPI* | [**deleteInvite**](docs/InvitesAPI.md#deleteinvite) | **DELETE** /invites/{invite_id} | Deletes an Invite
@@ -95,6 +98,7 @@ Class | Method | HTTP request | Description
  - [Host](docs/Host.md)
  - [HostBatchCreateParams](docs/HostBatchCreateParams.md)
  - [HostCreateParams](docs/HostCreateParams.md)
+ - [IdentifierList](docs/IdentifierList.md)
  - [Image](docs/Image.md)
  - [InternalWatchlistResult](docs/InternalWatchlistResult.md)
  - [Invite](docs/Invite.md)

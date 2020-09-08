@@ -4,6 +4,7 @@ All URIs are relative to *https://tractionguest.ca/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**batchDeleteInvites**](InvitesAPI.md#batchdeleteinvites) | **POST** /invites/batch_delete | Delete Multiple Invites
 [**createLocationInvite**](InvitesAPI.md#createlocationinvite) | **POST** /locations/{location_id}/invites | Create an Invite
 [**createRegistrationInvite**](InvitesAPI.md#createregistrationinvite) | **POST** /registrations/{registration_id}/invites | Create an Invite from a Registration
 [**deleteInvite**](InvitesAPI.md#deleteinvite) | **DELETE** /invites/{invite_id} | Deletes an Invite
@@ -11,6 +12,56 @@ Method | HTTP request | Description
 [**getInvites**](InvitesAPI.md#getinvites) | **GET** /invites | List all Invites
 [**updateInvite**](InvitesAPI.md#updateinvite) | **PUT** /invites/{invite_id} | Update an Invite
 
+
+# **batchDeleteInvites**
+```swift
+    open class func batchDeleteInvites(identifierList: IdentifierList? = nil, completion: @escaping (_ data: BatchJob?, _ error: Error?) -> Void)
+```
+
+Delete Multiple Invites
+
+Queues up a \"delete\" background task for one or more `Invite` entities.
+
+### Example 
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import GuestSDK
+
+let identifierList = IdentifierList(ids: ["ids_example"]) // IdentifierList |  (optional)
+
+// Delete Multiple Invites
+InvitesAPI.batchDeleteInvites(identifierList: identifierList) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **identifierList** | [**IdentifierList**](IdentifierList.md) |  | [optional] 
+
+### Return type
+
+[**BatchJob**](BatchJob.md)
+
+### Authorization
+
+[TractionGuestAuth](../README.md#TractionGuestAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createLocationInvite**
 ```swift
