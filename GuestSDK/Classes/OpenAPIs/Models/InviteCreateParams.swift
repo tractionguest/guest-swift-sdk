@@ -18,10 +18,10 @@ public struct InviteCreateParams: Codable {
         case orange = "ORANGE"
     }
     public var mobileNumber: String?
-    public var notificationTriggers: [Any]?
+    public var notificationTriggers: [NotificationTriggerCreateParams]?
     public var firstName: String
     public var emailTemplateId: Int?
-    public var customFields: [Any]?
+    public var customFields: [CustomField]?
     public var hostIds: [Int]?
     public var watchlistColour: WatchlistColour?
     public var title: String?
@@ -33,7 +33,7 @@ public struct InviteCreateParams: Codable {
     public var company: String?
     public var groupVisitId: String?
 
-    public init(mobileNumber: String?, notificationTriggers: [Any]?, firstName: String, emailTemplateId: Int?, customFields: [Any]?, hostIds: [Int]?, watchlistColour: WatchlistColour?, title: String?, startDate: Date?, lastName: String, endDate: Date?, email: String, company: String?, groupVisitId: String?) {
+    public init(mobileNumber: String?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, watchlistColour: WatchlistColour?, title: String?, startDate: Date?, lastName: String, endDate: Date?, email: String, company: String?, groupVisitId: String?) {
         self.mobileNumber = mobileNumber
         self.notificationTriggers = notificationTriggers
         self.firstName = firstName

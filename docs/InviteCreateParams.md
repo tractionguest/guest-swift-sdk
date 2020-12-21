@@ -4,10 +4,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **mobileNumber** | **String** |  | [optional] 
-**notificationTriggers** | **[Any]** |  | [optional] 
+**notificationTriggers** | [NotificationTriggerCreateParams] |  | [optional] 
 **firstName** | **String** |  | 
 **emailTemplateId** | **Int** |  | [optional] 
-**customFields** | **[Any]** |  | [optional] 
+**customFields** | [CustomField] |  | [optional] 
 **hostIds** | **[Int]** |  | [optional] 
 **watchlistColour** | **String** |  | [optional] 
 **title** | **String** |  | [optional] 

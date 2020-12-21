@@ -13,12 +13,12 @@ open class PackagesAPI {
     /**
      Create package
      
-     - parameter packageCreateParamsV1: (body)  (optional)
+     - parameter packageCreateParams: (body) Parameters for creating a package (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func createPackage(packageCreateParamsV1: PackageCreateParamsV1? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Package, Error>) -> Void)) {
-        createPackageWithRequestBuilder(packageCreateParamsV1: packageCreateParamsV1).execute(apiResponseQueue) { result -> Void in
+    open class func createPackage(packageCreateParams: PackageCreateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Package, Error>) -> Void)) {
+        createPackageWithRequestBuilder(packageCreateParams: packageCreateParams).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(.success(response.body!))
@@ -35,13 +35,13 @@ open class PackagesAPI {
      - :
        - type: openIdConnect
        - name: TractionGuestAuth
-     - parameter packageCreateParamsV1: (body)  (optional)
+     - parameter packageCreateParams: (body) Parameters for creating a package (optional)
      - returns: RequestBuilder<Package> 
      */
-    open class func createPackageWithRequestBuilder(packageCreateParamsV1: PackageCreateParamsV1? = nil) -> RequestBuilder<Package> {
+    open class func createPackageWithRequestBuilder(packageCreateParams: PackageCreateParams? = nil) -> RequestBuilder<Package> {
         let path = "/packages"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: packageCreateParamsV1)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: packageCreateParams)
 
         let url = URLComponents(string: URLString)
 
@@ -105,7 +105,7 @@ open class PackagesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getPackage(packageId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Any, Error>) -> Void)) {
+    open class func getPackage(packageId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Package, Error>) -> Void)) {
         getPackageWithRequestBuilder(packageId: packageId, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -125,9 +125,9 @@ open class PackagesAPI {
        - name: TractionGuestAuth
      - parameter packageId: (path)  
      - parameter include: (query) A list of comma-separated related models to include  (optional)
-     - returns: RequestBuilder<Any> 
+     - returns: RequestBuilder<Package> 
      */
-    open class func getPackageWithRequestBuilder(packageId: String, include: String? = nil) -> RequestBuilder<Any> {
+    open class func getPackageWithRequestBuilder(packageId: String, include: String? = nil) -> RequestBuilder<Package> {
         var path = "/packages/{package_id}"
         let packageIdPreEscape = "\(APIHelper.mapValueToPathItem(packageId))"
         let packageIdPostEscape = packageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -140,7 +140,7 @@ open class PackagesAPI {
             "include": include?.encodeToJSON()
         ])
 
-        let requestBuilder: RequestBuilder<Any>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Package>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -208,12 +208,12 @@ open class PackagesAPI {
      
      - parameter packageId: (path)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
-     - parameter packageUpdateParamsV1: (body)  (optional)
+     - parameter packageUpdateParams: (body)  (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func updatePackage(packageId: String, idempotencyKey: String? = nil, packageUpdateParamsV1: PackageUpdateParamsV1? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Any, Error>) -> Void)) {
-        updatePackageWithRequestBuilder(packageId: packageId, idempotencyKey: idempotencyKey, packageUpdateParamsV1: packageUpdateParamsV1).execute(apiResponseQueue) { result -> Void in
+    open class func updatePackage(packageId: String, idempotencyKey: String? = nil, packageUpdateParams: PackageUpdateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Package, Error>) -> Void)) {
+        updatePackageWithRequestBuilder(packageId: packageId, idempotencyKey: idempotencyKey, packageUpdateParams: packageUpdateParams).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(.success(response.body!))
@@ -232,16 +232,16 @@ open class PackagesAPI {
        - name: TractionGuestAuth
      - parameter packageId: (path)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
-     - parameter packageUpdateParamsV1: (body)  (optional)
-     - returns: RequestBuilder<Any> 
+     - parameter packageUpdateParams: (body)  (optional)
+     - returns: RequestBuilder<Package> 
      */
-    open class func updatePackageWithRequestBuilder(packageId: String, idempotencyKey: String? = nil, packageUpdateParamsV1: PackageUpdateParamsV1? = nil) -> RequestBuilder<Any> {
+    open class func updatePackageWithRequestBuilder(packageId: String, idempotencyKey: String? = nil, packageUpdateParams: PackageUpdateParams? = nil) -> RequestBuilder<Package> {
         var path = "/packages/{package_id}"
         let packageIdPreEscape = "\(APIHelper.mapValueToPathItem(packageId))"
         let packageIdPostEscape = packageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{package_id}", with: packageIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: packageUpdateParamsV1)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: packageUpdateParams)
 
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
@@ -249,7 +249,7 @@ open class PackagesAPI {
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<Any>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Package>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
     }

@@ -38,7 +38,7 @@ Run `pod install`
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://tractionguest.ca/api/v3*
+All URIs are relative to *https://us.tractionguest.com/api/v3*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -95,20 +95,20 @@ Class | Method | HTTP request | Description
  - [Host](docs/Host.md)
  - [HostBatchCreateParams](docs/HostBatchCreateParams.md)
  - [HostCreateParams](docs/HostCreateParams.md)
- - [ImageV1](docs/ImageV1.md)
+ - [Image](docs/Image.md)
  - [InternalWatchlistResult](docs/InternalWatchlistResult.md)
  - [Invite](docs/Invite.md)
  - [InviteCreateParams](docs/InviteCreateParams.md)
- - [InviteCreateParams1](docs/InviteCreateParams1.md)
  - [InviteDetail](docs/InviteDetail.md)
+ - [InviteUpdateParams](docs/InviteUpdateParams.md)
  - [InviteWatchlist](docs/InviteWatchlist.md)
  - [Location](docs/Location.md)
  - [ModelError](docs/ModelError.md)
  - [NotificationTrigger](docs/NotificationTrigger.md)
- - [NotificationTrigger1](docs/NotificationTrigger1.md)
+ - [NotificationTriggerCreateParams](docs/NotificationTriggerCreateParams.md)
  - [Package](docs/Package.md)
- - [PackageCreateParamsV1](docs/PackageCreateParamsV1.md)
- - [PackageUpdateParamsV1](docs/PackageUpdateParamsV1.md)
+ - [PackageCreateParams](docs/PackageCreateParams.md)
+ - [PackageUpdateParams](docs/PackageUpdateParams.md)
  - [PaginatedAuditLogsList](docs/PaginatedAuditLogsList.md)
  - [PaginatedEmailTemplatesList](docs/PaginatedEmailTemplatesList.md)
  - [PaginatedHostsList](docs/PaginatedHostsList.md)
@@ -119,7 +119,7 @@ Class | Method | HTTP request | Description
  - [PaginatedSigninsList](docs/PaginatedSigninsList.md)
  - [PaginatedWatchlistList](docs/PaginatedWatchlistList.md)
  - [Pagination](docs/Pagination.md)
- - [Permission](docs/Permission.md)
+ - [PermissionGroup](docs/PermissionGroup.md)
  - [Registration](docs/Registration.md)
  - [RegistrationDetail](docs/RegistrationDetail.md)
  - [SignableDocument](docs/SignableDocument.md)

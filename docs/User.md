@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Int** |  | 
 **mobileAccessEnabled** | **Bool** | Identifies if user has access to mobile app features. | 
-**permissionGroups** | [Permission] |  | [optional] 
+**permissionGroups** | [PermissionGroup] |  | [optional] 
 **email** | **String** |  | 
 **lastName** | **String** |  | [optional] 
 **firstName** | **String** | Determines if the registration portal has been enabled for this account | [optional] 

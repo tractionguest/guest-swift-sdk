@@ -13,7 +13,7 @@ open class SigninsAPI {
     /**
      Create Signin
      
-     - parameter signinCreateParams: (body)  (optional)
+     - parameter signinCreateParams: (body) Params for creating a Signin can omit certain fields if a &#x60;registration_id&#x60; is present. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
@@ -35,7 +35,7 @@ open class SigninsAPI {
      - :
        - type: openIdConnect
        - name: TractionGuestAuth
-     - parameter signinCreateParams: (body)  (optional)
+     - parameter signinCreateParams: (body) Params for creating a Signin can omit certain fields if a &#x60;registration_id&#x60; is present. (optional)
      - returns: RequestBuilder<Signin> 
      */
     open class func createSigninWithRequestBuilder(signinCreateParams: SigninCreateParams? = nil) -> RequestBuilder<Signin> {
@@ -183,12 +183,12 @@ open class SigninsAPI {
      Update a Signin
      
      - parameter signinId: (path)  
-     - parameter signinUpdateParams: (body)  
+     - parameter signinUpdateParams: (body) The only updatable values for a &#x60;Signin&#x60; are &#x60;badge_number&#x60;, &#x60;badge_returned&#x60;, &#x60;is_accounted_for&#x60;, &#x60;is_signed_out&#x60;, and &#x60;is_acknowledged&#x60;.  &#x60;is_signed_out&#x60; and &#x60;is_acknowledged&#x60; are pseudo attributes that once set to true, are irreversible. 
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func updateSignin(signinId: String, signinUpdateParams: SigninUpdateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Any, Error>) -> Void)) {
+    open class func updateSignin(signinId: String, signinUpdateParams: SigninUpdateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<SigninDetail, Error>) -> Void)) {
         updateSigninWithRequestBuilder(signinId: signinId, signinUpdateParams: signinUpdateParams, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -207,11 +207,11 @@ open class SigninsAPI {
        - type: openIdConnect
        - name: TractionGuestAuth
      - parameter signinId: (path)  
-     - parameter signinUpdateParams: (body)  
+     - parameter signinUpdateParams: (body) The only updatable values for a &#x60;Signin&#x60; are &#x60;badge_number&#x60;, &#x60;badge_returned&#x60;, &#x60;is_accounted_for&#x60;, &#x60;is_signed_out&#x60;, and &#x60;is_acknowledged&#x60;.  &#x60;is_signed_out&#x60; and &#x60;is_acknowledged&#x60; are pseudo attributes that once set to true, are irreversible. 
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
-     - returns: RequestBuilder<Any> 
+     - returns: RequestBuilder<SigninDetail> 
      */
-    open class func updateSigninWithRequestBuilder(signinId: String, signinUpdateParams: SigninUpdateParams, idempotencyKey: String? = nil) -> RequestBuilder<Any> {
+    open class func updateSigninWithRequestBuilder(signinId: String, signinUpdateParams: SigninUpdateParams, idempotencyKey: String? = nil) -> RequestBuilder<SigninDetail> {
         var path = "/signins/{signin_id}"
         let signinIdPreEscape = "\(APIHelper.mapValueToPathItem(signinId))"
         let signinIdPostEscape = signinIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -225,7 +225,7 @@ open class SigninsAPI {
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<Any>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<SigninDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
     }

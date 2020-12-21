@@ -11,17 +11,28 @@ import Foundation
 public struct AuditLog: Codable { 
 
 
+    /**  */
     public var id: Int
+    /**  */
     public var createdAt: String?
+    /**  */
     public var requestUuid: String?
+    /**  */
     public var remoteAddress: String?
+    /**  */
     public var comment: String?
+    /**  */
     public var version: Int?
     public var auditedChanges: [AuditLogChange]?
+    /**  */
     public var action: String?
+    /**  */
     public var username: String?
+    /**  */
     public var userId: Int?
+    /**  */
     public var auditableType: String?
+    /**  */
     public var auditableId: Int?
 
     public init(id: Int, createdAt: String?, requestUuid: String?, remoteAddress: String?, comment: String?, version: Int?, auditedChanges: [AuditLogChange]?, action: String?, username: String?, userId: Int?, auditableType: String?, auditableId: Int?) {

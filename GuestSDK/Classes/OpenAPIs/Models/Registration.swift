@@ -13,8 +13,8 @@ public struct Registration: Codable {
 
     /** Registration unique identifier */
     public var id: String
-    public var visitor: Any?
-    public var invite: Any?
+    public var visitor: Visitor?
+    public var invite: Invite?
     /** URL of the uploaded photo */
     public var photoUrl: String?
     /** Company&#39;s name */
@@ -25,9 +25,9 @@ public struct Registration: Codable {
     public var name: String?
     /** Datetime when registration was created */
     public var createdAt: Date
-    public var signin: Any?
+    public var signin: Signin?
 
-    public init(id: String, visitor: Any?, invite: Any?, photoUrl: String?, company: String?, email: String?, name: String?, createdAt: Date, signin: Any?) {
+    public init(id: String, visitor: Visitor?, invite: Invite?, photoUrl: String?, company: String?, email: String?, name: String?, createdAt: Date, signin: Signin?) {
         self.id = id
         self.visitor = visitor
         self.invite = invite

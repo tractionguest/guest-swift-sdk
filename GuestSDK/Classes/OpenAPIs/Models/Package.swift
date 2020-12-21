@@ -18,17 +18,17 @@ public struct Package: Codable {
         case pickedUp = "picked_up"
     }
     public var id: Int
-    public var recipient: Any?
-    public var location: Any
+    public var recipient: Host?
+    public var location: Location
     /** this can be one of the following states: &#39;processing&#39;, &#39;recipient_matched&#39;, &#39;needs_attention&#39; or &#39;picked_up&#39; */
     public var packageState: PackageState
     /** A carrier name that gets detected on the shipping label. i.e. USPS, Purolator, DHL, Canada Post, Royal Mail, etc...  */
     public var carrierName: String?
     public var pickedUpAt: Date?
     public var createdAt: Date
-    public var image: ImageV1?
+    public var image: Image?
 
-    public init(id: Int, recipient: Any?, location: Any, packageState: PackageState, carrierName: String?, pickedUpAt: Date?, createdAt: Date, image: ImageV1?) {
+    public init(id: Int, recipient: Host?, location: Location, packageState: PackageState, carrierName: String?, pickedUpAt: Date?, createdAt: Date, image: Image?) {
         self.id = id
         self.recipient = recipient
         self.location = location

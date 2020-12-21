@@ -1,6 +1,6 @@
 # WatchlistsAPI
 
-All URIs are relative to *https://tractionguest.ca/api/v3*
+All URIs are relative to *https://us.tractionguest.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -25,7 +25,7 @@ Create a new `Watchlist` record. Please note, every action taken against this en
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import GuestSDK
 
-let watchlistCreateParams = WatchlistCreateParams(aliases: ["aliases_example"], notes: "notes_example", lastName: "lastName_example", firstName: "firstName_example", email: "email_example", colour: "colour_example") // WatchlistCreateParams | 
+let watchlistCreateParams = WatchlistCreateParams(aliases: ["aliases_example"], notes: "notes_example", lastName: "lastName_example", firstName: "firstName_example", email: "email_example", colour: "colour_example") // WatchlistCreateParams | The new `Watchlist` to create
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
 
 // Create Watchlist
@@ -45,7 +45,7 @@ WatchlistsAPI.createWatchlist(watchlistCreateParams: watchlistCreateParams, idem
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **watchlistCreateParams** | [**WatchlistCreateParams**](WatchlistCreateParams.md) |  | 
+ **watchlistCreateParams** | [**WatchlistCreateParams**](WatchlistCreateParams.md) | The new &#x60;Watchlist&#x60; to create | 
  **idempotencyKey** | **String** | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored | [optional] 
 
 ### Return type
@@ -117,7 +117,7 @@ Void (empty response body)
 
 # **getWatchlist**
 ```swift
-    open class func getWatchlist(watchlistId: String, include: String? = nil, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func getWatchlist(watchlistId: String, include: String? = nil, completion: @escaping (_ data: Watchlist?, _ error: Error?) -> Void)
 ```
 
 Get a Watchlist
@@ -154,7 +154,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Any**
+[**Watchlist**](Watchlist.md)
 
 ### Authorization
 
@@ -227,7 +227,7 @@ Name | Type | Description  | Notes
 
 # **updateWatchlist**
 ```swift
-    open class func updateWatchlist(watchlistId: String, body: Any, idempotencyKey: String? = nil, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func updateWatchlist(watchlistId: String, watchlistCreateParams: WatchlistCreateParams, idempotencyKey: String? = nil, completion: @escaping (_ data: Watchlist?, _ error: Error?) -> Void)
 ```
 
 Update a Watchlist
@@ -240,11 +240,11 @@ Update an existing `Watchlist` record. Every operation against this endpoint is 
 import GuestSDK
 
 let watchlistId = "watchlistId_example" // String | 
-let body = 987 // Any | The watchlist record attributes to update
+let watchlistCreateParams = WatchlistCreateParams(aliases: ["aliases_example"], notes: "notes_example", lastName: "lastName_example", firstName: "firstName_example", email: "email_example", colour: "colour_example") // WatchlistCreateParams | The watchlist record attributes to update
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
 
 // Update a Watchlist
-WatchlistsAPI.updateWatchlist(watchlistId: watchlistId, body: body, idempotencyKey: idempotencyKey) { (response, error) in
+WatchlistsAPI.updateWatchlist(watchlistId: watchlistId, watchlistCreateParams: watchlistCreateParams, idempotencyKey: idempotencyKey) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -261,12 +261,12 @@ WatchlistsAPI.updateWatchlist(watchlistId: watchlistId, body: body, idempotencyK
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **watchlistId** | **String** |  | 
- **body** | **Any** | The watchlist record attributes to update | 
+ **watchlistCreateParams** | [**WatchlistCreateParams**](WatchlistCreateParams.md) | The watchlist record attributes to update | 
  **idempotencyKey** | **String** | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored | [optional] 
 
 ### Return type
 
-**Any**
+[**Watchlist**](Watchlist.md)
 
 ### Authorization
 

@@ -4,15 +4,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Int** |  | 
-**registration** | **Any** |  | [optional] 
+**registration** | [**Registration**](Registration.md) |  | [optional] 
 **mobileNumber** | **String** | Phone number | [optional] 
 **emailTemplate** | [**EmailTemplate**](EmailTemplate.md) |  | [optional] 
 **inviteWatchlist** | [**InviteWatchlist**](InviteWatchlist.md) |  | [optional] 
 **notificationTriggers** | [NotificationTrigger] | List of scheduled notifications for an invite | [optional] 
-**customFields** | **[Any]** |  | [optional] 
+**customFields** | [CustomField] |  | [optional] 
 **watchlistColour** | **String** |  | [optional] 
-**location** | **Any** |  | [optional] 
-**hosts** | **[Any]** |  | [optional] 
+**location** | [**Location**](Location.md) |  | [optional] 
+**hosts** | [Host] |  | [optional] 
 **startDate** | **Date** |  | [optional] 
 **lastName** | **String** |  | 
 **firstName** | **String** |  | 

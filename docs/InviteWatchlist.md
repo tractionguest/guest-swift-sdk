@@ -4,8 +4,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Int** |  | 
-**_internal** | **[Any]** |  | [optional] 
-**external** | **[Any]** |  | [optional] 
+**_internal** | [InternalWatchlistResult] |  | [optional] 
+**external** | [ExternalWatchlistResult] |  | [optional] 
 **internalColours** | **[String]** | Deprecated | [optional] 
 **externalColours** | **[String]** | Deprecated | [optional] 
 

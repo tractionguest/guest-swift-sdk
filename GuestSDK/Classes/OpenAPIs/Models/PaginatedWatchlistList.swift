@@ -11,10 +11,10 @@ import Foundation
 public struct PaginatedWatchlistList: Codable { 
 
 
-    public var watchlists: [Any]
-    public var pagination: Any
+    public var watchlists: [Watchlist]
+    public var pagination: Pagination
 
-    public init(watchlists: [Any], pagination: Any) {
+    public init(watchlists: [Watchlist], pagination: Pagination) {
         self.watchlists = watchlists
         self.pagination = pagination
     }

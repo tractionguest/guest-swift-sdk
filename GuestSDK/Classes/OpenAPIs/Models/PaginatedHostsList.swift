@@ -12,9 +12,9 @@ public struct PaginatedHostsList: Codable {
 
 
     public var pagination: Pagination
-    public var hosts: [Any]
+    public var hosts: [Host]
 
-    public init(pagination: Pagination, hosts: [Any]) {
+    public init(pagination: Pagination, hosts: [Host]) {
         self.pagination = pagination
         self.hosts = hosts
     }

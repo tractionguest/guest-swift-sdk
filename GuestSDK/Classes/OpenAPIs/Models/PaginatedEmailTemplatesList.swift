@@ -11,10 +11,10 @@ import Foundation
 public struct PaginatedEmailTemplatesList: Codable { 
 
 
-    public var pagination: Any
-    public var emailTemplates: [Any]
+    public var pagination: Pagination
+    public var emailTemplates: [EmailTemplate]
 
-    public init(pagination: Any, emailTemplates: [Any]) {
+    public init(pagination: Pagination, emailTemplates: [EmailTemplate]) {
         self.pagination = pagination
         self.emailTemplates = emailTemplates
     }

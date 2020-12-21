@@ -11,10 +11,10 @@ import Foundation
 public struct SigninData: Codable { 
 
 
-    public var customFields: [Any]?
+    public var customFields: [CustomField]?
     public var name: String?
 
-    public init(customFields: [Any]?, name: String?) {
+    public init(customFields: [CustomField]?, name: String?) {
         self.customFields = customFields
         self.name = name
     }

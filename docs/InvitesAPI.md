@@ -1,6 +1,6 @@
 # InvitesAPI
 
-All URIs are relative to *https://tractionguest.ca/api/v3*
+All URIs are relative to *https://us.tractionguest.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 # **createLocationInvite**
 ```swift
-    open class func createLocationInvite(locationId: String, inviteCreateParams: InviteCreateParams, idempotencyKey: String? = nil, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func createLocationInvite(locationId: String, inviteCreateParams: InviteCreateParams, idempotencyKey: String? = nil, completion: @escaping (_ data: InviteDetail?, _ error: Error?) -> Void)
 ```
 
 Create an Invite
@@ -27,7 +27,7 @@ Creates a new `Invite` for a specific `Location`.
 import GuestSDK
 
 let locationId = "locationId_example" // String | 
-let inviteCreateParams = InviteCreateParams(mobileNumber: "mobileNumber_example", notificationTriggers: [123], firstName: "firstName_example", emailTemplateId: 123, customFields: [123], hostIds: [123], watchlistColour: "watchlistColour_example", title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: "groupVisitId_example") // InviteCreateParams | 
+let inviteCreateParams = InviteCreateParams(mobileNumber: "mobileNumber_example", notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], watchlistColour: "watchlistColour_example", title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: "groupVisitId_example") // InviteCreateParams | 
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
 
 // Create an Invite
@@ -53,7 +53,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Any**
+[**InviteDetail**](InviteDetail.md)
 
 ### Authorization
 
@@ -68,7 +68,7 @@ Name | Type | Description  | Notes
 
 # **createRegistrationInvite**
 ```swift
-    open class func createRegistrationInvite(registrationId: String, idempotencyKey: String? = nil, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func createRegistrationInvite(registrationId: String, idempotencyKey: String? = nil, completion: @escaping (_ data: InviteDetail?, _ error: Error?) -> Void)
 ```
 
 Create an Invite from a Registration
@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Any**
+[**InviteDetail**](InviteDetail.md)
 
 ### Authorization
 
@@ -296,7 +296,7 @@ Name | Type | Description  | Notes
 
 # **updateInvite**
 ```swift
-    open class func updateInvite(inviteId: String, inviteCreateParams1: InviteCreateParams1, idempotencyKey: String? = nil, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func updateInvite(inviteId: String, inviteUpdateParams: InviteUpdateParams, idempotencyKey: String? = nil, completion: @escaping (_ data: InviteDetail?, _ error: Error?) -> Void)
 ```
 
 Update an Invite
@@ -309,11 +309,11 @@ Updates an existing `Invite`.
 import GuestSDK
 
 let inviteId = "inviteId_example" // String | 
-let inviteCreateParams1 = InviteCreateParams_1(mobileNumber: "mobileNumber_example", userId: 123, onPremise: false, notificationTriggers: [NotificationTrigger_1(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example") // InviteCreateParams1 | 
+let inviteUpdateParams = InviteUpdateParams(mobileNumber: "mobileNumber_example", userId: 123, onPremise: false, notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example") // InviteUpdateParams | Updated `Invite` information.
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
 
 // Update an Invite
-InvitesAPI.updateInvite(inviteId: inviteId, inviteCreateParams1: inviteCreateParams1, idempotencyKey: idempotencyKey) { (response, error) in
+InvitesAPI.updateInvite(inviteId: inviteId, inviteUpdateParams: inviteUpdateParams, idempotencyKey: idempotencyKey) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -330,12 +330,12 @@ InvitesAPI.updateInvite(inviteId: inviteId, inviteCreateParams1: inviteCreatePar
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **inviteId** | **String** |  | 
- **inviteCreateParams1** | [**InviteCreateParams1**](InviteCreateParams1.md) |  | 
+ **inviteUpdateParams** | [**InviteUpdateParams**](InviteUpdateParams.md) | Updated &#x60;Invite&#x60; information. | 
  **idempotencyKey** | **String** | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored | [optional] 
 
 ### Return type
 
-**Any**
+[**InviteDetail**](InviteDetail.md)
 
 ### Authorization
 

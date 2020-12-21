@@ -1,6 +1,6 @@
 # HostsAPI
 
-All URIs are relative to *https://tractionguest.ca/api/v3*
+All URIs are relative to *https://us.tractionguest.com/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -76,7 +76,7 @@ Creates a batch of `Host` records in an async queue. Please note, every action t
 import GuestSDK
 
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
-let hostBatchCreateParams = HostBatchCreateParams(hosts: [123]) // HostBatchCreateParams |  (optional)
+let hostBatchCreateParams = HostBatchCreateParams(hosts: [HostCreateParams(email: "email_example", firstName: "firstName_example", lastName: "lastName_example", profilePicUrl: "profilePicUrl_example", department: "department_example", mobileNumber: "mobileNumber_example")]) // HostBatchCreateParams |  (optional)
 
 // Create multiple Hosts
 HostsAPI.createHosts(idempotencyKey: idempotencyKey, hostBatchCreateParams: hostBatchCreateParams) { (response, error) in
