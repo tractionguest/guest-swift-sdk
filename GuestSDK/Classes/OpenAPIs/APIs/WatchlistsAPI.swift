@@ -13,7 +13,7 @@ open class WatchlistsAPI {
     /**
      Create Watchlist
      
-     - parameter watchlistCreateParams: (body) The new &#x60;Watchlist&#x60; to create 
+     - parameter watchlistCreateParams: (body)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
@@ -36,7 +36,7 @@ open class WatchlistsAPI {
      - :
        - type: openIdConnect
        - name: TractionGuestAuth
-     - parameter watchlistCreateParams: (body) The new &#x60;Watchlist&#x60; to create 
+     - parameter watchlistCreateParams: (body)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - returns: RequestBuilder<Watchlist> 
      */
@@ -113,7 +113,7 @@ open class WatchlistsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getWatchlist(watchlistId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Watchlist, Error>) -> Void)) {
+    open class func getWatchlist(watchlistId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Any, Error>) -> Void)) {
         getWatchlistWithRequestBuilder(watchlistId: watchlistId, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -133,9 +133,9 @@ open class WatchlistsAPI {
        - name: TractionGuestAuth
      - parameter watchlistId: (path)  
      - parameter include: (query) A list of comma-separated related models to include (optional)
-     - returns: RequestBuilder<Watchlist> 
+     - returns: RequestBuilder<Any> 
      */
-    open class func getWatchlistWithRequestBuilder(watchlistId: String, include: String? = nil) -> RequestBuilder<Watchlist> {
+    open class func getWatchlistWithRequestBuilder(watchlistId: String, include: String? = nil) -> RequestBuilder<Any> {
         var path = "/watchlists/{watchlist_id}"
         let watchlistIdPreEscape = "\(APIHelper.mapValueToPathItem(watchlistId))"
         let watchlistIdPostEscape = watchlistIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -148,7 +148,7 @@ open class WatchlistsAPI {
             "include": include?.encodeToJSON()
         ])
 
-        let requestBuilder: RequestBuilder<Watchlist>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Any>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
@@ -212,13 +212,13 @@ open class WatchlistsAPI {
      Update a Watchlist
      
      - parameter watchlistId: (path)  
-     - parameter watchlistCreateParams: (body) The watchlist record attributes to update 
+     - parameter body: (body) The watchlist record attributes to update 
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func updateWatchlist(watchlistId: String, watchlistCreateParams: WatchlistCreateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Watchlist, Error>) -> Void)) {
-        updateWatchlistWithRequestBuilder(watchlistId: watchlistId, watchlistCreateParams: watchlistCreateParams, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
+    open class func updateWatchlist(watchlistId: String, body: Any, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Any, Error>) -> Void)) {
+        updateWatchlistWithRequestBuilder(watchlistId: watchlistId, body: body, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(.success(response.body!))
@@ -236,17 +236,17 @@ open class WatchlistsAPI {
        - type: openIdConnect
        - name: TractionGuestAuth
      - parameter watchlistId: (path)  
-     - parameter watchlistCreateParams: (body) The watchlist record attributes to update 
+     - parameter body: (body) The watchlist record attributes to update 
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
-     - returns: RequestBuilder<Watchlist> 
+     - returns: RequestBuilder<Any> 
      */
-    open class func updateWatchlistWithRequestBuilder(watchlistId: String, watchlistCreateParams: WatchlistCreateParams, idempotencyKey: String? = nil) -> RequestBuilder<Watchlist> {
+    open class func updateWatchlistWithRequestBuilder(watchlistId: String, body: Any, idempotencyKey: String? = nil) -> RequestBuilder<Any> {
         var path = "/watchlists/{watchlist_id}"
         let watchlistIdPreEscape = "\(APIHelper.mapValueToPathItem(watchlistId))"
         let watchlistIdPostEscape = watchlistIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{watchlist_id}", with: watchlistIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: watchlistCreateParams)
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
 
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
@@ -254,7 +254,7 @@ open class WatchlistsAPI {
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<Watchlist>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Any>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
     }

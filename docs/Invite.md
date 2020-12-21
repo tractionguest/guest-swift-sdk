@@ -4,18 +4,18 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Int** |  | 
-**registration** | [**Registration**](Registration.md) |  | [optional] 
+**registration** | **Any** |  | [optional] 
 **mobileNumber** | **String** |  | [optional] 
 **email** | **String** |  | 
 **endDate** | **Date** |  | [optional] 
-**inviteWatchlist** | [**InviteWatchlist**](InviteWatchlist.md) |  | [optional] 
-**hosts** | [Host] |  | [optional] 
+**inviteWatchlist** | **Any** |  | [optional] 
+**hosts** | **[Any]** |  | [optional] 
 **watchlistColour** | **String** |  | [optional] 
-**location** | [**Location**](Location.md) |  | [optional] 
+**location** | **Any** |  | [optional] 
 **startDate** | **Date** |  | [optional] 
 **lastName** | **String** |  | 
 **firstName** | **String** |  | 
-**groupVisit** | [**GroupVisit**](GroupVisit.md) |  | [optional] 
+**groupVisit** | **Any** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

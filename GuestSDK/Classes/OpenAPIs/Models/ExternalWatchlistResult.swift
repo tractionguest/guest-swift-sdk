@@ -7,7 +7,7 @@
 
 import Foundation
 
-/**  */
+
 public struct ExternalWatchlistResult: Codable { 
 
 
@@ -18,9 +18,7 @@ public struct ExternalWatchlistResult: Codable {
         case orange = "ORANGE"
     }
     public var matches: [WatchlistMatch]?
-    /**  */
     public var colour: Colour?
-    /**  */
     public var integration: String?
     public var searchTerms: WatchlistSearch?
 

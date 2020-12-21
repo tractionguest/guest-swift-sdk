@@ -11,9 +11,9 @@ import Foundation
 public struct HostBatchCreateParams: Codable { 
 
 
-    public var hosts: [HostCreateParams]?
+    public var hosts: [Any]?
 
-    public init(hosts: [HostCreateParams]?) {
+    public init(hosts: [Any]?) {
         self.hosts = hosts
     }
 

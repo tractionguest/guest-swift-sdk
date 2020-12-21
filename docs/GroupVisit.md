@@ -4,8 +4,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Int** |  | [optional] 
-**location** | [**Location**](Location.md) |  | [optional] 
-**hosts** | [Host] |  | [optional] 
+**location** | **Any** |  | [optional] 
+**hosts** | **[Any]** |  | [optional] 
 **name** | **String** |  | [optional] 
 **startTime** | **String** |  | [optional] 
 **endTime** | **String** |  | [optional] 

@@ -11,10 +11,10 @@ import Foundation
 public struct PaginatedRegistrationsList: Codable { 
 
 
-    public var registrations: [Registration]?
-    public var pagination: Pagination?
+    public var registrations: [Any]?
+    public var pagination: Any?
 
-    public init(registrations: [Registration]?, pagination: Pagination?) {
+    public init(registrations: [Any]?, pagination: Any?) {
         self.registrations = registrations
         self.pagination = pagination
     }

@@ -12,14 +12,14 @@ public struct InviteWatchlist: Codable {
 
 
     public var id: Int
-    public var _internal: [InternalWatchlistResult]?
-    public var external: [ExternalWatchlistResult]?
+    public var _internal: [Any]?
+    public var external: [Any]?
     /** Deprecated */
     public var internalColours: [String]?
     /** Deprecated */
     public var externalColours: [String]?
 
-    public init(id: Int, _internal: [InternalWatchlistResult]?, external: [ExternalWatchlistResult]?, internalColours: [String]?, externalColours: [String]?) {
+    public init(id: Int, _internal: [Any]?, external: [Any]?, internalColours: [String]?, externalColours: [String]?) {
         self.id = id
         self._internal = _internal
         self.external = external

@@ -14,7 +14,7 @@ public struct Signin: Codable {
     public var id: Int
     public var mobileNumber: String?
     public var signinWatchlist: SigninWatchlist?
-    public var hosts: [Host]
+    public var hosts: [Any]
     public var signinTimestamp: Date?
     public var signinPhotoUrl: String?
     public var signedOutTimestamp: Date?
@@ -27,7 +27,7 @@ public struct Signin: Codable {
     public var company: String?
     public var registration: Registration?
 
-    public init(id: Int, mobileNumber: String?, signinWatchlist: SigninWatchlist?, hosts: [Host], signinTimestamp: Date?, signinPhotoUrl: String?, signedOutTimestamp: Date?, locationName: String?, lastName: String?, isAcknowledged: Bool?, isAccountedFor: Bool?, firstName: String?, email: String?, company: String?, registration: Registration?) {
+    public init(id: Int, mobileNumber: String?, signinWatchlist: SigninWatchlist?, hosts: [Any], signinTimestamp: Date?, signinPhotoUrl: String?, signedOutTimestamp: Date?, locationName: String?, lastName: String?, isAcknowledged: Bool?, isAccountedFor: Bool?, firstName: String?, email: String?, company: String?, registration: Registration?) {
         self.id = id
         self.mobileNumber = mobileNumber
         self.signinWatchlist = signinWatchlist

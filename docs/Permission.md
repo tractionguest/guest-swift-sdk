@@ -1,10 +1,11 @@
-# PaginatedHostsList
+# Permission
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**pagination** | [**Pagination**](Pagination.md) |  | 
-**hosts** | **[Any]** |  | 
+**name** | **String** |  | [optional] 
+**visibility** | **String** |  | [optional] 
+**permissions** | **[String]** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

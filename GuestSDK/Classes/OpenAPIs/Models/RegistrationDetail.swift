@@ -27,9 +27,9 @@ public struct RegistrationDetail: Codable {
     public var name: String?
     /** Datetime when registration was created */
     public var createdAt: Date
-    public var signin: Signin?
+    public var signin: Any?
 
-    public init(id: String, visitor: Visitor?, invite: Invite?, guestResponses: [GuestResponse]?, photoUrl: String?, company: String?, email: String?, name: String?, createdAt: Date, signin: Signin?) {
+    public init(id: String, visitor: Visitor?, invite: Invite?, guestResponses: [GuestResponse]?, photoUrl: String?, company: String?, email: String?, name: String?, createdAt: Date, signin: Any?) {
         self.id = id
         self.visitor = visitor
         self.invite = invite

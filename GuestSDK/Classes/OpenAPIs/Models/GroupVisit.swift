@@ -7,20 +7,20 @@
 
 import Foundation
 
-/**  */
+
 public struct GroupVisit: Codable { 
 
 
     public var id: Int?
-    public var location: Location?
-    public var hosts: [Host]?
+    public var location: Any?
+    public var hosts: [Any]?
     public var name: String?
     public var startTime: String?
     public var endTime: String?
     public var createdAt: String?
     public var updatedAt: String?
 
-    public init(id: Int?, location: Location?, hosts: [Host]?, name: String?, startTime: String?, endTime: String?, createdAt: String?, updatedAt: String?) {
+    public init(id: Int?, location: Any?, hosts: [Any]?, name: String?, startTime: String?, endTime: String?, createdAt: String?, updatedAt: String?) {
         self.id = id
         self.location = location
         self.hosts = hosts

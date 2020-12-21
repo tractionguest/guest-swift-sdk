@@ -5,8 +5,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Int** |  | 
 **documents** | [SignableDocument] |  | [optional] 
-**signinWatchlist** | [**SigninWatchlist**](SigninWatchlist.md) |  | [optional] 
-**hosts** | [Host] |  | [optional] 
+**signinWatchlist** | **Any** |  | [optional] 
+**hosts** | **[Any]** |  | [optional] 
 **signinData** | [SigninData] |  | [optional] 
 **signinAcknowledgement** | [**SigninAcknowledgement**](SigninAcknowledgement.md) |  | [optional] 
 **note** | **String** |  | [optional] 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **firstName** | **String** |  | [optional] 
 **email** | **String** |  | [optional] 
 **company** | **String** |  | [optional] 
-**registration** | [**Registration**](Registration.md) |  | [optional] 
+**registration** | **Any** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

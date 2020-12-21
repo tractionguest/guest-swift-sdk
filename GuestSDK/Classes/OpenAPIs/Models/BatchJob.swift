@@ -7,7 +7,7 @@
 
 import Foundation
 
-/**  */
+
 public struct BatchJob: Codable { 
 
 
@@ -16,9 +16,9 @@ public struct BatchJob: Codable {
     public var status: String?
     public var totalRecords: Int?
     public var workerName: String?
-    public var user: User?
+    public var user: Any?
 
-    public init(bid: String?, createdAt: String?, status: String?, totalRecords: Int?, workerName: String?, user: User?) {
+    public init(bid: String?, createdAt: String?, status: String?, totalRecords: Int?, workerName: String?, user: Any?) {
         self.bid = bid
         self.createdAt = createdAt
         self.status = status

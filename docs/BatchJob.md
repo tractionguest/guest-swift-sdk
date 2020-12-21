@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **status** | **String** |  | [optional] 
 **totalRecords** | **Int** |  | [optional] 
 **workerName** | **String** |  | [optional] 
-**user** | [**User**](User.md) |  | [optional] 
+**user** | **Any** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

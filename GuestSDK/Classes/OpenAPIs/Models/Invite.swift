@@ -18,23 +18,20 @@ public struct Invite: Codable {
         case orange = "ORANGE"
     }
     public var id: Int
-    public var registration: Registration?
-    /**  */
+    public var registration: Any?
     public var mobileNumber: String?
-    /**  */
     public var email: String?
-    /**  */
     public var endDate: Date?
-    public var inviteWatchlist: InviteWatchlist?
-    public var hosts: [Host]?
+    public var inviteWatchlist: Any?
+    public var hosts: [Any]?
     public var watchlistColour: WatchlistColour?
-    public var location: Location?
+    public var location: Any?
     public var startDate: Date?
     public var lastName: String?
     public var firstName: String?
-    public var groupVisit: GroupVisit?
+    public var groupVisit: Any?
 
-    public init(id: Int, registration: Registration?, mobileNumber: String?, email: String?, endDate: Date?, inviteWatchlist: InviteWatchlist?, hosts: [Host]?, watchlistColour: WatchlistColour?, location: Location?, startDate: Date?, lastName: String?, firstName: String?, groupVisit: GroupVisit?) {
+    public init(id: Int, registration: Any?, mobileNumber: String?, email: String?, endDate: Date?, inviteWatchlist: Any?, hosts: [Any]?, watchlistColour: WatchlistColour?, location: Any?, startDate: Date?, lastName: String?, firstName: String?, groupVisit: Any?) {
         self.id = id
         self.registration = registration
         self.mobileNumber = mobileNumber

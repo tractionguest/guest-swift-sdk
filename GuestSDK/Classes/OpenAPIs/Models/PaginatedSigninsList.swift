@@ -11,10 +11,10 @@ import Foundation
 public struct PaginatedSigninsList: Codable { 
 
 
-    public var pagination: Pagination
-    public var signins: [Signin]
+    public var pagination: Any
+    public var signins: [Any]
 
-    public init(pagination: Pagination, signins: [Signin]) {
+    public init(pagination: Any, signins: [Any]) {
         self.pagination = pagination
         self.signins = signins
     }

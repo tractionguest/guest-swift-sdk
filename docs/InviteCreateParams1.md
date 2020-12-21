@@ -1,22 +1,22 @@
-# InviteCreateParams
+# InviteCreateParams1
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **mobileNumber** | **String** |  | [optional] 
-**notificationTriggers** | **[Any]** |  | [optional] 
-**firstName** | **String** |  | 
+**userId** | **Int** | Used for transfering ownership of an &#x60;Invite&#x60; to another member of the Account | [optional] 
+**onPremise** | **Bool** |  | [optional] 
+**notificationTriggers** | [NotificationTrigger1] |  | [optional] 
+**firstName** | **String** |  | [optional] 
 **emailTemplateId** | **Int** |  | [optional] 
-**customFields** | **[Any]** |  | [optional] 
+**customFields** | [CustomField] |  | [optional] 
 **hostIds** | **[Int]** |  | [optional] 
-**watchlistColour** | **String** |  | [optional] 
 **title** | **String** |  | [optional] 
-**startDate** | **Date** | The &#x60;start_date&#x60; is required for invitations to lobbies | [optional] 
-**lastName** | **String** |  | 
+**startDate** | **Date** |  | [optional] 
+**lastName** | **String** |  | [optional] 
 **endDate** | **Date** |  | [optional] 
-**email** | **String** |  | 
+**email** | **String** |  | [optional] 
 **company** | **String** |  | [optional] 
-**groupVisitId** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

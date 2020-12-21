@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 # **createPackage**
 ```swift
-    open class func createPackage(packageCreateParams: PackageCreateParams? = nil, completion: @escaping (_ data: Package?, _ error: Error?) -> Void)
+    open class func createPackage(packageCreateParamsV1: PackageCreateParamsV1? = nil, completion: @escaping (_ data: Package?, _ error: Error?) -> Void)
 ```
 
 Create package
@@ -25,10 +25,10 @@ Creates a [Package] entity by extracting information about the recipient and car
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import GuestSDK
 
-let packageCreateParams = PackageCreateParams(base64Image: 123, locationId: 123) // PackageCreateParams | Parameters for creating a package (optional)
+let packageCreateParamsV1 = PackageCreateParams_v1(base64Image: 123, locationId: 123) // PackageCreateParamsV1 |  (optional)
 
 // Create package
-PackagesAPI.createPackage(packageCreateParams: packageCreateParams) { (response, error) in
+PackagesAPI.createPackage(packageCreateParamsV1: packageCreateParamsV1) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -44,7 +44,7 @@ PackagesAPI.createPackage(packageCreateParams: packageCreateParams) { (response,
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **packageCreateParams** | [**PackageCreateParams**](PackageCreateParams.md) | Parameters for creating a package | [optional] 
+ **packageCreateParamsV1** | [**PackageCreateParamsV1**](PackageCreateParamsV1.md) |  | [optional] 
 
 ### Return type
 
@@ -114,7 +114,7 @@ Void (empty response body)
 
 # **getPackage**
 ```swift
-    open class func getPackage(packageId: String, include: String? = nil, completion: @escaping (_ data: Package?, _ error: Error?) -> Void)
+    open class func getPackage(packageId: String, include: String? = nil, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
 ```
 
 Get Package
@@ -151,7 +151,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Package**](Package.md)
+**Any**
 
 ### Authorization
 
@@ -226,7 +226,7 @@ Name | Type | Description  | Notes
 
 # **updatePackage**
 ```swift
-    open class func updatePackage(packageId: String, idempotencyKey: String? = nil, packageUpdateParams: PackageUpdateParams? = nil, completion: @escaping (_ data: Package?, _ error: Error?) -> Void)
+    open class func updatePackage(packageId: String, idempotencyKey: String? = nil, packageUpdateParamsV1: PackageUpdateParamsV1? = nil, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
 ```
 
 Update Package
@@ -240,10 +240,10 @@ import GuestSDK
 
 let packageId = "packageId_example" // String | 
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
-let packageUpdateParams = PackageUpdateParams(pickedUp: false, carrierName: "carrierName_example", recipientId: 123) // PackageUpdateParams |  (optional)
+let packageUpdateParamsV1 = PackageUpdateParams_v1(pickedUp: false, carrierName: "carrierName_example", recipientId: 123) // PackageUpdateParamsV1 |  (optional)
 
 // Update Package
-PackagesAPI.updatePackage(packageId: packageId, idempotencyKey: idempotencyKey, packageUpdateParams: packageUpdateParams) { (response, error) in
+PackagesAPI.updatePackage(packageId: packageId, idempotencyKey: idempotencyKey, packageUpdateParamsV1: packageUpdateParamsV1) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -261,11 +261,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **packageId** | **String** |  | 
  **idempotencyKey** | **String** | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored | [optional] 
- **packageUpdateParams** | [**PackageUpdateParams**](PackageUpdateParams.md) |  | [optional] 
+ **packageUpdateParamsV1** | [**PackageUpdateParamsV1**](PackageUpdateParamsV1.md) |  | [optional] 
 
 ### Return type
 
-[**Package**](Package.md)
+**Any**
 
 ### Authorization
 

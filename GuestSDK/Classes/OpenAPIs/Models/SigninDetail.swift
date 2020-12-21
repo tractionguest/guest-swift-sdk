@@ -13,8 +13,8 @@ public struct SigninDetail: Codable {
 
     public var id: Int
     public var documents: [SignableDocument]?
-    public var signinWatchlist: SigninWatchlist?
-    public var hosts: [Host]?
+    public var signinWatchlist: Any?
+    public var hosts: [Any]?
     public var signinData: [SigninData]?
     public var signinAcknowledgement: SigninAcknowledgement?
     public var note: String?
@@ -32,9 +32,9 @@ public struct SigninDetail: Codable {
     public var firstName: String?
     public var email: String?
     public var company: String?
-    public var registration: Registration?
+    public var registration: Any?
 
-    public init(id: Int, documents: [SignableDocument]?, signinWatchlist: SigninWatchlist?, hosts: [Host]?, signinData: [SigninData]?, signinAcknowledgement: SigninAcknowledgement?, note: String?, isSignedOut: Bool?, signinTimestamp: Date?, signinPhotoUrl: String?, signedOutTimestamp: Date?, mobileNumber: String?, locationName: String?, lastName: String?, isAcknowledged: Bool?, isAccountedFor: Bool?, firstName: String?, email: String?, company: String?, registration: Registration?) {
+    public init(id: Int, documents: [SignableDocument]?, signinWatchlist: Any?, hosts: [Any]?, signinData: [SigninData]?, signinAcknowledgement: SigninAcknowledgement?, note: String?, isSignedOut: Bool?, signinTimestamp: Date?, signinPhotoUrl: String?, signedOutTimestamp: Date?, mobileNumber: String?, locationName: String?, lastName: String?, isAcknowledged: Bool?, isAccountedFor: Bool?, firstName: String?, email: String?, company: String?, registration: Any?) {
         self.id = id
         self.documents = documents
         self.signinWatchlist = signinWatchlist

@@ -7,14 +7,14 @@
 
 import Foundation
 
-/**  */
+
 public struct PaginatedAuditLogsList: Codable { 
 
 
-    public var pagination: Pagination
-    public var auditLogs: [AuditLog]
+    public var pagination: Any
+    public var auditLogs: [Any]
 
-    public init(pagination: Pagination, auditLogs: [AuditLog]) {
+    public init(pagination: Any, auditLogs: [Any]) {
         self.pagination = pagination
         self.auditLogs = auditLogs
     }

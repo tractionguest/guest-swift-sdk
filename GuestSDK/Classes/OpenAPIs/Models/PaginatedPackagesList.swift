@@ -11,10 +11,10 @@ import Foundation
 public struct PaginatedPackagesList: Codable { 
 
 
-    public var packages: [Package]
-    public var pagination: Pagination
+    public var packages: [Any]
+    public var pagination: Any
 
-    public init(packages: [Package], pagination: Pagination) {
+    public init(packages: [Any], pagination: Any) {
         self.packages = packages
         self.pagination = pagination
     }

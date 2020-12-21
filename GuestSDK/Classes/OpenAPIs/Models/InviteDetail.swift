@@ -18,17 +18,17 @@ public struct InviteDetail: Codable {
         case orange = "ORANGE"
     }
     public var id: Int
-    public var registration: Registration?
+    public var registration: Any?
     /** Phone number */
     public var mobileNumber: String?
     public var emailTemplate: EmailTemplate?
     public var inviteWatchlist: InviteWatchlist?
     /** List of scheduled notifications for an invite */
     public var notificationTriggers: [NotificationTrigger]?
-    public var customFields: [CustomField]?
+    public var customFields: [Any]?
     public var watchlistColour: WatchlistColour?
-    public var location: Location?
-    public var hosts: [Host]?
+    public var location: Any?
+    public var hosts: [Any]?
     public var startDate: Date?
     public var lastName: String
     public var firstName: String
@@ -38,7 +38,7 @@ public struct InviteDetail: Codable {
     public var company: String?
     public var groupVisit: GroupVisit?
 
-    public init(id: Int, registration: Registration?, mobileNumber: String?, emailTemplate: EmailTemplate?, inviteWatchlist: InviteWatchlist?, notificationTriggers: [NotificationTrigger]?, customFields: [CustomField]?, watchlistColour: WatchlistColour?, location: Location?, hosts: [Host]?, startDate: Date?, lastName: String, firstName: String, endDate: Date?, email: String, createdAt: Date?, company: String?, groupVisit: GroupVisit?) {
+    public init(id: Int, registration: Any?, mobileNumber: String?, emailTemplate: EmailTemplate?, inviteWatchlist: InviteWatchlist?, notificationTriggers: [NotificationTrigger]?, customFields: [Any]?, watchlistColour: WatchlistColour?, location: Any?, hosts: [Any]?, startDate: Date?, lastName: String, firstName: String, endDate: Date?, email: String, createdAt: Date?, company: String?, groupVisit: GroupVisit?) {
         self.id = id
         self.registration = registration
         self.mobileNumber = mobileNumber
