@@ -7,7 +7,7 @@
 
 import Foundation
 
-/**  */
+/** The root of the BatchJob&#39;s schema. */
 public struct BatchJob: Codable { 
 
 
@@ -17,14 +17,20 @@ public struct BatchJob: Codable {
     public var totalRecords: Int?
     public var workerName: String?
     public var user: User?
+    public var pending: Int?
+    public var completed: Int?
+    public var failed: Int?
 
-    public init(bid: String?, createdAt: String?, status: String?, totalRecords: Int?, workerName: String?, user: User?) {
+    public init(bid: String?, createdAt: String?, status: String?, totalRecords: Int?, workerName: String?, user: User?, pending: Int?, completed: Int?, failed: Int?) {
         self.bid = bid
         self.createdAt = createdAt
         self.status = status
         self.totalRecords = totalRecords
         self.workerName = workerName
         self.user = user
+        self.pending = pending
+        self.completed = completed
+        self.failed = failed
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -34,6 +40,9 @@ public struct BatchJob: Codable {
         case totalRecords = "total_records"
         case workerName = "worker_name"
         case user
+        case pending
+        case completed
+        case failed
     }
 
 }
