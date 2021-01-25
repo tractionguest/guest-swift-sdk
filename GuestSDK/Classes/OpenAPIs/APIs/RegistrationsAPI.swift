@@ -66,11 +66,12 @@ open class RegistrationsAPI {
      - parameter locationIds: (query) A comma separated list of Location IDs (optional)
      - parameter createdBefore: (query) Restricts results to only those that were created before the provided date (optional)
      - parameter createdAfter: (query) Restricts results to only those that were created after the provided date (optional)
+     - parameter needsConfirmation: (query) A confirmed &#x60;Registration&#x60; is one with an associated &#x60;Invite&#x60;. This filter returns those without an &#x60;Invite&#x60; when true, and those with an &#x60;Invite&#x60; when false. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedRegistrationsList, Error>) -> Void)) {
-        getRegistrationsWithRequestBuilder(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter).execute(apiResponseQueue) { result -> Void in
+    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedRegistrationsList, Error>) -> Void)) {
+        getRegistrationsWithRequestBuilder(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter, needsConfirmation: needsConfirmation).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(.success(response.body!))
@@ -92,9 +93,10 @@ open class RegistrationsAPI {
      - parameter locationIds: (query) A comma separated list of Location IDs (optional)
      - parameter createdBefore: (query) Restricts results to only those that were created before the provided date (optional)
      - parameter createdAfter: (query) Restricts results to only those that were created after the provided date (optional)
+     - parameter needsConfirmation: (query) A confirmed &#x60;Registration&#x60; is one with an associated &#x60;Invite&#x60;. This filter returns those without an &#x60;Invite&#x60; when true, and those with an &#x60;Invite&#x60; when false. (optional)
      - returns: RequestBuilder<PaginatedRegistrationsList> 
      */
-    open class func getRegistrationsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil) -> RequestBuilder<PaginatedRegistrationsList> {
+    open class func getRegistrationsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil) -> RequestBuilder<PaginatedRegistrationsList> {
         let path = "/registrations"
         let URLString = GuestSDKAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -105,7 +107,8 @@ open class RegistrationsAPI {
             "offset": offset?.encodeToJSON(), 
             "location_ids": locationIds?.encodeToJSON(), 
             "created_before": createdBefore?.encodeToJSON(), 
-            "created_after": createdAfter?.encodeToJSON()
+            "created_after": createdAfter?.encodeToJSON(), 
+            "needs_confirmation": needsConfirmation?.encodeToJSON()
         ])
 
         let requestBuilder: RequestBuilder<PaginatedRegistrationsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
