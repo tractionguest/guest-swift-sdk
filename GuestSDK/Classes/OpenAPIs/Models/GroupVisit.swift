@@ -7,7 +7,7 @@
 
 import Foundation
 
-/**  */
+/** The data structure for a Group Visit object. Also called an Appointment. */
 public struct GroupVisit: Codable { 
 
 
@@ -19,8 +19,14 @@ public struct GroupVisit: Codable {
     public var endTime: String?
     public var createdAt: String?
     public var updatedAt: String?
+    public var registrationLimit: Int?
+    public var registrationUrl: String?
+    public var invitesCount: Int?
+    public var unconfirmedRegistrationsCount: Int?
+    public var manualRegistrationApproval: Bool?
+    public var publicRegistrationEnabled: Bool?
 
-    public init(id: Int?, location: Location?, hosts: [Host]?, name: String?, startTime: String?, endTime: String?, createdAt: String?, updatedAt: String?) {
+    public init(id: Int?, location: Location?, hosts: [Host]?, name: String?, startTime: String?, endTime: String?, createdAt: String?, updatedAt: String?, registrationLimit: Int?, registrationUrl: String?, invitesCount: Int?, unconfirmedRegistrationsCount: Int?, manualRegistrationApproval: Bool?, publicRegistrationEnabled: Bool?) {
         self.id = id
         self.location = location
         self.hosts = hosts
@@ -29,6 +35,12 @@ public struct GroupVisit: Codable {
         self.endTime = endTime
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+        self.registrationLimit = registrationLimit
+        self.registrationUrl = registrationUrl
+        self.invitesCount = invitesCount
+        self.unconfirmedRegistrationsCount = unconfirmedRegistrationsCount
+        self.manualRegistrationApproval = manualRegistrationApproval
+        self.publicRegistrationEnabled = publicRegistrationEnabled
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -40,6 +52,12 @@ public struct GroupVisit: Codable {
         case endTime = "end_time"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+        case registrationLimit = "registration_limit"
+        case registrationUrl = "registration_url"
+        case invitesCount = "invites_count"
+        case unconfirmedRegistrationsCount = "unconfirmed_registrations_count"
+        case manualRegistrationApproval = "manual_registration_approval"
+        case publicRegistrationEnabled = "public_registration_enabled"
     }
 
 }

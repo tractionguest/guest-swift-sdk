@@ -31,9 +31,9 @@ public struct InviteCreateParams: Codable {
     public var endDate: Date?
     public var email: String
     public var company: String?
-    public var groupVisitId: String?
+    public var groupVisitId: Int?
 
-    public init(mobileNumber: String?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, watchlistColour: WatchlistColour?, title: String?, startDate: Date?, lastName: String, endDate: Date?, email: String, company: String?, groupVisitId: String?) {
+    public init(mobileNumber: String?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, watchlistColour: WatchlistColour?, title: String?, startDate: Date?, lastName: String, endDate: Date?, email: String, company: String?, groupVisitId: Int?) {
         self.mobileNumber = mobileNumber
         self.notificationTriggers = notificationTriggers
         self.firstName = firstName

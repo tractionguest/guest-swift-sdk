@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 
 # **getRegistrations**
 ```swift
-    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, completion: @escaping (_ data: PaginatedRegistrationsList?, _ error: Error?) -> Void)
+    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil, completion: @escaping (_ data: PaginatedRegistrationsList?, _ error: Error?) -> Void)
 ```
 
 List all Registrations
@@ -79,9 +79,10 @@ let offset = 987 // Int | Offsets the results to a specified number, defaults to
 let locationIds = "locationIds_example" // String | A comma separated list of Location IDs (optional)
 let createdBefore = "createdBefore_example" // String | Restricts results to only those that were created before the provided date (optional)
 let createdAfter = "createdAfter_example" // String | Restricts results to only those that were created after the provided date (optional)
+let needsConfirmation = true // Bool | A confirmed `Registration` is one with an associated `Invite`. This filter returns those without an `Invite` when true, and those with an `Invite` when false. (optional)
 
 // List all Registrations
-RegistrationsAPI.getRegistrations(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter) { (response, error) in
+RegistrationsAPI.getRegistrations(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter, needsConfirmation: needsConfirmation) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -102,6 +103,7 @@ Name | Type | Description  | Notes
  **locationIds** | **String** | A comma separated list of Location IDs | [optional] 
  **createdBefore** | **String** | Restricts results to only those that were created before the provided date | [optional] 
  **createdAfter** | **String** | Restricts results to only those that were created after the provided date | [optional] 
+ **needsConfirmation** | **Bool** | A confirmed &#x60;Registration&#x60; is one with an associated &#x60;Invite&#x60;. This filter returns those without an &#x60;Invite&#x60; when true, and those with an &#x60;Invite&#x60; when false. | [optional] 
 
 ### Return type
 
