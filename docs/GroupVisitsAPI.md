@@ -167,7 +167,7 @@ Name | Type | Description  | Notes
 
 # **getGroupVisits**
 ```swift
-    open class func getGroupVisits(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil, completion: @escaping (_ data: ErrorsList?, _ error: Error?) -> Void)
+    open class func getGroupVisits(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil, completion: @escaping (_ data: PaginatedGroupVisitsList?, _ error: Error?) -> Void)
 ```
 
 List all Group Visits (Appointments)
@@ -208,7 +208,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ErrorsList**](ErrorsList.md)
+[**PaginatedGroupVisitsList**](PaginatedGroupVisitsList.md)
 
 ### Authorization
 

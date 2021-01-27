@@ -158,7 +158,7 @@ open class GroupVisitsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getGroupVisits(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<ErrorsList, Error>) -> Void)) {
+    open class func getGroupVisits(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedGroupVisitsList, Error>) -> Void)) {
         getGroupVisitsWithRequestBuilder(limit: limit, offset: offset, locationIds: locationIds, sortWith: sortWith).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -180,9 +180,9 @@ open class GroupVisitsAPI {
      - parameter offset: (query) Offsets the results to a specified number. Defaults to 0. (optional)
      - parameter locationIds: (query) A comma-separated string of locations IDs, to only show group visits (appointments) from those locations. (optional)
      - parameter sortWith: (query) A combination of attribute and direction, joined with an underscore, for sorting. Valid attributes are: &#x60;created_at&#x60;, &#x60;updated_at&#x60;, &#x60;name&#x60;, and &#x60;start_time&#x60;. Valid directions are &#x60;asc&#x60; and &#x60;desc&#x60;. E.g., &#x60;name_desc&#x60;, &#x60;start_time_asc&#x60;. (optional)
-     - returns: RequestBuilder<ErrorsList> 
+     - returns: RequestBuilder<PaginatedGroupVisitsList> 
      */
-    open class func getGroupVisitsWithRequestBuilder(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil) -> RequestBuilder<ErrorsList> {
+    open class func getGroupVisitsWithRequestBuilder(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil) -> RequestBuilder<PaginatedGroupVisitsList> {
         let path = "/group_visits"
         let URLString = GuestSDKAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -195,7 +195,7 @@ open class GroupVisitsAPI {
             "sort_with": sortWith?.encodeToJSON()
         ])
 
-        let requestBuilder: RequestBuilder<ErrorsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<PaginatedGroupVisitsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
