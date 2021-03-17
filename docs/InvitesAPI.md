@@ -1,10 +1,9 @@
 # InvitesAPI
 
-All URIs are relative to *https://us.tractionguest.com/api/v3*
+All URIs are relative to *https://tractionguest.ca/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**batchDeleteInvites**](InvitesAPI.md#batchdeleteinvites) | **POST** /invites/batch_delete | Delete Multiple Invites
 [**createLocationInvite**](InvitesAPI.md#createlocationinvite) | **POST** /locations/{location_id}/invites | Create an Invite
 [**createRegistrationInvite**](InvitesAPI.md#createregistrationinvite) | **POST** /registrations/{registration_id}/invites | Create an Invite from a Registration
 [**deleteInvite**](InvitesAPI.md#deleteinvite) | **DELETE** /invites/{invite_id} | Deletes an Invite
@@ -12,56 +11,6 @@ Method | HTTP request | Description
 [**getInvites**](InvitesAPI.md#getinvites) | **GET** /invites | List all Invites
 [**updateInvite**](InvitesAPI.md#updateinvite) | **PUT** /invites/{invite_id} | Update an Invite
 
-
-# **batchDeleteInvites**
-```swift
-    open class func batchDeleteInvites(identifierList: IdentifierList? = nil, completion: @escaping (_ data: BatchJob?, _ error: Error?) -> Void)
-```
-
-Delete Multiple Invites
-
-Queues up a \"delete\" background task for one or more `Invite` entities.
-
-### Example 
-```swift
-// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import GuestSDK
-
-let identifierList = IdentifierList(ids: ["ids_example"]) // IdentifierList |  (optional)
-
-// Delete Multiple Invites
-InvitesAPI.batchDeleteInvites(identifierList: identifierList) { (response, error) in
-    guard error == nil else {
-        print(error)
-        return
-    }
-
-    if (response) {
-        dump(response)
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **identifierList** | [**IdentifierList**](IdentifierList.md) |  | [optional] 
-
-### Return type
-
-[**BatchJob**](BatchJob.md)
-
-### Authorization
-
-[TractionGuestAuth](../README.md#TractionGuestAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createLocationInvite**
 ```swift
@@ -78,7 +27,7 @@ Creates a new `Invite` for a specific `Location`.
 import GuestSDK
 
 let locationId = "locationId_example" // String | 
-let inviteCreateParams = InviteCreateParams(mobileNumber: "mobileNumber_example", notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], watchlistColour: "watchlistColour_example", title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: 123) // InviteCreateParams | 
+let inviteCreateParams = InviteCreateParams(mobileNumber: "mobileNumber_example", notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], watchlistColour: "watchlistColour_example", title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: "groupVisitId_example") // InviteCreateParams | 
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
 
 // Create an Invite
@@ -360,7 +309,7 @@ Updates an existing `Invite`.
 import GuestSDK
 
 let inviteId = "inviteId_example" // String | 
-let inviteUpdateParams = InviteUpdateParams(mobileNumber: "mobileNumber_example", userId: 123, onPremise: false, notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: 123) // InviteUpdateParams | Updated `Invite` information.
+let inviteUpdateParams = InviteUpdateParams(mobileNumber: "mobileNumber_example", userId: 123, onPremise: false, notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example") // InviteUpdateParams | Updated `Invite` information.
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
 
 // Update an Invite

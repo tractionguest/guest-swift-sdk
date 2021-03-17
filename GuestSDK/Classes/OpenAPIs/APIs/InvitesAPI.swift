@@ -11,46 +11,6 @@ import Foundation
 
 open class InvitesAPI {
     /**
-     Delete Multiple Invites
-     
-     - parameter identifierList: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the result
-     */
-    open class func batchDeleteInvites(identifierList: IdentifierList? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<BatchJob, Error>) -> Void)) {
-        batchDeleteInvitesWithRequestBuilder(identifierList: identifierList).execute(apiResponseQueue) { result -> Void in
-            switch result {
-            case let .success(response):
-                completion(.success(response.body!))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    /**
-     Delete Multiple Invites
-     - POST /invites/batch_delete
-     - Queues up a \"delete\" background task for one or more `Invite` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
-     - parameter identifierList: (body)  (optional)
-     - returns: RequestBuilder<BatchJob> 
-     */
-    open class func batchDeleteInvitesWithRequestBuilder(identifierList: IdentifierList? = nil) -> RequestBuilder<BatchJob> {
-        let path = "/invites/batch_delete"
-        let URLString = GuestSDKAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: identifierList)
-
-        let url = URLComponents(string: URLString)
-
-        let requestBuilder: RequestBuilder<BatchJob>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
-    }
-
-    /**
      Create an Invite
      
      - parameter locationId: (path)  

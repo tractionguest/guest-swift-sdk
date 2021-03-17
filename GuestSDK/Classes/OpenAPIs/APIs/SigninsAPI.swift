@@ -11,6 +11,100 @@ import Foundation
 
 open class SigninsAPI {
     /**
+
+     - parameter registrationId: (path)  
+     - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the result
+     */
+    open class func createRegistrationSignin(registrationId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<SigninDetail, Error>) -> Void)) {
+        createRegistrationSigninWithRequestBuilder(registrationId: registrationId, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(.success(response.body!))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    /**
+     - POST /registrations/{registration_id}/signins
+     - Creates a new `Signin` from a `Registration`
+     - :
+       - type: openIdConnect
+       - name: TractionGuestAuth
+     - parameter registrationId: (path)  
+     - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
+     - returns: RequestBuilder<SigninDetail> 
+     */
+    open class func createRegistrationSigninWithRequestBuilder(registrationId: String, idempotencyKey: String? = nil) -> RequestBuilder<SigninDetail> {
+        var path = "/registrations/{registration_id}/signins"
+        let registrationIdPreEscape = "\(APIHelper.mapValueToPathItem(registrationId))"
+        let registrationIdPostEscape = registrationIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{registration_id}", with: registrationIdPostEscape, options: .literal, range: nil)
+        let URLString = GuestSDKAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        let requestBuilder: RequestBuilder<SigninDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+    }
+
+    /**
+
+     - parameter registrationId: (path)  
+     - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the result
+     */
+    open class func createRegistrationSignout(registrationId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<SigninDetail, Error>) -> Void)) {
+        createRegistrationSignoutWithRequestBuilder(registrationId: registrationId, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(.success(response.body!))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    /**
+     - POST /registrations/{registration_id}/signouts
+     - Signs out the last `Signin` on a `Registration`. Returns the `SigninDetail` that was signed out, if the sign out is successful.
+     - :
+       - type: openIdConnect
+       - name: TractionGuestAuth
+     - parameter registrationId: (path)  
+     - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
+     - returns: RequestBuilder<SigninDetail> 
+     */
+    open class func createRegistrationSignoutWithRequestBuilder(registrationId: String, idempotencyKey: String? = nil) -> RequestBuilder<SigninDetail> {
+        var path = "/registrations/{registration_id}/signouts"
+        let registrationIdPreEscape = "\(APIHelper.mapValueToPathItem(registrationId))"
+        let registrationIdPostEscape = registrationIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{registration_id}", with: registrationIdPostEscape, options: .literal, range: nil)
+        let URLString = GuestSDKAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        let requestBuilder: RequestBuilder<SigninDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+    }
+
+    /**
      Create Signin
      
      - parameter signinCreateParams: (body) Params for creating a Signin can omit certain fields if a &#x60;registration_id&#x60; is present. (optional)

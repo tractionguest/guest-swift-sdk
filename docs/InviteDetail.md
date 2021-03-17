@@ -20,7 +20,6 @@ Name | Type | Description | Notes
 **email** | **String** |  | 
 **createdAt** | **Date** |  | [optional] 
 **company** | **String** |  | [optional] 
-**checkedIn** | **Bool** |  | [optional] 
 **groupVisit** | [**GroupVisit**](GroupVisit.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

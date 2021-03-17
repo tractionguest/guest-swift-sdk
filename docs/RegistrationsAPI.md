@@ -1,12 +1,64 @@
 # RegistrationsAPI
 
-All URIs are relative to *https://us.tractionguest.com/api/v3*
+All URIs are relative to *https://tractionguest.ca/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**createRegistrationSignout**](RegistrationsAPI.md#createregistrationsignout) | **POST** /registrations/{registration_id}/signouts | 
 [**getRegistration**](RegistrationsAPI.md#getregistration) | **GET** /registrations/{registration_id} | Get a Registration
 [**getRegistrations**](RegistrationsAPI.md#getregistrations) | **GET** /registrations | List all Registrations
 
+
+# **createRegistrationSignout**
+```swift
+    open class func createRegistrationSignout(registrationId: String, idempotencyKey: String? = nil, completion: @escaping (_ data: SigninDetail?, _ error: Error?) -> Void)
+```
+
+
+
+Signs out the last `Signin` on a `Registration`. Returns the `SigninDetail` that was signed out, if the sign out is successful.
+
+### Example 
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import GuestSDK
+
+let registrationId = "registrationId_example" // String | 
+let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
+
+RegistrationsAPI.createRegistrationSignout(registrationId: registrationId, idempotencyKey: idempotencyKey) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **registrationId** | **String** |  | 
+ **idempotencyKey** | **String** | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored | [optional] 
+
+### Return type
+
+[**SigninDetail**](SigninDetail.md)
+
+### Authorization
+
+[TractionGuestAuth](../README.md#TractionGuestAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getRegistration**
 ```swift
@@ -62,7 +114,7 @@ Name | Type | Description  | Notes
 
 # **getRegistrations**
 ```swift
-    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil, completion: @escaping (_ data: PaginatedRegistrationsList?, _ error: Error?) -> Void)
+    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, completion: @escaping (_ data: PaginatedRegistrationsList?, _ error: Error?) -> Void)
 ```
 
 List all Registrations
@@ -79,10 +131,9 @@ let offset = 987 // Int | Offsets the results to a specified number, defaults to
 let locationIds = "locationIds_example" // String | A comma separated list of Location IDs (optional)
 let createdBefore = "createdBefore_example" // String | Restricts results to only those that were created before the provided date (optional)
 let createdAfter = "createdAfter_example" // String | Restricts results to only those that were created after the provided date (optional)
-let needsConfirmation = true // Bool | A confirmed `Registration` is one with an associated `Invite`. This filter returns those without an `Invite` when true, and those with an `Invite` when false. (optional)
 
 // List all Registrations
-RegistrationsAPI.getRegistrations(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter, needsConfirmation: needsConfirmation) { (response, error) in
+RegistrationsAPI.getRegistrations(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -103,7 +154,6 @@ Name | Type | Description  | Notes
  **locationIds** | **String** | A comma separated list of Location IDs | [optional] 
  **createdBefore** | **String** | Restricts results to only those that were created before the provided date | [optional] 
  **createdAfter** | **String** | Restricts results to only those that were created after the provided date | [optional] 
- **needsConfirmation** | **Bool** | A confirmed &#x60;Registration&#x60; is one with an associated &#x60;Invite&#x60;. This filter returns those without an &#x60;Invite&#x60; when true, and those with an &#x60;Invite&#x60; when false. | [optional] 
 
 ### Return type
 

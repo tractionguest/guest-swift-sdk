@@ -10,7 +10,6 @@ Name | Type | Description | Notes
 **lastName** | **String** |  | [optional] 
 **firstName** | **String** | Determines if the registration portal has been enabled for this account | [optional] 
 **registrationPortalEnabled** | **Bool** | Determines if the registration portal has been enabled for this account | 
-**accountUuid** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

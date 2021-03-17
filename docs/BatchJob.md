@@ -9,9 +9,6 @@ Name | Type | Description | Notes
 **totalRecords** | **Int** |  | [optional] 
 **workerName** | **String** |  | [optional] 
 **user** | [**User**](User.md) |  | [optional] 
-**pending** | **Int** |  | [optional] 
-**completed** | **Int** |  | [optional] 
-**failed** | **Int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -12,7 +12,7 @@ public struct SigninCreateParams: Codable {
 
 
     /** UUID of a Registration */
-    public var registrationId: String?
+    public var registrationId: UUID?
     /** E-mail, ignored if &#x60;registration_id&#x60; is included */
     public var email: String?
     /** Company name, ignored if &#x60;registration_id&#x60; is included */
@@ -30,7 +30,7 @@ public struct SigninCreateParams: Codable {
     public var hostEmailTemplateId: Int?
     public var guestEmailTemplateId: Int?
 
-    public init(registrationId: String?, email: String?, company: String?, lastName: String?, firstName: String?, smsMessage: String?, sendNotifications: Bool?, locationId: Int?, hostIds: [Int]?, hostEmailTemplateId: Int?, guestEmailTemplateId: Int?) {
+    public init(registrationId: UUID?, email: String?, company: String?, lastName: String?, firstName: String?, smsMessage: String?, sendNotifications: Bool?, locationId: Int?, hostIds: [Int]?, hostEmailTemplateId: Int?, guestEmailTemplateId: Int?) {
         self.registrationId = registrationId
         self.email = email
         self.company = company

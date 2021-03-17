@@ -27,9 +27,8 @@ public struct InviteUpdateParams: Codable {
     public var endDate: Date?
     public var email: String?
     public var company: String?
-    public var groupVisitId: Int?
 
-    public init(mobileNumber: String?, userId: Int?, onPremise: Bool?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String?, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, title: String?, startDate: Date?, lastName: String?, endDate: Date?, email: String?, company: String?, groupVisitId: Int?) {
+    public init(mobileNumber: String?, userId: Int?, onPremise: Bool?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String?, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, title: String?, startDate: Date?, lastName: String?, endDate: Date?, email: String?, company: String?) {
         self.mobileNumber = mobileNumber
         self.userId = userId
         self.onPremise = onPremise
@@ -44,7 +43,6 @@ public struct InviteUpdateParams: Codable {
         self.endDate = endDate
         self.email = email
         self.company = company
-        self.groupVisitId = groupVisitId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -62,7 +60,6 @@ public struct InviteUpdateParams: Codable {
         case endDate = "end_date"
         case email
         case company
-        case groupVisitId = "group_visit_id"
     }
 
 }

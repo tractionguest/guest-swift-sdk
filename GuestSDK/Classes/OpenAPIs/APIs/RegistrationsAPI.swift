@@ -11,6 +11,53 @@ import Foundation
 
 open class RegistrationsAPI {
     /**
+
+     - parameter registrationId: (path)  
+     - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the result
+     */
+    open class func createRegistrationSignout(registrationId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<SigninDetail, Error>) -> Void)) {
+        createRegistrationSignoutWithRequestBuilder(registrationId: registrationId, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(.success(response.body!))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    /**
+     - POST /registrations/{registration_id}/signouts
+     - Signs out the last `Signin` on a `Registration`. Returns the `SigninDetail` that was signed out, if the sign out is successful.
+     - :
+       - type: openIdConnect
+       - name: TractionGuestAuth
+     - parameter registrationId: (path)  
+     - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
+     - returns: RequestBuilder<SigninDetail> 
+     */
+    open class func createRegistrationSignoutWithRequestBuilder(registrationId: String, idempotencyKey: String? = nil) -> RequestBuilder<SigninDetail> {
+        var path = "/registrations/{registration_id}/signouts"
+        let registrationIdPreEscape = "\(APIHelper.mapValueToPathItem(registrationId))"
+        let registrationIdPostEscape = registrationIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{registration_id}", with: registrationIdPostEscape, options: .literal, range: nil)
+        let URLString = GuestSDKAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        let requestBuilder: RequestBuilder<SigninDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+    }
+
+    /**
      Get a Registration
      
      - parameter registrationId: (path)  
@@ -66,12 +113,11 @@ open class RegistrationsAPI {
      - parameter locationIds: (query) A comma separated list of Location IDs (optional)
      - parameter createdBefore: (query) Restricts results to only those that were created before the provided date (optional)
      - parameter createdAfter: (query) Restricts results to only those that were created after the provided date (optional)
-     - parameter needsConfirmation: (query) A confirmed &#x60;Registration&#x60; is one with an associated &#x60;Invite&#x60;. This filter returns those without an &#x60;Invite&#x60; when true, and those with an &#x60;Invite&#x60; when false. (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedRegistrationsList, Error>) -> Void)) {
-        getRegistrationsWithRequestBuilder(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter, needsConfirmation: needsConfirmation).execute(apiResponseQueue) { result -> Void in
+    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedRegistrationsList, Error>) -> Void)) {
+        getRegistrationsWithRequestBuilder(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(.success(response.body!))
@@ -93,10 +139,9 @@ open class RegistrationsAPI {
      - parameter locationIds: (query) A comma separated list of Location IDs (optional)
      - parameter createdBefore: (query) Restricts results to only those that were created before the provided date (optional)
      - parameter createdAfter: (query) Restricts results to only those that were created after the provided date (optional)
-     - parameter needsConfirmation: (query) A confirmed &#x60;Registration&#x60; is one with an associated &#x60;Invite&#x60;. This filter returns those without an &#x60;Invite&#x60; when true, and those with an &#x60;Invite&#x60; when false. (optional)
      - returns: RequestBuilder<PaginatedRegistrationsList> 
      */
-    open class func getRegistrationsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil) -> RequestBuilder<PaginatedRegistrationsList> {
+    open class func getRegistrationsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil) -> RequestBuilder<PaginatedRegistrationsList> {
         let path = "/registrations"
         let URLString = GuestSDKAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -107,8 +152,7 @@ open class RegistrationsAPI {
             "offset": offset?.encodeToJSON(), 
             "location_ids": locationIds?.encodeToJSON(), 
             "created_before": createdBefore?.encodeToJSON(), 
-            "created_after": createdAfter?.encodeToJSON(), 
-            "needs_confirmation": needsConfirmation?.encodeToJSON()
+            "created_after": createdAfter?.encodeToJSON()
         ])
 
         let requestBuilder: RequestBuilder<PaginatedRegistrationsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()

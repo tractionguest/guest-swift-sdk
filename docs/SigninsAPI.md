@@ -1,14 +1,118 @@
 # SigninsAPI
 
-All URIs are relative to *https://us.tractionguest.com/api/v3*
+All URIs are relative to *https://tractionguest.ca/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**createRegistrationSignin**](SigninsAPI.md#createregistrationsignin) | **POST** /registrations/{registration_id}/signins | 
+[**createRegistrationSignout**](SigninsAPI.md#createregistrationsignout) | **POST** /registrations/{registration_id}/signouts | 
 [**createSignin**](SigninsAPI.md#createsignin) | **POST** /signins | Create Signin
 [**getSignin**](SigninsAPI.md#getsignin) | **GET** /signins/{signin_id} | Get a Signin
 [**getSignins**](SigninsAPI.md#getsignins) | **GET** /signins | List all Signins
 [**updateSignin**](SigninsAPI.md#updatesignin) | **PUT** /signins/{signin_id} | Update a Signin
 
+
+# **createRegistrationSignin**
+```swift
+    open class func createRegistrationSignin(registrationId: String, idempotencyKey: String? = nil, completion: @escaping (_ data: SigninDetail?, _ error: Error?) -> Void)
+```
+
+
+
+Creates a new `Signin` from a `Registration`
+
+### Example 
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import GuestSDK
+
+let registrationId = "registrationId_example" // String | 
+let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
+
+SigninsAPI.createRegistrationSignin(registrationId: registrationId, idempotencyKey: idempotencyKey) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **registrationId** | **String** |  | 
+ **idempotencyKey** | **String** | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored | [optional] 
+
+### Return type
+
+[**SigninDetail**](SigninDetail.md)
+
+### Authorization
+
+[TractionGuestAuth](../README.md#TractionGuestAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **createRegistrationSignout**
+```swift
+    open class func createRegistrationSignout(registrationId: String, idempotencyKey: String? = nil, completion: @escaping (_ data: SigninDetail?, _ error: Error?) -> Void)
+```
+
+
+
+Signs out the last `Signin` on a `Registration`. Returns the `SigninDetail` that was signed out, if the sign out is successful.
+
+### Example 
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import GuestSDK
+
+let registrationId = "registrationId_example" // String | 
+let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
+
+SigninsAPI.createRegistrationSignout(registrationId: registrationId, idempotencyKey: idempotencyKey) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **registrationId** | **String** |  | 
+ **idempotencyKey** | **String** | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored | [optional] 
+
+### Return type
+
+[**SigninDetail**](SigninDetail.md)
+
+### Authorization
+
+[TractionGuestAuth](../README.md#TractionGuestAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createSignin**
 ```swift
@@ -24,7 +128,7 @@ Creates a Signin
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import GuestSDK
 
-let signinCreateParams = SigninCreateParams(registrationId: "registrationId_example", email: "email_example", company: "company_example", lastName: "lastName_example", firstName: "firstName_example", smsMessage: "smsMessage_example", sendNotifications: false, locationId: 123, hostIds: [123], hostEmailTemplateId: 123, guestEmailTemplateId: 123) // SigninCreateParams | Params for creating a Signin can omit certain fields if a `registration_id` is present. (optional)
+let signinCreateParams = SigninCreateParams(registrationId: 123, email: "email_example", company: "company_example", lastName: "lastName_example", firstName: "firstName_example", smsMessage: "smsMessage_example", sendNotifications: false, locationId: 123, hostIds: [123], hostEmailTemplateId: 123, guestEmailTemplateId: 123) // SigninCreateParams | Params for creating a Signin can omit certain fields if a `registration_id` is present. (optional)
 
 // Create Signin
 SigninsAPI.createSignin(signinCreateParams: signinCreateParams) { (response, error) in

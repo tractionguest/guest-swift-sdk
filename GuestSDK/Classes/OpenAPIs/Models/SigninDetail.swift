@@ -32,9 +32,8 @@ public struct SigninDetail: Codable {
     public var firstName: String?
     public var email: String?
     public var company: String?
-    public var registration: Registration?
 
-    public init(id: Int, documents: [SignableDocument]?, signinWatchlist: SigninWatchlist?, hosts: [Host]?, signinData: [SigninData]?, signinAcknowledgement: SigninAcknowledgement?, note: String?, isSignedOut: Bool?, signinTimestamp: Date?, signinPhotoUrl: String?, signedOutTimestamp: Date?, mobileNumber: String?, locationName: String?, lastName: String?, isAcknowledged: Bool?, isAccountedFor: Bool?, firstName: String?, email: String?, company: String?, registration: Registration?) {
+    public init(id: Int, documents: [SignableDocument]?, signinWatchlist: SigninWatchlist?, hosts: [Host]?, signinData: [SigninData]?, signinAcknowledgement: SigninAcknowledgement?, note: String?, isSignedOut: Bool?, signinTimestamp: Date?, signinPhotoUrl: String?, signedOutTimestamp: Date?, mobileNumber: String?, locationName: String?, lastName: String?, isAcknowledged: Bool?, isAccountedFor: Bool?, firstName: String?, email: String?, company: String?) {
         self.id = id
         self.documents = documents
         self.signinWatchlist = signinWatchlist
@@ -54,7 +53,6 @@ public struct SigninDetail: Codable {
         self.firstName = firstName
         self.email = email
         self.company = company
-        self.registration = registration
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -77,7 +75,6 @@ public struct SigninDetail: Codable {
         case firstName = "first_name"
         case email
         case company
-        case registration
     }
 
 }
