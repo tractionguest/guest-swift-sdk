@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct PaginatedEmailTemplatesList: Codable { 
-
+public struct PaginatedEmailTemplatesList: Codable, Hashable {
 
     public var pagination: Pagination
     public var emailTemplates: [EmailTemplate]
@@ -18,10 +17,19 @@ public struct PaginatedEmailTemplatesList: Codable {
         self.pagination = pagination
         self.emailTemplates = emailTemplates
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case pagination
         case emailTemplates = "email_templates"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(pagination, forKey: .pagination)
+        try container.encode(emailTemplates, forKey: .emailTemplates)
+    }
+
+
 
 }

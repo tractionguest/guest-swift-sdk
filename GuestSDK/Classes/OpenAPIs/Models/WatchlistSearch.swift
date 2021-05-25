@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct WatchlistSearch: Codable { 
-
+public struct WatchlistSearch: Codable, Hashable {
 
     public var name: String?
     public var company: String?
@@ -17,12 +17,32 @@ public struct WatchlistSearch: Codable {
     public var country: String?
     public var state: String?
 
-    public init(name: String?, company: String?, city: String?, country: String?, state: String?) {
+    public init(name: String? = nil, company: String? = nil, city: String? = nil, country: String? = nil, state: String? = nil) {
         self.name = name
         self.company = company
         self.city = city
         self.country = country
         self.state = state
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case name
+        case company
+        case city
+        case country
+        case state
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(city, forKey: .city)
+        try container.encodeIfPresent(country, forKey: .country)
+        try container.encodeIfPresent(state, forKey: .state)
+    }
+
+
 
 }

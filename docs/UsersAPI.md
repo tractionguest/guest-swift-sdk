@@ -50,7 +50,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[TractionGuestAuth](../README.md#TractionGuestAuth)
+No authorization required
 
 ### HTTP request headers
 

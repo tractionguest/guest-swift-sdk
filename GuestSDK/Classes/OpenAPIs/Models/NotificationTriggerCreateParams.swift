@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the NotificationTrigger type&#39;s schema. */
-public struct NotificationTriggerCreateParams: Codable { 
-
+public struct NotificationTriggerCreateParams: Codable, Hashable {
 
     public enum OffsetUnit: String, Codable, CaseIterable {
         case days = "days"
@@ -43,8 +43,7 @@ public struct NotificationTriggerCreateParams: Codable {
         self.offsetAmount = offsetAmount
         self.offsetDirection = offsetDirection
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case offsetUnit = "offset_unit"
         case notificationGroups = "notification_groups"
         case emailTemplateId = "email_template_id"
@@ -52,5 +51,19 @@ public struct NotificationTriggerCreateParams: Codable {
         case offsetAmount = "offset_amount"
         case offsetDirection = "offset_direction"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(offsetUnit, forKey: .offsetUnit)
+        try container.encode(notificationGroups, forKey: .notificationGroups)
+        try container.encode(emailTemplateId, forKey: .emailTemplateId)
+        try container.encode(offsetOrigin, forKey: .offsetOrigin)
+        try container.encode(offsetAmount, forKey: .offsetAmount)
+        try container.encode(offsetDirection, forKey: .offsetDirection)
+    }
+
+
 
 }

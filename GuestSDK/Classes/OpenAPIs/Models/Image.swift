@@ -6,19 +6,26 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct Image: Codable { 
-
+public struct Image: Codable, Hashable {
 
     public var fullSizeUrl: String?
 
-    public init(fullSizeUrl: String?) {
+    public init(fullSizeUrl: String? = nil) {
         self.fullSizeUrl = fullSizeUrl
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case fullSizeUrl = "full_size_url"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(fullSizeUrl, forKey: .fullSizeUrl)
+    }
+
+
 
 }

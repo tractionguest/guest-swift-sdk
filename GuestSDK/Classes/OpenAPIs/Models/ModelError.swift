@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the Error type&#39;s schema. */
-public struct ModelError: Codable { 
-
+public struct ModelError: Codable, Hashable {
 
     /** The name of the model with the error, or global if it is something outside a model */
     public var domain: String
@@ -20,11 +20,29 @@ public struct ModelError: Codable {
     /** A human readable error message that can be discarded for internationalization purposes */
     public var message: String?
 
-    public init(domain: String, attribute: String?, code: String, message: String?) {
+    public init(domain: String, attribute: String? = nil, code: String, message: String? = nil) {
         self.domain = domain
         self.attribute = attribute
         self.code = code
         self.message = message
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case domain
+        case attribute
+        case code
+        case message
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(domain, forKey: .domain)
+        try container.encodeIfPresent(attribute, forKey: .attribute)
+        try container.encode(code, forKey: .code)
+        try container.encodeIfPresent(message, forKey: .message)
+    }
+
+
 
 }

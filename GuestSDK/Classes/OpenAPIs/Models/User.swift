@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the User type&#39;s schema. */
-public struct User: Codable { 
-
+public struct User: Codable, Hashable {
 
     public var id: Int
     /** Identifies if user has access to mobile app features. */
@@ -25,7 +25,7 @@ public struct User: Codable {
     public var registrationPortalEnabled: Bool
     public var accountUuid: String?
 
-    public init(id: Int, mobileAccessEnabled: Bool, permissionGroups: [PermissionGroup]?, email: String, lastName: String?, firstName: String?, registrationPortalEnabled: Bool, accountUuid: String?) {
+    public init(id: Int, mobileAccessEnabled: Bool, permissionGroups: [PermissionGroup]? = nil, email: String, lastName: String? = nil, firstName: String? = nil, registrationPortalEnabled: Bool, accountUuid: String? = nil) {
         self.id = id
         self.mobileAccessEnabled = mobileAccessEnabled
         self.permissionGroups = permissionGroups
@@ -35,8 +35,7 @@ public struct User: Codable {
         self.registrationPortalEnabled = registrationPortalEnabled
         self.accountUuid = accountUuid
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case mobileAccessEnabled = "mobile_access_enabled"
         case permissionGroups = "permission_groups"
@@ -46,5 +45,21 @@ public struct User: Codable {
         case registrationPortalEnabled = "registration_portal_enabled"
         case accountUuid = "account_uuid"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(mobileAccessEnabled, forKey: .mobileAccessEnabled)
+        try container.encodeIfPresent(permissionGroups, forKey: .permissionGroups)
+        try container.encode(email, forKey: .email)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encode(registrationPortalEnabled, forKey: .registrationPortalEnabled)
+        try container.encodeIfPresent(accountUuid, forKey: .accountUuid)
+    }
+
+
 
 }

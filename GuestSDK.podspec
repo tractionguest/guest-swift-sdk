@@ -12,4 +12,5 @@ Pod::Spec.new do |s|
   s.summary = 'GuestSDK Swift SDK'
   s.source_files = 'GuestSDK/Classes/**/*.swift'
   s.dependency 'Alamofire', '~> 4.9.1'
+  s.dependency 'AnyCodable-FlightSchool', '~> 0.4.0'
 end

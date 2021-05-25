@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class EmailTemplatesAPI {
     /**
      List all EmailTemplates
@@ -19,7 +17,7 @@ open class EmailTemplatesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getEmailTemplates(limit: Int? = nil, offset: Int? = nil, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedEmailTemplatesList, Error>) -> Void)) {
+    open class func getEmailTemplates(limit: Int? = nil, offset: Int? = nil, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<PaginatedEmailTemplatesList, Error>) -> Void)) {
         getEmailTemplatesWithRequestBuilder(limit: limit, offset: offset, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -34,9 +32,6 @@ open class EmailTemplatesAPI {
      List all EmailTemplates
      - GET /email_templates
      - Gets a list of all `EmailTemplate` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter limit: (query) Limits the results to a specified number, defaults to 50 (optional)
      - parameter offset: (query) Offsets the results to a specified number, defaults to 0 (optional)
      - parameter include: (query) A list of comma-separated related models to include (optional)
@@ -45,18 +40,24 @@ open class EmailTemplatesAPI {
     open class func getEmailTemplatesWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, include: String? = nil) -> RequestBuilder<PaginatedEmailTemplatesList> {
         let path = "/email_templates"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(), 
-            "offset": offset?.encodeToJSON(), 
-            "include": include?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "include": include?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<PaginatedEmailTemplatesList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

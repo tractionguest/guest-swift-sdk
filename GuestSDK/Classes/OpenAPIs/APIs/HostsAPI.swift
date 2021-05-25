@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class HostsAPI {
     /**
      Create a Host
@@ -18,7 +16,7 @@ open class HostsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func createHost(hostCreateParams: HostCreateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Host, Error>) -> Void)) {
+    open class func createHost(hostCreateParams: HostCreateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<Host, Error>) -> Void)) {
         createHostWithRequestBuilder(hostCreateParams: hostCreateParams, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -33,9 +31,6 @@ open class HostsAPI {
      Create a Host
      - POST /hosts
      - Creates a Host
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter hostCreateParams: (body)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - returns: RequestBuilder<Host> 
@@ -45,15 +40,17 @@ open class HostsAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: hostCreateParams)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Host>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -64,7 +61,7 @@ open class HostsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func createHosts(idempotencyKey: String? = nil, hostBatchCreateParams: HostBatchCreateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<BatchJob, Error>) -> Void)) {
+    open class func createHosts(idempotencyKey: String? = nil, hostBatchCreateParams: HostBatchCreateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<BatchJob, Error>) -> Void)) {
         createHostsWithRequestBuilder(idempotencyKey: idempotencyKey, hostBatchCreateParams: hostBatchCreateParams).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -79,9 +76,6 @@ open class HostsAPI {
      Create multiple Hosts
      - POST /hosts/batch
      - Creates a batch of `Host` records in an async queue. Please note, every action taken against this endpoint is recorded in the audit log.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - parameter hostBatchCreateParams: (body)  (optional)
      - returns: RequestBuilder<BatchJob> 
@@ -91,15 +85,17 @@ open class HostsAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: hostBatchCreateParams)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<BatchJob>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -112,7 +108,7 @@ open class HostsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getHosts(query: String? = nil, limit: Int? = nil, offset: Int? = nil, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedHostsList, Error>) -> Void)) {
+    open class func getHosts(query: String? = nil, limit: Int? = nil, offset: Int? = nil, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<PaginatedHostsList, Error>) -> Void)) {
         getHostsWithRequestBuilder(query: query, limit: limit, offset: offset, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -127,9 +123,6 @@ open class HostsAPI {
      List all Hosts
      - GET /hosts
      - Gets a list of all `Host` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter query: (query) Will filter by &#x60;first_name&#x60;, &#x60;last_name&#x60;, and &#x60;email&#x60; (optional)
      - parameter limit: (query) Limits the results to a specified number, defaults to 50 (optional)
      - parameter offset: (query) Offsets the results to a specified number, defaults to 0 (optional)
@@ -139,19 +132,25 @@ open class HostsAPI {
     open class func getHostsWithRequestBuilder(query: String? = nil, limit: Int? = nil, offset: Int? = nil, include: String? = nil) -> RequestBuilder<PaginatedHostsList> {
         let path = "/hosts"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "query": query?.encodeToJSON(), 
-            "limit": limit?.encodeToJSON(), 
-            "offset": offset?.encodeToJSON(), 
-            "include": include?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "query": query?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "include": include?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<PaginatedHostsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class AuditLogsAPI {
     /**
      Get an AuditLog
@@ -17,7 +15,7 @@ open class AuditLogsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getAuditLog(auditLogId: String, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<AuditLog, Error>) -> Void)) {
+    open class func getAuditLog(auditLogId: String, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<AuditLog, Error>) -> Void)) {
         getAuditLogWithRequestBuilder(auditLogId: auditLogId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -32,9 +30,6 @@ open class AuditLogsAPI {
      Get an AuditLog
      - GET /audit_logs/{audit_log_id}
      - Gets the details of a single instance of an `AuditLog`.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter auditLogId: (path)  
      - returns: RequestBuilder<AuditLog> 
      */
@@ -44,13 +39,19 @@ open class AuditLogsAPI {
         let auditLogIdPostEscape = auditLogIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{audit_log_id}", with: auditLogIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<AuditLog>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -66,7 +67,7 @@ open class AuditLogsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getAuditLogs(limit: Int? = nil, offset: Int? = nil, sortBy: String? = nil, auditableId: Int? = nil, auditableType: String? = nil, actionType: String? = nil, userId: Int? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedAuditLogsList, Error>) -> Void)) {
+    open class func getAuditLogs(limit: Int? = nil, offset: Int? = nil, sortBy: String? = nil, auditableId: Int? = nil, auditableType: String? = nil, actionType: String? = nil, userId: Int? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<PaginatedAuditLogsList, Error>) -> Void)) {
         getAuditLogsWithRequestBuilder(limit: limit, offset: offset, sortBy: sortBy, auditableId: auditableId, auditableType: auditableType, actionType: actionType, userId: userId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -81,9 +82,6 @@ open class AuditLogsAPI {
      List all AuditLogs
      - GET /audit_logs
      - Gets a list of all `AuditLog` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter limit: (query) Limits the results to a specified number, defaults to 50 (optional)
      - parameter offset: (query) Offsets the results to a specified number, defaults to 0 (optional)
      - parameter sortBy: (query) Sorts by the field name and direction provided where the pattern is &#x60;FIELD_NAME_DIRECTION&#x60; (optional)
@@ -96,22 +94,28 @@ open class AuditLogsAPI {
     open class func getAuditLogsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, sortBy: String? = nil, auditableId: Int? = nil, auditableType: String? = nil, actionType: String? = nil, userId: Int? = nil) -> RequestBuilder<PaginatedAuditLogsList> {
         let path = "/audit_logs"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(), 
-            "offset": offset?.encodeToJSON(), 
-            "sort_by": sortBy?.encodeToJSON(), 
-            "auditable_id": auditableId?.encodeToJSON(), 
-            "auditable_type": auditableType?.encodeToJSON(), 
-            "action_type": actionType?.encodeToJSON(), 
-            "user_id": userId?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "sort_by": sortBy?.encodeToJSON(),
+            "auditable_id": auditableId?.encodeToJSON(),
+            "auditable_type": auditableType?.encodeToJSON(),
+            "action_type": actionType?.encodeToJSON(),
+            "user_id": userId?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<PaginatedAuditLogsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

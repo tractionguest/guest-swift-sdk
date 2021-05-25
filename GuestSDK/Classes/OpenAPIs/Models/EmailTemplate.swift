@@ -6,25 +6,35 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the EmailTemplate type&#39;s schema. */
-public struct EmailTemplate: Codable { 
-
+public struct EmailTemplate: Codable, Hashable {
 
     public var id: Int
     public var name: String?
     public var templateType: String?
 
-    public init(id: Int, name: String?, templateType: String?) {
+    public init(id: Int, name: String? = nil, templateType: String? = nil) {
         self.id = id
         self.name = name
         self.templateType = templateType
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case name
         case templateType = "template_type"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(templateType, forKey: .templateType)
+    }
+
+
 
 }

@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct PaginatedWatchlistList: Codable { 
-
+public struct PaginatedWatchlistList: Codable, Hashable {
 
     public var watchlists: [Watchlist]
     public var pagination: Pagination
@@ -18,5 +17,19 @@ public struct PaginatedWatchlistList: Codable {
         self.watchlists = watchlists
         self.pagination = pagination
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case watchlists
+        case pagination
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(watchlists, forKey: .watchlists)
+        try container.encode(pagination, forKey: .pagination)
+    }
+
+
 
 }

@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class InvitesAPI {
     /**
      Delete Multiple Invites
@@ -17,7 +15,7 @@ open class InvitesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func batchDeleteInvites(identifierList: IdentifierList? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<BatchJob, Error>) -> Void)) {
+    open class func batchDeleteInvites(identifierList: IdentifierList? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<BatchJob, Error>) -> Void)) {
         batchDeleteInvitesWithRequestBuilder(identifierList: identifierList).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -32,9 +30,6 @@ open class InvitesAPI {
      Delete Multiple Invites
      - POST /invites/batch_delete
      - Queues up a \"delete\" background task for one or more `Invite` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter identifierList: (body)  (optional)
      - returns: RequestBuilder<BatchJob> 
      */
@@ -43,11 +38,17 @@ open class InvitesAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: identifierList)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<BatchJob>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -59,7 +60,7 @@ open class InvitesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func createLocationInvite(locationId: String, inviteCreateParams: InviteCreateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<InviteDetail, Error>) -> Void)) {
+    open class func createLocationInvite(locationId: String, inviteCreateParams: InviteCreateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<InviteDetail, Error>) -> Void)) {
         createLocationInviteWithRequestBuilder(locationId: locationId, inviteCreateParams: inviteCreateParams, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -74,9 +75,6 @@ open class InvitesAPI {
      Create an Invite
      - POST /locations/{location_id}/invites
      - Creates a new `Invite` for a specific `Location`.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter locationId: (path)  
      - parameter inviteCreateParams: (body)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
@@ -90,15 +88,17 @@ open class InvitesAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: inviteCreateParams)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<InviteDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -109,7 +109,7 @@ open class InvitesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func createRegistrationInvite(registrationId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<InviteDetail, Error>) -> Void)) {
+    open class func createRegistrationInvite(registrationId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<InviteDetail, Error>) -> Void)) {
         createRegistrationInviteWithRequestBuilder(registrationId: registrationId, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -124,9 +124,6 @@ open class InvitesAPI {
      Create an Invite from a Registration
      - POST /registrations/{registration_id}/invites
      - Creates a new `Invite` from `Registration` data.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter registrationId: (path)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - returns: RequestBuilder<InviteDetail> 
@@ -137,17 +134,19 @@ open class InvitesAPI {
         let registrationIdPostEscape = registrationIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{registration_id}", with: registrationIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<InviteDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -158,7 +157,7 @@ open class InvitesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func deleteInvite(inviteId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
+    open class func deleteInvite(inviteId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<Void, Error>) -> Void)) {
         deleteInviteWithRequestBuilder(inviteId: inviteId, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
@@ -173,9 +172,6 @@ open class InvitesAPI {
      Deletes an Invite
      - DELETE /invites/{invite_id}
      - Deletes a single instance of `Invite`
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter inviteId: (path)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - returns: RequestBuilder<Void> 
@@ -186,17 +182,19 @@ open class InvitesAPI {
         let inviteIdPostEscape = inviteIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{invite_id}", with: inviteIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Void>.Type = GuestSDKAPI.requestBuilderFactory.getNonDecodableBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+        return requestBuilder.init(method: "DELETE", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -207,7 +205,7 @@ open class InvitesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getInvite(inviteId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<InviteDetail, Error>) -> Void)) {
+    open class func getInvite(inviteId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<InviteDetail, Error>) -> Void)) {
         getInviteWithRequestBuilder(inviteId: inviteId, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -222,9 +220,6 @@ open class InvitesAPI {
      Get an Invite
      - GET /invites/{invite_id}
      - Gets the details of a single instance of a `Invite`.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter inviteId: (path)  
      - parameter include: (query) A list of comma-separated related models to include (optional)
      - returns: RequestBuilder<InviteDetail> 
@@ -235,16 +230,22 @@ open class InvitesAPI {
         let inviteIdPostEscape = inviteIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{invite_id}", with: inviteIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "include": include?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "include": include?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<InviteDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -279,7 +280,7 @@ open class InvitesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getInvites(limit: Int? = nil, offset: Int? = nil, query: String? = nil, withColours: String? = nil, locationIds: String? = nil, sortBy: SortBy_getInvites? = nil, startsBefore: Date? = nil, startsAfter: Date? = nil, include: String? = nil, isApproved: Bool? = nil, activeAfter: Date? = nil, activeBefore: Date? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedInvitesList, Error>) -> Void)) {
+    open class func getInvites(limit: Int? = nil, offset: Int? = nil, query: String? = nil, withColours: String? = nil, locationIds: String? = nil, sortBy: SortBy_getInvites? = nil, startsBefore: Date? = nil, startsAfter: Date? = nil, include: String? = nil, isApproved: Bool? = nil, activeAfter: Date? = nil, activeBefore: Date? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<PaginatedInvitesList, Error>) -> Void)) {
         getInvitesWithRequestBuilder(limit: limit, offset: offset, query: query, withColours: withColours, locationIds: locationIds, sortBy: sortBy, startsBefore: startsBefore, startsAfter: startsAfter, include: include, isApproved: isApproved, activeAfter: activeAfter, activeBefore: activeBefore).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -294,9 +295,6 @@ open class InvitesAPI {
      List all Invites
      - GET /invites
      - Gets a list of all `Invite` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter limit: (query) Limits the results to a specified number, defaults to 50 (optional)
      - parameter offset: (query) Offsets the results to a specified number, defaults to 0 (optional)
      - parameter query: (query) Filters by &#x60;first_name&#x60;, &#x60;last_name&#x60;, &#x60;company&#x60;, and &#x60;email&#x60; (optional)
@@ -314,27 +312,33 @@ open class InvitesAPI {
     open class func getInvitesWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, query: String? = nil, withColours: String? = nil, locationIds: String? = nil, sortBy: SortBy_getInvites? = nil, startsBefore: Date? = nil, startsAfter: Date? = nil, include: String? = nil, isApproved: Bool? = nil, activeAfter: Date? = nil, activeBefore: Date? = nil) -> RequestBuilder<PaginatedInvitesList> {
         let path = "/invites"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(), 
-            "offset": offset?.encodeToJSON(), 
-            "query": query?.encodeToJSON(), 
-            "with_colours": withColours?.encodeToJSON(), 
-            "location_ids": locationIds?.encodeToJSON(), 
-            "sort_by": sortBy?.encodeToJSON(), 
-            "starts_before": startsBefore?.encodeToJSON(), 
-            "starts_after": startsAfter?.encodeToJSON(), 
-            "include": include?.encodeToJSON(), 
-            "is_approved": isApproved?.encodeToJSON(), 
-            "active_after": activeAfter?.encodeToJSON(), 
-            "active_before": activeBefore?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "query": query?.encodeToJSON(),
+            "with_colours": withColours?.encodeToJSON(),
+            "location_ids": locationIds?.encodeToJSON(),
+            "sort_by": sortBy?.encodeToJSON(),
+            "starts_before": startsBefore?.encodeToJSON(),
+            "starts_after": startsAfter?.encodeToJSON(),
+            "include": include?.encodeToJSON(),
+            "is_approved": isApproved?.encodeToJSON(),
+            "active_after": activeAfter?.encodeToJSON(),
+            "active_before": activeBefore?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<PaginatedInvitesList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -346,7 +350,7 @@ open class InvitesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func updateInvite(inviteId: String, inviteUpdateParams: InviteUpdateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<InviteDetail, Error>) -> Void)) {
+    open class func updateInvite(inviteId: String, inviteUpdateParams: InviteUpdateParams, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<InviteDetail, Error>) -> Void)) {
         updateInviteWithRequestBuilder(inviteId: inviteId, inviteUpdateParams: inviteUpdateParams, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -361,9 +365,6 @@ open class InvitesAPI {
      Update an Invite
      - PUT /invites/{invite_id}
      - Updates an existing `Invite`.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter inviteId: (path)  
      - parameter inviteUpdateParams: (body) Updated &#x60;Invite&#x60; information. 
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
@@ -377,15 +378,17 @@ open class InvitesAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: inviteUpdateParams)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<InviteDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

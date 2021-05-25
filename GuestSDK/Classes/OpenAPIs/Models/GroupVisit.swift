@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The data structure for a Group Visit object. Also called an Appointment. */
-public struct GroupVisit: Codable { 
-
+public struct GroupVisit: Codable, Hashable {
 
     public var id: Int?
     public var location: Location?
@@ -26,7 +26,7 @@ public struct GroupVisit: Codable {
     public var manualRegistrationApproval: Bool?
     public var publicRegistrationEnabled: Bool?
 
-    public init(id: Int?, location: Location?, hosts: [Host]?, name: String?, startTime: String?, endTime: String?, createdAt: String?, updatedAt: String?, registrationLimit: Int?, registrationUrl: String?, invitesCount: Int?, unconfirmedRegistrationsCount: Int?, manualRegistrationApproval: Bool?, publicRegistrationEnabled: Bool?) {
+    public init(id: Int? = nil, location: Location? = nil, hosts: [Host]? = nil, name: String? = nil, startTime: String? = nil, endTime: String? = nil, createdAt: String? = nil, updatedAt: String? = nil, registrationLimit: Int? = nil, registrationUrl: String? = nil, invitesCount: Int? = nil, unconfirmedRegistrationsCount: Int? = nil, manualRegistrationApproval: Bool? = nil, publicRegistrationEnabled: Bool? = nil) {
         self.id = id
         self.location = location
         self.hosts = hosts
@@ -42,8 +42,7 @@ public struct GroupVisit: Codable {
         self.manualRegistrationApproval = manualRegistrationApproval
         self.publicRegistrationEnabled = publicRegistrationEnabled
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case location
         case hosts
@@ -59,5 +58,27 @@ public struct GroupVisit: Codable {
         case manualRegistrationApproval = "manual_registration_approval"
         case publicRegistrationEnabled = "public_registration_enabled"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(location, forKey: .location)
+        try container.encodeIfPresent(hosts, forKey: .hosts)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(startTime, forKey: .startTime)
+        try container.encodeIfPresent(endTime, forKey: .endTime)
+        try container.encodeIfPresent(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
+        try container.encodeIfPresent(registrationLimit, forKey: .registrationLimit)
+        try container.encodeIfPresent(registrationUrl, forKey: .registrationUrl)
+        try container.encodeIfPresent(invitesCount, forKey: .invitesCount)
+        try container.encodeIfPresent(unconfirmedRegistrationsCount, forKey: .unconfirmedRegistrationsCount)
+        try container.encodeIfPresent(manualRegistrationApproval, forKey: .manualRegistrationApproval)
+        try container.encodeIfPresent(publicRegistrationEnabled, forKey: .publicRegistrationEnabled)
+    }
+
+
 
 }

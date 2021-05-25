@@ -6,25 +6,35 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the SigninWatchlist type&#39;s schema. */
-public struct SigninWatchlist: Codable { 
-
+public struct SigninWatchlist: Codable, Hashable {
 
     public var id: Int
     public var _internal: [InternalWatchlistResult]?
     public var external: [ExternalWatchlistResult]?
 
-    public init(id: Int, _internal: [InternalWatchlistResult]?, external: [ExternalWatchlistResult]?) {
+    public init(id: Int, _internal: [InternalWatchlistResult]? = nil, external: [ExternalWatchlistResult]? = nil) {
         self.id = id
         self._internal = _internal
         self.external = external
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case _internal = "internal"
         case external
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(_internal, forKey: ._internal)
+        try container.encodeIfPresent(external, forKey: .external)
+    }
+
+
 
 }

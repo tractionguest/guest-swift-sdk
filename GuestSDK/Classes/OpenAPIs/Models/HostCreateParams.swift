@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The params needed to create a new Host */
-public struct HostCreateParams: Codable { 
-
+public struct HostCreateParams: Codable, Hashable {
 
     public var email: String?
     public var firstName: String?
@@ -19,7 +19,7 @@ public struct HostCreateParams: Codable {
     public var department: String?
     public var mobileNumber: String?
 
-    public init(email: String?, firstName: String?, lastName: String?, profilePicUrl: String?, department: String?, mobileNumber: String?) {
+    public init(email: String? = nil, firstName: String? = nil, lastName: String? = nil, profilePicUrl: String? = nil, department: String? = nil, mobileNumber: String? = nil) {
         self.email = email
         self.firstName = firstName
         self.lastName = lastName
@@ -27,8 +27,7 @@ public struct HostCreateParams: Codable {
         self.department = department
         self.mobileNumber = mobileNumber
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case email
         case firstName = "first_name"
         case lastName = "last_name"
@@ -36,5 +35,19 @@ public struct HostCreateParams: Codable {
         case department
         case mobileNumber = "mobile_number"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(profilePicUrl, forKey: .profilePicUrl)
+        try container.encodeIfPresent(department, forKey: .department)
+        try container.encodeIfPresent(mobileNumber, forKey: .mobileNumber)
+    }
+
+
 
 }

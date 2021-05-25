@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The allowable changes when updating a Group Visit (Appointment). */
-public struct GroupVisitUpdateParams: Codable { 
-
+public struct GroupVisitUpdateParams: Codable, Hashable {
 
     public var name: String?
     public var startTime: String?
@@ -22,7 +22,7 @@ public struct GroupVisitUpdateParams: Codable {
     public var inviteIds: [Int]?
     public var refreshRegistrationUrl: Bool?
 
-    public init(name: String?, startTime: String?, endTime: String?, locationId: Int?, registrationLimit: Int?, manualRegistrationApproval: Bool?, publicRegistrationEnabled: Bool?, hostIds: [Int]?, inviteIds: [Int]?, refreshRegistrationUrl: Bool?) {
+    public init(name: String? = nil, startTime: String? = nil, endTime: String? = nil, locationId: Int? = nil, registrationLimit: Int? = nil, manualRegistrationApproval: Bool? = nil, publicRegistrationEnabled: Bool? = nil, hostIds: [Int]? = nil, inviteIds: [Int]? = nil, refreshRegistrationUrl: Bool? = nil) {
         self.name = name
         self.startTime = startTime
         self.endTime = endTime
@@ -34,8 +34,7 @@ public struct GroupVisitUpdateParams: Codable {
         self.inviteIds = inviteIds
         self.refreshRegistrationUrl = refreshRegistrationUrl
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case startTime = "start_time"
         case endTime = "end_time"
@@ -47,5 +46,23 @@ public struct GroupVisitUpdateParams: Codable {
         case inviteIds = "invite_ids"
         case refreshRegistrationUrl = "refresh_registration_url"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(startTime, forKey: .startTime)
+        try container.encodeIfPresent(endTime, forKey: .endTime)
+        try container.encodeIfPresent(locationId, forKey: .locationId)
+        try container.encodeIfPresent(registrationLimit, forKey: .registrationLimit)
+        try container.encodeIfPresent(manualRegistrationApproval, forKey: .manualRegistrationApproval)
+        try container.encodeIfPresent(publicRegistrationEnabled, forKey: .publicRegistrationEnabled)
+        try container.encodeIfPresent(hostIds, forKey: .hostIds)
+        try container.encodeIfPresent(inviteIds, forKey: .inviteIds)
+        try container.encodeIfPresent(refreshRegistrationUrl, forKey: .refreshRegistrationUrl)
+    }
+
+
 
 }

@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** A [base64_image] string is provided as an encoded image of a shipping label. The image will be processed to determine the package&#39;s intended recipient. If a match is found between the recipient and an existing host, they&#39;ll be notified about the arrival of their package at the [location_id] specified. */
-public struct PackageCreateParams: Codable { 
-
+public struct PackageCreateParams: Codable, Hashable {
 
     /** Base64 encoded image on which to perform processing */
     public var base64Image: Data
@@ -20,10 +20,19 @@ public struct PackageCreateParams: Codable {
         self.base64Image = base64Image
         self.locationId = locationId
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case base64Image = "base64_image"
         case locationId = "location_id"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(base64Image, forKey: .base64Image)
+        try container.encode(locationId, forKey: .locationId)
+    }
+
+
 
 }

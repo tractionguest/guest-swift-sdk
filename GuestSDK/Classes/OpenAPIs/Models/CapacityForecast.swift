@@ -6,19 +6,27 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the CapacityForecast&#39;s schema. */
-public struct CapacityForecast: Codable { 
-
+public struct CapacityForecast: Codable, Hashable {
 
     public var invitesByHour: [CapacityByHourResponse]?
 
-    public init(invitesByHour: [CapacityByHourResponse]?) {
+    public init(invitesByHour: [CapacityByHourResponse]? = nil) {
         self.invitesByHour = invitesByHour
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case invitesByHour = "invites_by_hour"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(invitesByHour, forKey: .invitesByHour)
+    }
+
+
 
 }

@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the Watchlist type&#39;s schema. */
-public struct Watchlist: Codable { 
-
+public struct Watchlist: Codable, Hashable {
 
     public enum Colour: String, Codable, CaseIterable {
         case red = "RED"
@@ -26,7 +26,7 @@ public struct Watchlist: Codable {
     public var email: String?
     public var colour: Colour?
 
-    public init(id: Int, aliases: [String]?, photo: String?, notes: String?, lastName: String?, firstName: String?, email: String?, colour: Colour?) {
+    public init(id: Int, aliases: [String]? = nil, photo: String? = nil, notes: String? = nil, lastName: String? = nil, firstName: String? = nil, email: String? = nil, colour: Colour? = nil) {
         self.id = id
         self.aliases = aliases
         self.photo = photo
@@ -36,8 +36,7 @@ public struct Watchlist: Codable {
         self.email = email
         self.colour = colour
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case aliases
         case photo
@@ -47,5 +46,21 @@ public struct Watchlist: Codable {
         case email
         case colour
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(aliases, forKey: .aliases)
+        try container.encodeIfPresent(photo, forKey: .photo)
+        try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(colour, forKey: .colour)
+    }
+
+
 
 }

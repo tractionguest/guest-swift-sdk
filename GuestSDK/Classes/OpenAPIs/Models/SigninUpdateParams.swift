@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct SigninUpdateParams: Codable { 
-
+public struct SigninUpdateParams: Codable, Hashable {
 
     /** Used to sign out the &#x60;Signin&#x60;, can only be set to &#x60;true&#x60;. */
     public var isSignedOut: Bool?
@@ -18,16 +17,26 @@ public struct SigninUpdateParams: Codable {
     /** Used when keeping track of people in emergency situations */
     public var isAccountedFor: Bool?
 
-    public init(isSignedOut: Bool?, isAcknowledged: Bool?, isAccountedFor: Bool?) {
+    public init(isSignedOut: Bool? = nil, isAcknowledged: Bool? = nil, isAccountedFor: Bool? = nil) {
         self.isSignedOut = isSignedOut
         self.isAcknowledged = isAcknowledged
         self.isAccountedFor = isAccountedFor
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case isSignedOut = "is_signed_out"
         case isAcknowledged = "is_acknowledged"
         case isAccountedFor = "is_accounted_for"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(isSignedOut, forKey: .isSignedOut)
+        try container.encodeIfPresent(isAcknowledged, forKey: .isAcknowledged)
+        try container.encodeIfPresent(isAccountedFor, forKey: .isAccountedFor)
+    }
+
+
 
 }

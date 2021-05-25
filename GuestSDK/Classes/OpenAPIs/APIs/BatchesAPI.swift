@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class BatchesAPI {
     /**
      Delete Multiple Invites
@@ -17,7 +15,7 @@ open class BatchesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func batchDeleteInvites(identifierList: IdentifierList? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<BatchJob, Error>) -> Void)) {
+    open class func batchDeleteInvites(identifierList: IdentifierList? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<BatchJob, Error>) -> Void)) {
         batchDeleteInvitesWithRequestBuilder(identifierList: identifierList).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -32,9 +30,6 @@ open class BatchesAPI {
      Delete Multiple Invites
      - POST /invites/batch_delete
      - Queues up a \"delete\" background task for one or more `Invite` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter identifierList: (body)  (optional)
      - returns: RequestBuilder<BatchJob> 
      */
@@ -43,11 +38,17 @@ open class BatchesAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: identifierList)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<BatchJob>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -57,7 +58,7 @@ open class BatchesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getBatch(batchId: String, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<BatchJob, Error>) -> Void)) {
+    open class func getBatch(batchId: String, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<BatchJob, Error>) -> Void)) {
         getBatchWithRequestBuilder(batchId: batchId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -72,9 +73,6 @@ open class BatchesAPI {
      Get a BatchJob
      - GET /batches/{batch_id}
      - Retrieve a given `BatchJob` entity.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter batchId: (path)  
      - returns: RequestBuilder<BatchJob> 
      */
@@ -84,13 +82,19 @@ open class BatchesAPI {
         let batchIdPostEscape = batchIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{batch_id}", with: batchIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<BatchJob>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

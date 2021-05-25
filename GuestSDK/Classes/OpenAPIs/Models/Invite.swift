@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the Invite type&#39;s schema. */
-public struct Invite: Codable { 
-
+public struct Invite: Codable, Hashable {
 
     public enum WatchlistColour: String, Codable, CaseIterable {
         case red = "RED"
@@ -34,7 +34,7 @@ public struct Invite: Codable {
     public var firstName: String?
     public var groupVisit: GroupVisit?
 
-    public init(id: Int, registration: Registration?, mobileNumber: String?, email: String?, endDate: Date?, inviteWatchlist: InviteWatchlist?, hosts: [Host]?, watchlistColour: WatchlistColour?, location: Location?, startDate: Date?, lastName: String?, firstName: String?, groupVisit: GroupVisit?) {
+    public init(id: Int, registration: Registration? = nil, mobileNumber: String? = nil, email: String?, endDate: Date? = nil, inviteWatchlist: InviteWatchlist? = nil, hosts: [Host]? = nil, watchlistColour: WatchlistColour? = nil, location: Location? = nil, startDate: Date? = nil, lastName: String?, firstName: String?, groupVisit: GroupVisit? = nil) {
         self.id = id
         self.registration = registration
         self.mobileNumber = mobileNumber
@@ -49,8 +49,7 @@ public struct Invite: Codable {
         self.firstName = firstName
         self.groupVisit = groupVisit
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case registration
         case mobileNumber = "mobile_number"
@@ -65,5 +64,26 @@ public struct Invite: Codable {
         case firstName = "first_name"
         case groupVisit = "group_visit"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(registration, forKey: .registration)
+        try container.encodeIfPresent(mobileNumber, forKey: .mobileNumber)
+        try container.encode(email, forKey: .email)
+        try container.encodeIfPresent(endDate, forKey: .endDate)
+        try container.encodeIfPresent(inviteWatchlist, forKey: .inviteWatchlist)
+        try container.encodeIfPresent(hosts, forKey: .hosts)
+        try container.encodeIfPresent(watchlistColour, forKey: .watchlistColour)
+        try container.encodeIfPresent(location, forKey: .location)
+        try container.encodeIfPresent(startDate, forKey: .startDate)
+        try container.encode(lastName, forKey: .lastName)
+        try container.encode(firstName, forKey: .firstName)
+        try container.encodeIfPresent(groupVisit, forKey: .groupVisit)
+    }
+
+
 
 }

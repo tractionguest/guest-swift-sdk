@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct ExternalWatchlistResult: Codable { 
-
+public struct ExternalWatchlistResult: Codable, Hashable {
 
     public enum Colour: String, Codable, CaseIterable {
         case red = "RED"
@@ -24,18 +24,29 @@ public struct ExternalWatchlistResult: Codable {
     public var integration: String?
     public var searchTerms: WatchlistSearch?
 
-    public init(matches: [WatchlistMatch]?, colour: Colour?, integration: String?, searchTerms: WatchlistSearch?) {
+    public init(matches: [WatchlistMatch]? = nil, colour: Colour? = nil, integration: String? = nil, searchTerms: WatchlistSearch? = nil) {
         self.matches = matches
         self.colour = colour
         self.integration = integration
         self.searchTerms = searchTerms
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case matches
         case colour
         case integration
         case searchTerms = "search_terms"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(matches, forKey: .matches)
+        try container.encodeIfPresent(colour, forKey: .colour)
+        try container.encodeIfPresent(integration, forKey: .integration)
+        try container.encodeIfPresent(searchTerms, forKey: .searchTerms)
+    }
+
+
 
 }

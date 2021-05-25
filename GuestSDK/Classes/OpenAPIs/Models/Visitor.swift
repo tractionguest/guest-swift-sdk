@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** Visitor information */
-public struct Visitor: Codable { 
-
+public struct Visitor: Codable, Hashable {
 
     /** UUID */
     public var id: String?
@@ -29,7 +29,7 @@ public struct Visitor: Codable {
     public var createdAt: Date?
     public var updatedAt: Date?
 
-    public init(id: String?, active: Bool?, company: String?, createdVia: String?, email: String?, firstName: String?, lastName: String?, mobile: String?, note: String?, profilePicContentType: String?, profilePicFileName: String?, profilePicFileSize: String?, profilePicUpdatedAt: String?, watchlistLevel: String?, createdAt: Date?, updatedAt: Date?) {
+    public init(id: String? = nil, active: Bool? = nil, company: String? = nil, createdVia: String? = nil, email: String? = nil, firstName: String? = nil, lastName: String? = nil, mobile: String? = nil, note: String? = nil, profilePicContentType: String? = nil, profilePicFileName: String? = nil, profilePicFileSize: String? = nil, profilePicUpdatedAt: String? = nil, watchlistLevel: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
         self.active = active
         self.company = company
@@ -47,8 +47,7 @@ public struct Visitor: Codable {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case active
         case company
@@ -66,5 +65,29 @@ public struct Visitor: Codable {
         case createdAt = "created_at"
         case updatedAt = "updated_at"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(active, forKey: .active)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(createdVia, forKey: .createdVia)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(mobile, forKey: .mobile)
+        try container.encodeIfPresent(note, forKey: .note)
+        try container.encodeIfPresent(profilePicContentType, forKey: .profilePicContentType)
+        try container.encodeIfPresent(profilePicFileName, forKey: .profilePicFileName)
+        try container.encodeIfPresent(profilePicFileSize, forKey: .profilePicFileSize)
+        try container.encodeIfPresent(profilePicUpdatedAt, forKey: .profilePicUpdatedAt)
+        try container.encodeIfPresent(watchlistLevel, forKey: .watchlistLevel)
+        try container.encodeIfPresent(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
+    }
+
+
 
 }

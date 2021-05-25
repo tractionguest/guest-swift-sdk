@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct InternalWatchlistResult: Codable { 
-
+public struct InternalWatchlistResult: Codable, Hashable {
 
     /**  */
     public var id: Int?
@@ -22,20 +22,32 @@ public struct InternalWatchlistResult: Codable {
     /**  */
     public var firstName: String?
 
-    public init(id: Int?, email: String?, colour: String, lastName: String?, firstName: String?) {
+    public init(id: Int? = nil, email: String? = nil, colour: String, lastName: String? = nil, firstName: String? = nil) {
         self.id = id
         self.email = email
         self.colour = colour
         self.lastName = lastName
         self.firstName = firstName
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case email
         case colour
         case lastName = "last_name"
         case firstName = "first_name"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encode(colour, forKey: .colour)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+    }
+
+
 
 }

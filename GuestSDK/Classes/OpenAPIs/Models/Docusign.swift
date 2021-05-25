@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct Docusign: Codable { 
-
+public struct Docusign: Codable, Hashable {
 
     /**  */
     public var templateId: String?
@@ -30,7 +30,7 @@ public struct Docusign: Codable {
     /**  */
     public var title: String?
 
-    public init(templateId: String?, integration: String?, ndaStatus: String?, ndaSignedDate: Date?, envelopeId: String?, sequence: String?, docusignId: String?, docusignName: String?, title: String?) {
+    public init(templateId: String? = nil, integration: String? = nil, ndaStatus: String? = nil, ndaSignedDate: Date? = nil, envelopeId: String? = nil, sequence: String? = nil, docusignId: String? = nil, docusignName: String? = nil, title: String? = nil) {
         self.templateId = templateId
         self.integration = integration
         self.ndaStatus = ndaStatus
@@ -41,8 +41,7 @@ public struct Docusign: Codable {
         self.docusignName = docusignName
         self.title = title
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case templateId = "template_id"
         case integration
         case ndaStatus = "nda_status"
@@ -53,5 +52,22 @@ public struct Docusign: Codable {
         case docusignName = "docusign_name"
         case title
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(templateId, forKey: .templateId)
+        try container.encodeIfPresent(integration, forKey: .integration)
+        try container.encodeIfPresent(ndaStatus, forKey: .ndaStatus)
+        try container.encodeIfPresent(ndaSignedDate, forKey: .ndaSignedDate)
+        try container.encodeIfPresent(envelopeId, forKey: .envelopeId)
+        try container.encodeIfPresent(sequence, forKey: .sequence)
+        try container.encodeIfPresent(docusignId, forKey: .docusignId)
+        try container.encodeIfPresent(docusignName, forKey: .docusignName)
+        try container.encodeIfPresent(title, forKey: .title)
+    }
+
+
 
 }

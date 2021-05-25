@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the Pagination type&#39;s schema. */
-public struct Pagination: Codable { 
-
+public struct Pagination: Codable, Hashable {
 
     public var totalRecords: Int?
     public var currentOffset: Int?
@@ -18,20 +18,32 @@ public struct Pagination: Codable {
     public var lastId: Int?
     public var limit: Int?
 
-    public init(totalRecords: Int?, currentOffset: Int?, nextOffset: Int?, lastId: Int?, limit: Int?) {
+    public init(totalRecords: Int? = nil, currentOffset: Int? = nil, nextOffset: Int? = nil, lastId: Int? = nil, limit: Int? = nil) {
         self.totalRecords = totalRecords
         self.currentOffset = currentOffset
         self.nextOffset = nextOffset
         self.lastId = lastId
         self.limit = limit
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case totalRecords = "total_records"
         case currentOffset = "current_offset"
         case nextOffset = "next_offset"
         case lastId = "last_id"
         case limit
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(totalRecords, forKey: .totalRecords)
+        try container.encodeIfPresent(currentOffset, forKey: .currentOffset)
+        try container.encodeIfPresent(nextOffset, forKey: .nextOffset)
+        try container.encodeIfPresent(lastId, forKey: .lastId)
+        try container.encodeIfPresent(limit, forKey: .limit)
+    }
+
+
 
 }

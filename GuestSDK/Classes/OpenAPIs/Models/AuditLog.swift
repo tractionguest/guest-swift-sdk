@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the AuditLog type&#39;s schema. */
-public struct AuditLog: Codable { 
-
+public struct AuditLog: Codable, Hashable {
 
     /**  */
     public var id: Int
@@ -35,7 +35,7 @@ public struct AuditLog: Codable {
     /**  */
     public var auditableId: Int?
 
-    public init(id: Int, createdAt: String?, requestUuid: String?, remoteAddress: String?, comment: String?, version: Int?, auditedChanges: [AuditLogChange]?, action: String?, username: String?, userId: Int?, auditableType: String?, auditableId: Int?) {
+    public init(id: Int, createdAt: String? = nil, requestUuid: String? = nil, remoteAddress: String? = nil, comment: String? = nil, version: Int? = nil, auditedChanges: [AuditLogChange]? = nil, action: String? = nil, username: String? = nil, userId: Int? = nil, auditableType: String? = nil, auditableId: Int? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.requestUuid = requestUuid
@@ -49,8 +49,7 @@ public struct AuditLog: Codable {
         self.auditableType = auditableType
         self.auditableId = auditableId
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case createdAt = "created_at"
         case requestUuid = "request_uuid"
@@ -64,5 +63,25 @@ public struct AuditLog: Codable {
         case auditableType = "auditable_type"
         case auditableId = "auditable_id"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(requestUuid, forKey: .requestUuid)
+        try container.encodeIfPresent(remoteAddress, forKey: .remoteAddress)
+        try container.encodeIfPresent(comment, forKey: .comment)
+        try container.encodeIfPresent(version, forKey: .version)
+        try container.encodeIfPresent(auditedChanges, forKey: .auditedChanges)
+        try container.encodeIfPresent(action, forKey: .action)
+        try container.encodeIfPresent(username, forKey: .username)
+        try container.encodeIfPresent(userId, forKey: .userId)
+        try container.encodeIfPresent(auditableType, forKey: .auditableType)
+        try container.encodeIfPresent(auditableId, forKey: .auditableId)
+    }
+
+
 
 }

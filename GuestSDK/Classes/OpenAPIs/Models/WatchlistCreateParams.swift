@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** Parameters required for updating or creating watchlist records */
-public struct WatchlistCreateParams: Codable { 
-
+public struct WatchlistCreateParams: Codable, Hashable {
 
     public enum Colour: String, Codable, CaseIterable {
         case red = "RED"
@@ -24,7 +24,7 @@ public struct WatchlistCreateParams: Codable {
     public var email: String?
     public var colour: Colour?
 
-    public init(aliases: [String]?, notes: String?, lastName: String?, firstName: String?, email: String?, colour: Colour?) {
+    public init(aliases: [String]? = nil, notes: String? = nil, lastName: String? = nil, firstName: String? = nil, email: String? = nil, colour: Colour? = nil) {
         self.aliases = aliases
         self.notes = notes
         self.lastName = lastName
@@ -32,8 +32,7 @@ public struct WatchlistCreateParams: Codable {
         self.email = email
         self.colour = colour
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case aliases
         case notes
         case lastName = "last_name"
@@ -41,5 +40,19 @@ public struct WatchlistCreateParams: Codable {
         case email
         case colour
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(aliases, forKey: .aliases)
+        try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(colour, forKey: .colour)
+    }
+
+
 
 }

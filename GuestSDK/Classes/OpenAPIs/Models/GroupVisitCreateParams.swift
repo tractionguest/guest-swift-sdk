@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct GroupVisitCreateParams: Codable { 
-
+public struct GroupVisitCreateParams: Codable, Hashable {
 
     public var name: String
     public var startTime: String
@@ -20,7 +19,7 @@ public struct GroupVisitCreateParams: Codable {
     public var publicRegistrationEnabled: Bool?
     public var hostIds: [Int]?
 
-    public init(name: String, startTime: String, endTime: String, locationId: Int, registrationLimit: Int?, manualRegistrationApproval: Bool?, publicRegistrationEnabled: Bool?, hostIds: [Int]?) {
+    public init(name: String, startTime: String, endTime: String, locationId: Int, registrationLimit: Int? = nil, manualRegistrationApproval: Bool? = nil, publicRegistrationEnabled: Bool? = nil, hostIds: [Int]? = nil) {
         self.name = name
         self.startTime = startTime
         self.endTime = endTime
@@ -30,8 +29,7 @@ public struct GroupVisitCreateParams: Codable {
         self.publicRegistrationEnabled = publicRegistrationEnabled
         self.hostIds = hostIds
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case startTime = "start_time"
         case endTime = "end_time"
@@ -41,5 +39,21 @@ public struct GroupVisitCreateParams: Codable {
         case publicRegistrationEnabled = "public_registration_enabled"
         case hostIds = "host_ids"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(startTime, forKey: .startTime)
+        try container.encode(endTime, forKey: .endTime)
+        try container.encode(locationId, forKey: .locationId)
+        try container.encodeIfPresent(registrationLimit, forKey: .registrationLimit)
+        try container.encodeIfPresent(manualRegistrationApproval, forKey: .manualRegistrationApproval)
+        try container.encodeIfPresent(publicRegistrationEnabled, forKey: .publicRegistrationEnabled)
+        try container.encodeIfPresent(hostIds, forKey: .hostIds)
+    }
+
+
 
 }

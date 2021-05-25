@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the BatchJob&#39;s schema. */
-public struct BatchJob: Codable { 
-
+public struct BatchJob: Codable, Hashable {
 
     public var bid: String?
     public var createdAt: String?
@@ -21,7 +21,7 @@ public struct BatchJob: Codable {
     public var completed: Int?
     public var failed: Int?
 
-    public init(bid: String?, createdAt: String?, status: String?, totalRecords: Int?, workerName: String?, user: User?, pending: Int?, completed: Int?, failed: Int?) {
+    public init(bid: String? = nil, createdAt: String? = nil, status: String? = nil, totalRecords: Int? = nil, workerName: String? = nil, user: User? = nil, pending: Int? = nil, completed: Int? = nil, failed: Int? = nil) {
         self.bid = bid
         self.createdAt = createdAt
         self.status = status
@@ -32,8 +32,7 @@ public struct BatchJob: Codable {
         self.completed = completed
         self.failed = failed
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case bid
         case createdAt = "created_at"
         case status
@@ -44,5 +43,22 @@ public struct BatchJob: Codable {
         case completed
         case failed
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(bid, forKey: .bid)
+        try container.encodeIfPresent(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(status, forKey: .status)
+        try container.encodeIfPresent(totalRecords, forKey: .totalRecords)
+        try container.encodeIfPresent(workerName, forKey: .workerName)
+        try container.encodeIfPresent(user, forKey: .user)
+        try container.encodeIfPresent(pending, forKey: .pending)
+        try container.encodeIfPresent(completed, forKey: .completed)
+        try container.encodeIfPresent(failed, forKey: .failed)
+    }
+
+
 
 }

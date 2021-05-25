@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 
 import PackageDescription
 
@@ -8,16 +8,18 @@ let package = Package(
         .iOS(.v9),
         .macOS(.v10_11),
         .tvOS(.v9),
-        .watchOS(.v3)
+        .watchOS(.v3),
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "GuestSDK",
-            targets: ["GuestSDK"]),
+            targets: ["GuestSDK"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/Flight-School/AnyCodable", .exact("0.4.0")),
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "4.9.1"),
     ],
     targets: [
@@ -25,7 +27,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "GuestSDK",
-            dependencies: ["Alamofire", ],
+            dependencies: ["AnyCodable", "Alamofire", ],
             path: "GuestSDK/Classes"
         ),
     ]

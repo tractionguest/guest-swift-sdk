@@ -6,22 +6,30 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct SigninData: Codable { 
-
+public struct SigninData: Codable, Hashable {
 
     public var customFields: [CustomField]?
     public var name: String?
 
-    public init(customFields: [CustomField]?, name: String?) {
+    public init(customFields: [CustomField]? = nil, name: String? = nil) {
         self.customFields = customFields
         self.name = name
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case customFields = "custom_fields"
         case name
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(customFields, forKey: .customFields)
+        try container.encodeIfPresent(name, forKey: .name)
+    }
+
+
 
 }

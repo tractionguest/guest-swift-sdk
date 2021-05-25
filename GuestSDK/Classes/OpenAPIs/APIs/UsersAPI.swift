@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class UsersAPI {
     /**
      Get the current User
@@ -18,7 +16,7 @@ open class UsersAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getCurrentUser(userId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<User, Error>) -> Void)) {
+    open class func getCurrentUser(userId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<User, Error>) -> Void)) {
         getCurrentUserWithRequestBuilder(userId: userId, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -33,9 +31,6 @@ open class UsersAPI {
      Get the current User
      - GET /users/{user_id}
      - Gets the details of a single instance of the current `User`.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter userId: (path)  
      - parameter include: (query) A list of comma-separated related models to include (optional)
      - returns: RequestBuilder<User> 
@@ -46,16 +41,22 @@ open class UsersAPI {
         let userIdPostEscape = userIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{user_id}", with: userIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "include": include?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "include": include?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<User>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

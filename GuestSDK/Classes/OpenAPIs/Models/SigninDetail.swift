@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the Signin type&#39;s schema. */
-public struct SigninDetail: Codable { 
-
+public struct SigninDetail: Codable, Hashable {
 
     public var id: Int
     public var documents: [SignableDocument]?
@@ -34,7 +34,7 @@ public struct SigninDetail: Codable {
     public var company: String?
     public var registration: Registration?
 
-    public init(id: Int, documents: [SignableDocument]?, signinWatchlist: SigninWatchlist?, hosts: [Host]?, signinData: [SigninData]?, signinAcknowledgement: SigninAcknowledgement?, note: String?, isSignedOut: Bool?, signinTimestamp: Date?, signinPhotoUrl: String?, signedOutTimestamp: Date?, mobileNumber: String?, locationName: String?, lastName: String?, isAcknowledged: Bool?, isAccountedFor: Bool?, firstName: String?, email: String?, company: String?, registration: Registration?) {
+    public init(id: Int, documents: [SignableDocument]? = nil, signinWatchlist: SigninWatchlist? = nil, hosts: [Host]? = nil, signinData: [SigninData]? = nil, signinAcknowledgement: SigninAcknowledgement? = nil, note: String? = nil, isSignedOut: Bool? = nil, signinTimestamp: Date? = nil, signinPhotoUrl: String? = nil, signedOutTimestamp: Date? = nil, mobileNumber: String? = nil, locationName: String? = nil, lastName: String? = nil, isAcknowledged: Bool? = nil, isAccountedFor: Bool? = nil, firstName: String? = nil, email: String? = nil, company: String? = nil, registration: Registration? = nil) {
         self.id = id
         self.documents = documents
         self.signinWatchlist = signinWatchlist
@@ -56,8 +56,7 @@ public struct SigninDetail: Codable {
         self.company = company
         self.registration = registration
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case documents
         case signinWatchlist = "signin_watchlist"
@@ -79,5 +78,33 @@ public struct SigninDetail: Codable {
         case company
         case registration
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(documents, forKey: .documents)
+        try container.encodeIfPresent(signinWatchlist, forKey: .signinWatchlist)
+        try container.encodeIfPresent(hosts, forKey: .hosts)
+        try container.encodeIfPresent(signinData, forKey: .signinData)
+        try container.encodeIfPresent(signinAcknowledgement, forKey: .signinAcknowledgement)
+        try container.encodeIfPresent(note, forKey: .note)
+        try container.encodeIfPresent(isSignedOut, forKey: .isSignedOut)
+        try container.encodeIfPresent(signinTimestamp, forKey: .signinTimestamp)
+        try container.encodeIfPresent(signinPhotoUrl, forKey: .signinPhotoUrl)
+        try container.encodeIfPresent(signedOutTimestamp, forKey: .signedOutTimestamp)
+        try container.encodeIfPresent(mobileNumber, forKey: .mobileNumber)
+        try container.encodeIfPresent(locationName, forKey: .locationName)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(isAcknowledged, forKey: .isAcknowledged)
+        try container.encodeIfPresent(isAccountedFor, forKey: .isAccountedFor)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(registration, forKey: .registration)
+    }
+
+
 
 }

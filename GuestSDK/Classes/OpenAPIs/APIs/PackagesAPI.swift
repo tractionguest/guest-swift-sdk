@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class PackagesAPI {
     /**
      Create package
@@ -17,7 +15,7 @@ open class PackagesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func createPackage(packageCreateParams: PackageCreateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Package, Error>) -> Void)) {
+    open class func createPackage(packageCreateParams: PackageCreateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<Package, Error>) -> Void)) {
         createPackageWithRequestBuilder(packageCreateParams: packageCreateParams).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -32,9 +30,6 @@ open class PackagesAPI {
      Create package
      - POST /packages
      - Creates a [Package] entity by extracting information about the recipient and carrier from the given image file.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter packageCreateParams: (body) Parameters for creating a package (optional)
      - returns: RequestBuilder<Package> 
      */
@@ -43,11 +38,17 @@ open class PackagesAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: packageCreateParams)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Package>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -57,7 +58,7 @@ open class PackagesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func deletePackage(packageId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
+    open class func deletePackage(packageId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<Void, Error>) -> Void)) {
         deletePackageWithRequestBuilder(packageId: packageId, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
@@ -71,9 +72,6 @@ open class PackagesAPI {
     /**
      - DELETE /packages/{package_id}
      - Delete a pacakge
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter packageId: (path)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - returns: RequestBuilder<Void> 
@@ -84,17 +82,19 @@ open class PackagesAPI {
         let packageIdPostEscape = packageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{package_id}", with: packageIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Void>.Type = GuestSDKAPI.requestBuilderFactory.getNonDecodableBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+        return requestBuilder.init(method: "DELETE", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -105,7 +105,7 @@ open class PackagesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getPackage(packageId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Package, Error>) -> Void)) {
+    open class func getPackage(packageId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<Package, Error>) -> Void)) {
         getPackageWithRequestBuilder(packageId: packageId, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -120,9 +120,6 @@ open class PackagesAPI {
      Get Package
      - GET /packages/{package_id}
      - Gets the details of a single instance of a Package
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter packageId: (path)  
      - parameter include: (query) A list of comma-separated related models to include  (optional)
      - returns: RequestBuilder<Package> 
@@ -133,16 +130,22 @@ open class PackagesAPI {
         let packageIdPostEscape = packageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{package_id}", with: packageIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "include": include?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "include": include?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Package>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -157,7 +160,7 @@ open class PackagesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getPackages(locationIds: String? = nil, limit: Int? = nil, offset: Int? = nil, include: String? = nil, pickedUp: Bool? = nil, query: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedPackagesList, Error>) -> Void)) {
+    open class func getPackages(locationIds: String? = nil, limit: Int? = nil, offset: Int? = nil, include: String? = nil, pickedUp: Bool? = nil, query: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<PaginatedPackagesList, Error>) -> Void)) {
         getPackagesWithRequestBuilder(locationIds: locationIds, limit: limit, offset: offset, include: include, pickedUp: pickedUp, query: query).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -172,9 +175,6 @@ open class PackagesAPI {
      Get packages
      - GET /packages
      - Gets a list of [Package] entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter locationIds: (query) A comma separated list of Location ids for filtering. i.e. &#39;1,2,3&#39; Will return all packages from all locations if none are specified (optional)
      - parameter limit: (query) Limits the results to a specified number, defaults to 50 (optional, default to 50)
      - parameter offset: (query) Offsets the results to a specified number, defaults to 0 (optional, default to 0)
@@ -186,21 +186,27 @@ open class PackagesAPI {
     open class func getPackagesWithRequestBuilder(locationIds: String? = nil, limit: Int? = nil, offset: Int? = nil, include: String? = nil, pickedUp: Bool? = nil, query: String? = nil) -> RequestBuilder<PaginatedPackagesList> {
         let path = "/packages"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "location_ids": locationIds?.encodeToJSON(), 
-            "limit": limit?.encodeToJSON(), 
-            "offset": offset?.encodeToJSON(), 
-            "include": include?.encodeToJSON(), 
-            "picked_up": pickedUp?.encodeToJSON(), 
-            "query": query?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "location_ids": locationIds?.encodeToJSON(),
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "include": include?.encodeToJSON(),
+            "picked_up": pickedUp?.encodeToJSON(),
+            "query": query?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<PaginatedPackagesList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -212,7 +218,7 @@ open class PackagesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func updatePackage(packageId: String, idempotencyKey: String? = nil, packageUpdateParams: PackageUpdateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Package, Error>) -> Void)) {
+    open class func updatePackage(packageId: String, idempotencyKey: String? = nil, packageUpdateParams: PackageUpdateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<Package, Error>) -> Void)) {
         updatePackageWithRequestBuilder(packageId: packageId, idempotencyKey: idempotencyKey, packageUpdateParams: packageUpdateParams).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -227,9 +233,6 @@ open class PackagesAPI {
      Update Package
      - PUT /packages/{package_id}
      - Update/Edit information about a Package.  picked_up - changes the package_state to picked up and assigns non null value to picked_up_at  recipient_id - update the package's intended recipient. Changes package_state to 'recipient_matched' if a match hasn't been found and notifies host about their package via email. A previous recipient will stop getting notifications  carrier_name - change/update the package's carrier/courier information 
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter packageId: (path)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - parameter packageUpdateParams: (body)  (optional)
@@ -243,15 +246,17 @@ open class PackagesAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: packageUpdateParams)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Package>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

@@ -6,25 +6,35 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the CapacityByHour&#39;s schema. */
-public struct CapacityByHourResponse: Codable { 
-
+public struct CapacityByHourResponse: Codable, Hashable {
 
     public var rangeStart: Date?
     public var rangeEnd: Date?
     public var expectedVisitors: Int?
 
-    public init(rangeStart: Date?, rangeEnd: Date?, expectedVisitors: Int?) {
+    public init(rangeStart: Date? = nil, rangeEnd: Date? = nil, expectedVisitors: Int? = nil) {
         self.rangeStart = rangeStart
         self.rangeEnd = rangeEnd
         self.expectedVisitors = expectedVisitors
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case rangeStart = "range_start"
         case rangeEnd = "range_end"
         case expectedVisitors = "expected_visitors"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(rangeStart, forKey: .rangeStart)
+        try container.encodeIfPresent(rangeEnd, forKey: .rangeEnd)
+        try container.encodeIfPresent(expectedVisitors, forKey: .expectedVisitors)
+    }
+
+
 
 }

@@ -6,15 +6,26 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct HostBatchCreateParams: Codable { 
-
+public struct HostBatchCreateParams: Codable, Hashable {
 
     public var hosts: [HostCreateParams]?
 
-    public init(hosts: [HostCreateParams]?) {
+    public init(hosts: [HostCreateParams]? = nil) {
         self.hosts = hosts
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case hosts
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(hosts, forKey: .hosts)
+    }
+
+
 
 }

@@ -6,19 +6,35 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the Permission type&#39;s schema. */
-public struct PermissionGroup: Codable { 
-
+public struct PermissionGroup: Codable, Hashable {
 
     public var name: String?
     public var visibility: String?
     public var permissions: [String]?
 
-    public init(name: String?, visibility: String?, permissions: [String]?) {
+    public init(name: String? = nil, visibility: String? = nil, permissions: [String]? = nil) {
         self.name = name
         self.visibility = visibility
         self.permissions = permissions
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case name
+        case visibility
+        case permissions
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(visibility, forKey: .visibility)
+        try container.encodeIfPresent(permissions, forKey: .permissions)
+    }
+
+
 
 }

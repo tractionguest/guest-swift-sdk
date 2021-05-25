@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The data collected from the response on a Registration */
-public struct GuestResponse: Codable { 
-
+public struct GuestResponse: Codable, Hashable {
 
     /** UUID */
     public var id: String?
@@ -20,20 +20,32 @@ public struct GuestResponse: Codable {
     /** Page title */
     public var title: String?
 
-    public init(id: String?, customFields: [CustomField]?, pageType: String?, sequence: Int?, title: String?) {
+    public init(id: String? = nil, customFields: [CustomField]? = nil, pageType: String? = nil, sequence: Int? = nil, title: String? = nil) {
         self.id = id
         self.customFields = customFields
         self.pageType = pageType
         self.sequence = sequence
         self.title = title
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case customFields = "custom_fields"
         case pageType = "page_type"
         case sequence
         case title
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(customFields, forKey: .customFields)
+        try container.encodeIfPresent(pageType, forKey: .pageType)
+        try container.encodeIfPresent(sequence, forKey: .sequence)
+        try container.encodeIfPresent(title, forKey: .title)
+    }
+
+
 
 }

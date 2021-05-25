@@ -6,15 +6,26 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct IdentifierList: Codable { 
-
+public struct IdentifierList: Codable, Hashable {
 
     public var ids: [String]?
 
-    public init(ids: [String]?) {
+    public init(ids: [String]? = nil) {
         self.ids = ids
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case ids
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(ids, forKey: .ids)
+    }
+
+
 
 }

@@ -6,22 +6,31 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct SignableDocument: Codable { 
-
+public struct SignableDocument: Codable, Hashable {
 
     public var simpleSignatures: [SimpleSignature]?
     public var docusigns: [Docusign]?
 
-    public init(simpleSignatures: [SimpleSignature]?, docusigns: [Docusign]?) {
+    public init(simpleSignatures: [SimpleSignature]? = nil, docusigns: [Docusign]? = nil) {
         self.simpleSignatures = simpleSignatures
         self.docusigns = docusigns
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case simpleSignatures = "simple_signatures"
         case docusigns
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(simpleSignatures, forKey: .simpleSignatures)
+        try container.encodeIfPresent(docusigns, forKey: .docusigns)
+    }
+
+
 
 }

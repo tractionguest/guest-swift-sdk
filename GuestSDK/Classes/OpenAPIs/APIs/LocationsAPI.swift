@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class LocationsAPI {
     /**
      Get the details of a location
@@ -17,7 +15,7 @@ open class LocationsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getLocation(locationId: String, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Location, Error>) -> Void)) {
+    open class func getLocation(locationId: String, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<Location, Error>) -> Void)) {
         getLocationWithRequestBuilder(locationId: locationId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -32,9 +30,6 @@ open class LocationsAPI {
      Get the details of a location
      - GET /locations/{location_id}
      - Gets details of a single instance of `Location`.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter locationId: (path)  
      - returns: RequestBuilder<Location> 
      */
@@ -44,13 +39,19 @@ open class LocationsAPI {
         let locationIdPostEscape = locationIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{location_id}", with: locationIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Location>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -63,7 +64,7 @@ open class LocationsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getLocations(limit: Int? = nil, offset: Int? = nil, query: String? = nil, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedLocationsList, Error>) -> Void)) {
+    open class func getLocations(limit: Int? = nil, offset: Int? = nil, query: String? = nil, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<PaginatedLocationsList, Error>) -> Void)) {
         getLocationsWithRequestBuilder(limit: limit, offset: offset, query: query, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -78,9 +79,6 @@ open class LocationsAPI {
      List all Locations
      - GET /locations
      - Gets a list of all `Location` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter limit: (query) Limits the results to a specified number, defaults to 50 (optional)
      - parameter offset: (query) Offsets the results to a specified number, defaults to 0 (optional)
      - parameter query: (query) Queries by Location &#x60;name&#x60; (optional)
@@ -90,19 +88,25 @@ open class LocationsAPI {
     open class func getLocationsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, query: String? = nil, include: String? = nil) -> RequestBuilder<PaginatedLocationsList> {
         let path = "/locations"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(), 
-            "offset": offset?.encodeToJSON(), 
-            "query": query?.encodeToJSON(), 
-            "include": include?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "query": query?.encodeToJSON(),
+            "include": include?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<PaginatedLocationsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

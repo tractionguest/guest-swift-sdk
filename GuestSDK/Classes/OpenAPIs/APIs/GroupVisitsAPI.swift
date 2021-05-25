@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class GroupVisitsAPI {
     /**
      Create a new Group Visit (Appointment)
@@ -18,7 +16,7 @@ open class GroupVisitsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func createGroupVisit(idempotencyKey: String? = nil, groupVisitCreateParams: GroupVisitCreateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<GroupVisit, Error>) -> Void)) {
+    open class func createGroupVisit(idempotencyKey: String? = nil, groupVisitCreateParams: GroupVisitCreateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<GroupVisit, Error>) -> Void)) {
         createGroupVisitWithRequestBuilder(idempotencyKey: idempotencyKey, groupVisitCreateParams: groupVisitCreateParams).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -33,9 +31,6 @@ open class GroupVisitsAPI {
      Create a new Group Visit (Appointment)
      - POST /group_visits
      - Creates a `GroupVisit` (Appointment)
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - parameter groupVisitCreateParams: (body)  (optional)
      - returns: RequestBuilder<GroupVisit> 
@@ -45,15 +40,17 @@ open class GroupVisitsAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: groupVisitCreateParams)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<GroupVisit>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "POST", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -64,7 +61,7 @@ open class GroupVisitsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func deleteGroupVisit(groupVisitId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
+    open class func deleteGroupVisit(groupVisitId: String, idempotencyKey: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<Void, Error>) -> Void)) {
         deleteGroupVisitWithRequestBuilder(groupVisitId: groupVisitId, idempotencyKey: idempotencyKey).execute(apiResponseQueue) { result -> Void in
             switch result {
             case .success:
@@ -79,9 +76,6 @@ open class GroupVisitsAPI {
      Delete a Group Visit (Appointment)
      - DELETE /group_visits/{group_visit_id}
      - Deletes a single instance of `GroupVisit` (Appointment).
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter groupVisitId: (path)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - returns: RequestBuilder<Void> 
@@ -92,17 +86,19 @@ open class GroupVisitsAPI {
         let groupVisitIdPostEscape = groupVisitIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{group_visit_id}", with: groupVisitIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Void>.Type = GuestSDKAPI.requestBuilderFactory.getNonDecodableBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+        return requestBuilder.init(method: "DELETE", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -112,7 +108,7 @@ open class GroupVisitsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getGroupVisit(groupVisitId: String, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<GroupVisit, Error>) -> Void)) {
+    open class func getGroupVisit(groupVisitId: String, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<GroupVisit, Error>) -> Void)) {
         getGroupVisitWithRequestBuilder(groupVisitId: groupVisitId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -127,9 +123,6 @@ open class GroupVisitsAPI {
      Get a Group Visit (Appointment)
      - GET /group_visits/{group_visit_id}
      - Gets the details of a single instance of a `GroupVisit`.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter groupVisitId: (path)  
      - returns: RequestBuilder<GroupVisit> 
      */
@@ -139,13 +132,19 @@ open class GroupVisitsAPI {
         let groupVisitIdPostEscape = groupVisitIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{group_visit_id}", with: groupVisitIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        let url = URLComponents(string: URLString)
+        let parameters: [String: Any]? = nil
+
+        let urlComponents = URLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<GroupVisit>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -158,7 +157,7 @@ open class GroupVisitsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getGroupVisits(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedGroupVisitsList, Error>) -> Void)) {
+    open class func getGroupVisits(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<PaginatedGroupVisitsList, Error>) -> Void)) {
         getGroupVisitsWithRequestBuilder(limit: limit, offset: offset, locationIds: locationIds, sortWith: sortWith).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -173,9 +172,6 @@ open class GroupVisitsAPI {
      List all Group Visits (Appointments)
      - GET /group_visits
      - Gets a list of all `GroupVisit` entities (Appointments).
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter limit: (query) Limits the results to a specified number. Defaults to 50. (optional)
      - parameter offset: (query) Offsets the results to a specified number. Defaults to 0. (optional)
      - parameter locationIds: (query) A comma-separated string of locations IDs, to only show group visits (appointments) from those locations. (optional)
@@ -185,19 +181,25 @@ open class GroupVisitsAPI {
     open class func getGroupVisitsWithRequestBuilder(limit: String? = nil, offset: String? = nil, locationIds: String? = nil, sortWith: String? = nil) -> RequestBuilder<PaginatedGroupVisitsList> {
         let path = "/group_visits"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(), 
-            "offset": offset?.encodeToJSON(), 
-            "location_ids": locationIds?.encodeToJSON(), 
-            "sort_with": sortWith?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "location_ids": locationIds?.encodeToJSON(),
+            "sort_with": sortWith?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<PaginatedGroupVisitsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -209,7 +211,7 @@ open class GroupVisitsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func updateGroupVisit(groupVisitId: String, idempotencyKey: String? = nil, groupVisitUpdateParams: GroupVisitUpdateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<GroupVisit, Error>) -> Void)) {
+    open class func updateGroupVisit(groupVisitId: String, idempotencyKey: String? = nil, groupVisitUpdateParams: GroupVisitUpdateParams? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<GroupVisit, Error>) -> Void)) {
         updateGroupVisitWithRequestBuilder(groupVisitId: groupVisitId, idempotencyKey: idempotencyKey, groupVisitUpdateParams: groupVisitUpdateParams).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -224,9 +226,6 @@ open class GroupVisitsAPI {
      Update a Group Visit (Appointment)
      - PUT /group_visits/{group_visit_id}
      - Updates an existing `GroupVisit` (Appointment).
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter groupVisitId: (path)  
      - parameter idempotencyKey: (header) An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it&#39;s submitted. We store idempotency keys for only 24 hours. Any &#x60;Idempotency-Key&#x60; shorter than 10 characters will be ignored (optional)
      - parameter groupVisitUpdateParams: (body)  (optional)
@@ -240,15 +239,17 @@ open class GroupVisitsAPI {
         let URLString = GuestSDKAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: groupVisitUpdateParams)
 
-        let url = URLComponents(string: URLString)
+        let urlComponents = URLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
-            "Idempotency-Key": idempotencyKey?.encodeToJSON()
+            "Idempotency-Key": idempotencyKey?.encodeToJSON(),
         ]
+
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<GroupVisit>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "PUT", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

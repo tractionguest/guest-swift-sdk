@@ -6,22 +6,31 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the Capacity&#39;s schema. */
-public struct Capacity: Codable { 
-
+public struct Capacity: Codable, Hashable {
 
     public var signinsCount: Int?
     public var invitesExpectedNextHour: Int?
 
-    public init(signinsCount: Int?, invitesExpectedNextHour: Int?) {
+    public init(signinsCount: Int? = nil, invitesExpectedNextHour: Int? = nil) {
         self.signinsCount = signinsCount
         self.invitesExpectedNextHour = invitesExpectedNextHour
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case signinsCount = "signins_count"
         case invitesExpectedNextHour = "invites_expected_next_hour"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(signinsCount, forKey: .signinsCount)
+        try container.encodeIfPresent(invitesExpectedNextHour, forKey: .invitesExpectedNextHour)
+    }
+
+
 
 }

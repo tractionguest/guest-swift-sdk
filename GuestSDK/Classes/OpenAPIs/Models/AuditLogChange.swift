@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct AuditLogChange: Codable { 
-
+public struct AuditLogChange: Codable, Hashable {
 
     public enum Format: String, Codable, CaseIterable {
         case string = "string"
@@ -27,18 +27,29 @@ public struct AuditLogChange: Codable {
     /** The format type of the field */
     public var format: Format?
 
-    public init(fieldName: String?, fieldValueBefore: String?, fieldValueAfter: String?, format: Format?) {
+    public init(fieldName: String? = nil, fieldValueBefore: String? = nil, fieldValueAfter: String? = nil, format: Format? = nil) {
         self.fieldName = fieldName
         self.fieldValueBefore = fieldValueBefore
         self.fieldValueAfter = fieldValueAfter
         self.format = format
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case fieldName = "field_name"
         case fieldValueBefore = "field_value_before"
         case fieldValueAfter = "field_value_after"
         case format
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(fieldName, forKey: .fieldName)
+        try container.encodeIfPresent(fieldValueBefore, forKey: .fieldValueBefore)
+        try container.encodeIfPresent(fieldValueAfter, forKey: .fieldValueAfter)
+        try container.encodeIfPresent(format, forKey: .format)
+    }
+
+
 
 }

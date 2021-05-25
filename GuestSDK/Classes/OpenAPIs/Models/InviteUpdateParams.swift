@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the InviteUpdateParams type&#39;s schema. */
-public struct InviteUpdateParams: Codable { 
-
+public struct InviteUpdateParams: Codable, Hashable {
 
     public var mobileNumber: String?
     /** Used for transfering ownership of an &#x60;Invite&#x60; to another member of the Account */
@@ -29,7 +29,7 @@ public struct InviteUpdateParams: Codable {
     public var company: String?
     public var groupVisitId: Int?
 
-    public init(mobileNumber: String?, userId: Int?, onPremise: Bool?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String?, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, title: String?, startDate: Date?, lastName: String?, endDate: Date?, email: String?, company: String?, groupVisitId: Int?) {
+    public init(mobileNumber: String? = nil, userId: Int? = nil, onPremise: Bool? = nil, notificationTriggers: [NotificationTriggerCreateParams]? = nil, firstName: String? = nil, emailTemplateId: Int? = nil, customFields: [CustomField]? = nil, hostIds: [Int]? = nil, title: String? = nil, startDate: Date? = nil, lastName: String? = nil, endDate: Date? = nil, email: String? = nil, company: String? = nil, groupVisitId: Int? = nil) {
         self.mobileNumber = mobileNumber
         self.userId = userId
         self.onPremise = onPremise
@@ -46,8 +46,7 @@ public struct InviteUpdateParams: Codable {
         self.company = company
         self.groupVisitId = groupVisitId
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case mobileNumber = "mobile_number"
         case userId = "user_id"
         case onPremise = "on_premise"
@@ -64,5 +63,28 @@ public struct InviteUpdateParams: Codable {
         case company
         case groupVisitId = "group_visit_id"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(mobileNumber, forKey: .mobileNumber)
+        try container.encodeIfPresent(userId, forKey: .userId)
+        try container.encodeIfPresent(onPremise, forKey: .onPremise)
+        try container.encodeIfPresent(notificationTriggers, forKey: .notificationTriggers)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(emailTemplateId, forKey: .emailTemplateId)
+        try container.encodeIfPresent(customFields, forKey: .customFields)
+        try container.encodeIfPresent(hostIds, forKey: .hostIds)
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(startDate, forKey: .startDate)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(endDate, forKey: .endDate)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(groupVisitId, forKey: .groupVisitId)
+    }
+
+
 
 }

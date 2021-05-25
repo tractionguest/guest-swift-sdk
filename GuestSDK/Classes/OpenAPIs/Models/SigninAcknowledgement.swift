@@ -6,25 +6,35 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the SigninAcknowledgement type&#39;s schema. */
-public struct SigninAcknowledgement: Codable { 
-
+public struct SigninAcknowledgement: Codable, Hashable {
 
     public var code: String?
     public var acknowledgedAt: Date?
     public var id: Int
 
-    public init(code: String?, acknowledgedAt: Date?, id: Int) {
+    public init(code: String? = nil, acknowledgedAt: Date? = nil, id: Int) {
         self.code = code
         self.acknowledgedAt = acknowledgedAt
         self.id = id
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case code
         case acknowledgedAt = "acknowledged_at"
         case id
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(code, forKey: .code)
+        try container.encodeIfPresent(acknowledgedAt, forKey: .acknowledgedAt)
+        try container.encode(id, forKey: .id)
+    }
+
+
 
 }

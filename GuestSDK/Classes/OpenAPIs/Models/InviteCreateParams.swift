@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the InviteCreateParams type&#39;s schema. */
-public struct InviteCreateParams: Codable { 
-
+public struct InviteCreateParams: Codable, Hashable {
 
     public enum WatchlistColour: String, Codable, CaseIterable {
         case red = "RED"
@@ -33,7 +33,7 @@ public struct InviteCreateParams: Codable {
     public var company: String?
     public var groupVisitId: Int?
 
-    public init(mobileNumber: String?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, watchlistColour: WatchlistColour?, title: String?, startDate: Date?, lastName: String, endDate: Date?, email: String, company: String?, groupVisitId: Int?) {
+    public init(mobileNumber: String? = nil, notificationTriggers: [NotificationTriggerCreateParams]? = nil, firstName: String, emailTemplateId: Int? = nil, customFields: [CustomField]? = nil, hostIds: [Int]? = nil, watchlistColour: WatchlistColour? = nil, title: String? = nil, startDate: Date? = nil, lastName: String, endDate: Date? = nil, email: String, company: String? = nil, groupVisitId: Int? = nil) {
         self.mobileNumber = mobileNumber
         self.notificationTriggers = notificationTriggers
         self.firstName = firstName
@@ -49,8 +49,7 @@ public struct InviteCreateParams: Codable {
         self.company = company
         self.groupVisitId = groupVisitId
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case mobileNumber = "mobile_number"
         case notificationTriggers = "notification_triggers"
         case firstName = "first_name"
@@ -66,5 +65,27 @@ public struct InviteCreateParams: Codable {
         case company
         case groupVisitId = "group_visit_id"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(mobileNumber, forKey: .mobileNumber)
+        try container.encodeIfPresent(notificationTriggers, forKey: .notificationTriggers)
+        try container.encode(firstName, forKey: .firstName)
+        try container.encodeIfPresent(emailTemplateId, forKey: .emailTemplateId)
+        try container.encodeIfPresent(customFields, forKey: .customFields)
+        try container.encodeIfPresent(hostIds, forKey: .hostIds)
+        try container.encodeIfPresent(watchlistColour, forKey: .watchlistColour)
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(startDate, forKey: .startDate)
+        try container.encode(lastName, forKey: .lastName)
+        try container.encodeIfPresent(endDate, forKey: .endDate)
+        try container.encode(email, forKey: .email)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(groupVisitId, forKey: .groupVisitId)
+    }
+
+
 
 }

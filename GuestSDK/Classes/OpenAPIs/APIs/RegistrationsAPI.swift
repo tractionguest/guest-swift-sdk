@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 open class RegistrationsAPI {
     /**
      Get a Registration
@@ -18,7 +16,7 @@ open class RegistrationsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getRegistration(registrationId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<RegistrationDetail, Error>) -> Void)) {
+    open class func getRegistration(registrationId: String, include: String? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<RegistrationDetail, Error>) -> Void)) {
         getRegistrationWithRequestBuilder(registrationId: registrationId, include: include).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -33,9 +31,6 @@ open class RegistrationsAPI {
      Get a Registration
      - GET /registrations/{registration_id}
      - Gets the details of a single instance of a `Registration`
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter registrationId: (path)  
      - parameter include: (query) A list of comma-separated related models to include (optional)
      - returns: RequestBuilder<RegistrationDetail> 
@@ -46,16 +41,22 @@ open class RegistrationsAPI {
         let registrationIdPostEscape = registrationIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{registration_id}", with: registrationIdPostEscape, options: .literal, range: nil)
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "include": include?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "include": include?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<RegistrationDetail>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**
@@ -70,7 +71,7 @@ open class RegistrationsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
-    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Result<PaginatedRegistrationsList, Error>) -> Void)) {
+    open class func getRegistrations(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil, apiResponseQueue: DispatchQueue = GuestSDKAPI.apiResponseQueue, completion: @escaping ((_ result: Swift.Result<PaginatedRegistrationsList, Error>) -> Void)) {
         getRegistrationsWithRequestBuilder(limit: limit, offset: offset, locationIds: locationIds, createdBefore: createdBefore, createdAfter: createdAfter, needsConfirmation: needsConfirmation).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -85,9 +86,6 @@ open class RegistrationsAPI {
      List all Registrations
      - GET /registrations
      - Gets a list of all `Registration` entities.
-     - :
-       - type: openIdConnect
-       - name: TractionGuestAuth
      - parameter limit: (query) Limits the results to a specified number, defaults to 50 (optional)
      - parameter offset: (query) Offsets the results to a specified number, defaults to 0 (optional)
      - parameter locationIds: (query) A comma separated list of Location IDs (optional)
@@ -99,21 +97,27 @@ open class RegistrationsAPI {
     open class func getRegistrationsWithRequestBuilder(limit: Int? = nil, offset: Int? = nil, locationIds: String? = nil, createdBefore: String? = nil, createdAfter: String? = nil, needsConfirmation: Bool? = nil) -> RequestBuilder<PaginatedRegistrationsList> {
         let path = "/registrations"
         let URLString = GuestSDKAPI.basePath + path
-        let parameters: [String:Any]? = nil
-        
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(), 
-            "offset": offset?.encodeToJSON(), 
-            "location_ids": locationIds?.encodeToJSON(), 
-            "created_before": createdBefore?.encodeToJSON(), 
-            "created_after": createdAfter?.encodeToJSON(), 
-            "needs_confirmation": needsConfirmation?.encodeToJSON()
+        let parameters: [String: Any]? = nil
+
+        var urlComponents = URLComponents(string: URLString)
+        urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": limit?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+            "location_ids": locationIds?.encodeToJSON(),
+            "created_before": createdBefore?.encodeToJSON(),
+            "created_after": createdAfter?.encodeToJSON(),
+            "needs_confirmation": needsConfirmation?.encodeToJSON(),
         ])
+
+        let nillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<PaginatedRegistrationsList>.Type = GuestSDKAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (urlComponents?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
 }

@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** Root for a Package type&#39;s schema */
-public struct Package: Codable { 
-
+public struct Package: Codable, Hashable {
 
     public enum PackageState: String, Codable, CaseIterable {
         case processing = "processing"
@@ -28,7 +28,7 @@ public struct Package: Codable {
     public var createdAt: Date
     public var image: Image?
 
-    public init(id: Int, recipient: Host?, location: Location, packageState: PackageState, carrierName: String?, pickedUpAt: Date?, createdAt: Date, image: Image?) {
+    public init(id: Int, recipient: Host? = nil, location: Location, packageState: PackageState, carrierName: String? = nil, pickedUpAt: Date? = nil, createdAt: Date, image: Image? = nil) {
         self.id = id
         self.recipient = recipient
         self.location = location
@@ -38,8 +38,7 @@ public struct Package: Codable {
         self.createdAt = createdAt
         self.image = image
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case recipient
         case location
@@ -49,5 +48,21 @@ public struct Package: Codable {
         case createdAt = "created_at"
         case image
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(recipient, forKey: .recipient)
+        try container.encode(location, forKey: .location)
+        try container.encode(packageState, forKey: .packageState)
+        try container.encodeIfPresent(carrierName, forKey: .carrierName)
+        try container.encodeIfPresent(pickedUpAt, forKey: .pickedUpAt)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(image, forKey: .image)
+    }
+
+
 
 }

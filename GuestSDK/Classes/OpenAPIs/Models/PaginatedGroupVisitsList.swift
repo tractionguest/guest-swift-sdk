@@ -6,22 +6,31 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct PaginatedGroupVisitsList: Codable { 
-
+public struct PaginatedGroupVisitsList: Codable, Hashable {
 
     public var pagination: Pagination?
     public var groupVisits: [GroupVisit]?
 
-    public init(pagination: Pagination?, groupVisits: [GroupVisit]?) {
+    public init(pagination: Pagination? = nil, groupVisits: [GroupVisit]? = nil) {
         self.pagination = pagination
         self.groupVisits = groupVisits
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case pagination
         case groupVisits = "group_visits"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(pagination, forKey: .pagination)
+        try container.encodeIfPresent(groupVisits, forKey: .groupVisits)
+    }
+
+
 
 }

@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct SigninCreateParams: Codable { 
-
+public struct SigninCreateParams: Codable, Hashable {
 
     /** UUID of a Registration */
     public var registrationId: String?
@@ -30,7 +30,7 @@ public struct SigninCreateParams: Codable {
     public var hostEmailTemplateId: Int?
     public var guestEmailTemplateId: Int?
 
-    public init(registrationId: String?, email: String?, company: String?, lastName: String?, firstName: String?, smsMessage: String?, sendNotifications: Bool?, locationId: Int?, hostIds: [Int]?, hostEmailTemplateId: Int?, guestEmailTemplateId: Int?) {
+    public init(registrationId: String? = nil, email: String? = nil, company: String? = nil, lastName: String? = nil, firstName: String? = nil, smsMessage: String? = nil, sendNotifications: Bool? = nil, locationId: Int? = nil, hostIds: [Int]? = nil, hostEmailTemplateId: Int? = nil, guestEmailTemplateId: Int? = nil) {
         self.registrationId = registrationId
         self.email = email
         self.company = company
@@ -43,8 +43,7 @@ public struct SigninCreateParams: Codable {
         self.hostEmailTemplateId = hostEmailTemplateId
         self.guestEmailTemplateId = guestEmailTemplateId
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case registrationId = "registration_id"
         case email
         case company
@@ -57,5 +56,24 @@ public struct SigninCreateParams: Codable {
         case hostEmailTemplateId = "host_email_template_id"
         case guestEmailTemplateId = "guest_email_template_id"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(registrationId, forKey: .registrationId)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(smsMessage, forKey: .smsMessage)
+        try container.encodeIfPresent(sendNotifications, forKey: .sendNotifications)
+        try container.encodeIfPresent(locationId, forKey: .locationId)
+        try container.encodeIfPresent(hostIds, forKey: .hostIds)
+        try container.encodeIfPresent(hostEmailTemplateId, forKey: .hostEmailTemplateId)
+        try container.encodeIfPresent(guestEmailTemplateId, forKey: .guestEmailTemplateId)
+    }
+
+
 
 }

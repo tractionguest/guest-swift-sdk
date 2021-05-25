@@ -6,17 +6,30 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct PaginatedRegistrationsList: Codable { 
-
+public struct PaginatedRegistrationsList: Codable, Hashable {
 
     public var registrations: [Registration]?
     public var pagination: Pagination?
 
-    public init(registrations: [Registration]?, pagination: Pagination?) {
+    public init(registrations: [Registration]? = nil, pagination: Pagination? = nil) {
         self.registrations = registrations
         self.pagination = pagination
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case registrations
+        case pagination
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(registrations, forKey: .registrations)
+        try container.encodeIfPresent(pagination, forKey: .pagination)
+    }
+
+
 
 }

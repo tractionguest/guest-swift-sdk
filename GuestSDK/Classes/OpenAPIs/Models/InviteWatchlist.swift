@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the InviteWatchlist type&#39;s schema. */
-public struct InviteWatchlist: Codable { 
-
+public struct InviteWatchlist: Codable, Hashable {
 
     public var id: Int
     public var _internal: [InternalWatchlistResult]?
@@ -19,20 +19,32 @@ public struct InviteWatchlist: Codable {
     /** Deprecated */
     public var externalColours: [String]?
 
-    public init(id: Int, _internal: [InternalWatchlistResult]?, external: [ExternalWatchlistResult]?, internalColours: [String]?, externalColours: [String]?) {
+    public init(id: Int, _internal: [InternalWatchlistResult]? = nil, external: [ExternalWatchlistResult]? = nil, internalColours: [String]? = nil, externalColours: [String]? = nil) {
         self.id = id
         self._internal = _internal
         self.external = external
         self.internalColours = internalColours
         self.externalColours = externalColours
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case _internal = "internal"
         case external
         case internalColours = "internal_colours"
         case externalColours = "external_colours"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(_internal, forKey: ._internal)
+        try container.encodeIfPresent(external, forKey: .external)
+        try container.encodeIfPresent(internalColours, forKey: .internalColours)
+        try container.encodeIfPresent(externalColours, forKey: .externalColours)
+    }
+
+
 
 }

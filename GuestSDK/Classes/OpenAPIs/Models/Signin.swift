@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import AnyCodable
 
-
-public struct Signin: Codable { 
-
+public struct Signin: Codable, Hashable {
 
     public var id: Int
     public var mobileNumber: String?
@@ -27,7 +26,7 @@ public struct Signin: Codable {
     public var company: String?
     public var registration: Registration?
 
-    public init(id: Int, mobileNumber: String?, signinWatchlist: SigninWatchlist?, hosts: [Host], signinTimestamp: Date?, signinPhotoUrl: String?, signedOutTimestamp: Date?, locationName: String?, lastName: String?, isAcknowledged: Bool?, isAccountedFor: Bool?, firstName: String?, email: String?, company: String?, registration: Registration?) {
+    public init(id: Int, mobileNumber: String? = nil, signinWatchlist: SigninWatchlist? = nil, hosts: [Host], signinTimestamp: Date? = nil, signinPhotoUrl: String? = nil, signedOutTimestamp: Date? = nil, locationName: String? = nil, lastName: String? = nil, isAcknowledged: Bool? = nil, isAccountedFor: Bool? = nil, firstName: String? = nil, email: String? = nil, company: String? = nil, registration: Registration? = nil) {
         self.id = id
         self.mobileNumber = mobileNumber
         self.signinWatchlist = signinWatchlist
@@ -44,8 +43,7 @@ public struct Signin: Codable {
         self.company = company
         self.registration = registration
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case mobileNumber = "mobile_number"
         case signinWatchlist = "signin_watchlist"
@@ -62,5 +60,28 @@ public struct Signin: Codable {
         case company
         case registration
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(mobileNumber, forKey: .mobileNumber)
+        try container.encodeIfPresent(signinWatchlist, forKey: .signinWatchlist)
+        try container.encode(hosts, forKey: .hosts)
+        try container.encodeIfPresent(signinTimestamp, forKey: .signinTimestamp)
+        try container.encodeIfPresent(signinPhotoUrl, forKey: .signinPhotoUrl)
+        try container.encodeIfPresent(signedOutTimestamp, forKey: .signedOutTimestamp)
+        try container.encodeIfPresent(locationName, forKey: .locationName)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(isAcknowledged, forKey: .isAcknowledged)
+        try container.encodeIfPresent(isAccountedFor, forKey: .isAccountedFor)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(registration, forKey: .registration)
+    }
+
+
 
 }

@@ -6,15 +6,27 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** A list of Errors that occured on the server */
-public struct ErrorsList: Codable { 
-
+public struct ErrorsList: Codable, Hashable {
 
     public var errors: [ModelError]
 
     public init(errors: [ModelError]) {
         self.errors = errors
     }
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case errors
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(errors, forKey: .errors)
+    }
+
+
 
 }

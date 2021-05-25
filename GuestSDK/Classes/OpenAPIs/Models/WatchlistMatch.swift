@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /**  */
-public struct WatchlistMatch: Codable { 
-
+public struct WatchlistMatch: Codable, Hashable {
 
     public var id: String?
     public var altNames: [String]?
@@ -125,7 +125,7 @@ public struct WatchlistMatch: Codable {
     /**  */
     public var sourceLists: String?
 
-    public init(id: String?, altNames: [String]?, federalRegisterNotice: String?, name: String, sourceInformationUrl: String?, sourceListUrl: String?, list: String, type: String?, category: String?, street1: String?, street2: String?, city: String?, state: String?, country: String?, notes: String?, frc: String?, start: String?, end: String?, frserve: String?, optionalID: String?, alertType: String?, pairStatus: String?, pairReason: String?, pairComments: String?, applicationDisplayName: String?, applicationId: String?, clientId: String?, clientKey: String?, clientFullName: String?, listKey: String?, listName: String?, listId: String?, listVersion: String?, listModifyDate: String?, listProfileId: String?, listProfileKey: String?, linkSingleStringName: String?, listParentSingleStringName: String?, listCategory: String?, listPepCategory: String?, listDoBs: String?, listCountries: String?, rankString: String?, ranktype: String?, rankweight: String?, pairLoadDate: String?, eAddressTo: String?, eAddressCc: String?, origin: String?, secondsviewed: String?, initialUser: String?, isPairParentFlag: String?, pairMetSearchCriteriaFlag: String?, editableDueToAssignmentFlag: String?, modifyDate: String?, modifiedByUser: String?, pairReportType: String?, finscanCategory: String?, wrapperStatus: String?, sourceLists: String?) {
+    public init(id: String? = nil, altNames: [String]? = nil, federalRegisterNotice: String? = nil, name: String, sourceInformationUrl: String? = nil, sourceListUrl: String? = nil, list: String, type: String? = nil, category: String? = nil, street1: String? = nil, street2: String? = nil, city: String? = nil, state: String? = nil, country: String? = nil, notes: String? = nil, frc: String? = nil, start: String? = nil, end: String? = nil, frserve: String? = nil, optionalID: String? = nil, alertType: String? = nil, pairStatus: String? = nil, pairReason: String? = nil, pairComments: String? = nil, applicationDisplayName: String? = nil, applicationId: String? = nil, clientId: String? = nil, clientKey: String? = nil, clientFullName: String? = nil, listKey: String? = nil, listName: String? = nil, listId: String? = nil, listVersion: String? = nil, listModifyDate: String? = nil, listProfileId: String? = nil, listProfileKey: String? = nil, linkSingleStringName: String? = nil, listParentSingleStringName: String? = nil, listCategory: String? = nil, listPepCategory: String? = nil, listDoBs: String? = nil, listCountries: String? = nil, rankString: String? = nil, ranktype: String? = nil, rankweight: String? = nil, pairLoadDate: String? = nil, eAddressTo: String? = nil, eAddressCc: String? = nil, origin: String? = nil, secondsviewed: String? = nil, initialUser: String? = nil, isPairParentFlag: String? = nil, pairMetSearchCriteriaFlag: String? = nil, editableDueToAssignmentFlag: String? = nil, modifyDate: String? = nil, modifiedByUser: String? = nil, pairReportType: String? = nil, finscanCategory: String? = nil, wrapperStatus: String? = nil, sourceLists: String? = nil) {
         self.id = id
         self.altNames = altNames
         self.federalRegisterNotice = federalRegisterNotice
@@ -187,8 +187,7 @@ public struct WatchlistMatch: Codable {
         self.wrapperStatus = wrapperStatus
         self.sourceLists = sourceLists
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case altNames = "alt_names"
         case federalRegisterNotice = "federal_register_notice"
@@ -250,5 +249,73 @@ public struct WatchlistMatch: Codable {
         case wrapperStatus = "wrapper_status"
         case sourceLists = "source_lists"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(altNames, forKey: .altNames)
+        try container.encodeIfPresent(federalRegisterNotice, forKey: .federalRegisterNotice)
+        try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(sourceInformationUrl, forKey: .sourceInformationUrl)
+        try container.encodeIfPresent(sourceListUrl, forKey: .sourceListUrl)
+        try container.encode(list, forKey: .list)
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(category, forKey: .category)
+        try container.encodeIfPresent(street1, forKey: .street1)
+        try container.encodeIfPresent(street2, forKey: .street2)
+        try container.encodeIfPresent(city, forKey: .city)
+        try container.encodeIfPresent(state, forKey: .state)
+        try container.encodeIfPresent(country, forKey: .country)
+        try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encodeIfPresent(frc, forKey: .frc)
+        try container.encodeIfPresent(start, forKey: .start)
+        try container.encodeIfPresent(end, forKey: .end)
+        try container.encodeIfPresent(frserve, forKey: .frserve)
+        try container.encodeIfPresent(optionalID, forKey: .optionalID)
+        try container.encodeIfPresent(alertType, forKey: .alertType)
+        try container.encodeIfPresent(pairStatus, forKey: .pairStatus)
+        try container.encodeIfPresent(pairReason, forKey: .pairReason)
+        try container.encodeIfPresent(pairComments, forKey: .pairComments)
+        try container.encodeIfPresent(applicationDisplayName, forKey: .applicationDisplayName)
+        try container.encodeIfPresent(applicationId, forKey: .applicationId)
+        try container.encodeIfPresent(clientId, forKey: .clientId)
+        try container.encodeIfPresent(clientKey, forKey: .clientKey)
+        try container.encodeIfPresent(clientFullName, forKey: .clientFullName)
+        try container.encodeIfPresent(listKey, forKey: .listKey)
+        try container.encodeIfPresent(listName, forKey: .listName)
+        try container.encodeIfPresent(listId, forKey: .listId)
+        try container.encodeIfPresent(listVersion, forKey: .listVersion)
+        try container.encodeIfPresent(listModifyDate, forKey: .listModifyDate)
+        try container.encodeIfPresent(listProfileId, forKey: .listProfileId)
+        try container.encodeIfPresent(listProfileKey, forKey: .listProfileKey)
+        try container.encodeIfPresent(linkSingleStringName, forKey: .linkSingleStringName)
+        try container.encodeIfPresent(listParentSingleStringName, forKey: .listParentSingleStringName)
+        try container.encodeIfPresent(listCategory, forKey: .listCategory)
+        try container.encodeIfPresent(listPepCategory, forKey: .listPepCategory)
+        try container.encodeIfPresent(listDoBs, forKey: .listDoBs)
+        try container.encodeIfPresent(listCountries, forKey: .listCountries)
+        try container.encodeIfPresent(rankString, forKey: .rankString)
+        try container.encodeIfPresent(ranktype, forKey: .ranktype)
+        try container.encodeIfPresent(rankweight, forKey: .rankweight)
+        try container.encodeIfPresent(pairLoadDate, forKey: .pairLoadDate)
+        try container.encodeIfPresent(eAddressTo, forKey: .eAddressTo)
+        try container.encodeIfPresent(eAddressCc, forKey: .eAddressCc)
+        try container.encodeIfPresent(origin, forKey: .origin)
+        try container.encodeIfPresent(secondsviewed, forKey: .secondsviewed)
+        try container.encodeIfPresent(initialUser, forKey: .initialUser)
+        try container.encodeIfPresent(isPairParentFlag, forKey: .isPairParentFlag)
+        try container.encodeIfPresent(pairMetSearchCriteriaFlag, forKey: .pairMetSearchCriteriaFlag)
+        try container.encodeIfPresent(editableDueToAssignmentFlag, forKey: .editableDueToAssignmentFlag)
+        try container.encodeIfPresent(modifyDate, forKey: .modifyDate)
+        try container.encodeIfPresent(modifiedByUser, forKey: .modifiedByUser)
+        try container.encodeIfPresent(pairReportType, forKey: .pairReportType)
+        try container.encodeIfPresent(finscanCategory, forKey: .finscanCategory)
+        try container.encodeIfPresent(wrapperStatus, forKey: .wrapperStatus)
+        try container.encodeIfPresent(sourceLists, forKey: .sourceLists)
+    }
+
+
 
 }

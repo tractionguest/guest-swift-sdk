@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the InviteDetail type&#39;s schema. */
-public struct InviteDetail: Codable { 
-
+public struct InviteDetail: Codable, Hashable {
 
     public enum WatchlistColour: String, Codable, CaseIterable {
         case red = "RED"
@@ -39,7 +39,7 @@ public struct InviteDetail: Codable {
     public var checkedIn: Bool?
     public var groupVisit: GroupVisit?
 
-    public init(id: Int, registration: Registration?, mobileNumber: String?, emailTemplate: EmailTemplate?, inviteWatchlist: InviteWatchlist?, notificationTriggers: [NotificationTrigger]?, customFields: [CustomField]?, watchlistColour: WatchlistColour?, location: Location?, hosts: [Host]?, startDate: Date?, lastName: String, firstName: String, endDate: Date?, email: String, createdAt: Date?, company: String?, checkedIn: Bool?, groupVisit: GroupVisit?) {
+    public init(id: Int, registration: Registration? = nil, mobileNumber: String? = nil, emailTemplate: EmailTemplate? = nil, inviteWatchlist: InviteWatchlist? = nil, notificationTriggers: [NotificationTrigger]? = nil, customFields: [CustomField]? = nil, watchlistColour: WatchlistColour? = nil, location: Location? = nil, hosts: [Host]? = nil, startDate: Date? = nil, lastName: String, firstName: String, endDate: Date? = nil, email: String, createdAt: Date? = nil, company: String? = nil, checkedIn: Bool? = nil, groupVisit: GroupVisit? = nil) {
         self.id = id
         self.registration = registration
         self.mobileNumber = mobileNumber
@@ -60,8 +60,7 @@ public struct InviteDetail: Codable {
         self.checkedIn = checkedIn
         self.groupVisit = groupVisit
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case registration
         case mobileNumber = "mobile_number"
@@ -82,5 +81,32 @@ public struct InviteDetail: Codable {
         case checkedIn = "checked_in"
         case groupVisit = "group_visit"
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(registration, forKey: .registration)
+        try container.encodeIfPresent(mobileNumber, forKey: .mobileNumber)
+        try container.encodeIfPresent(emailTemplate, forKey: .emailTemplate)
+        try container.encodeIfPresent(inviteWatchlist, forKey: .inviteWatchlist)
+        try container.encodeIfPresent(notificationTriggers, forKey: .notificationTriggers)
+        try container.encodeIfPresent(customFields, forKey: .customFields)
+        try container.encodeIfPresent(watchlistColour, forKey: .watchlistColour)
+        try container.encodeIfPresent(location, forKey: .location)
+        try container.encodeIfPresent(hosts, forKey: .hosts)
+        try container.encodeIfPresent(startDate, forKey: .startDate)
+        try container.encode(lastName, forKey: .lastName)
+        try container.encode(firstName, forKey: .firstName)
+        try container.encodeIfPresent(endDate, forKey: .endDate)
+        try container.encode(email, forKey: .email)
+        try container.encodeIfPresent(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(checkedIn, forKey: .checkedIn)
+        try container.encodeIfPresent(groupVisit, forKey: .groupVisit)
+    }
+
+
 
 }

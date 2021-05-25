@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import AnyCodable
 
 /** The root of the CustomField type&#39;s schema. */
-public struct CustomField: Codable { 
-
+public struct CustomField: Codable, Hashable {
 
     public enum Format: String, Codable, CaseIterable {
         case string = "string"
@@ -22,18 +22,29 @@ public struct CustomField: Codable {
     public var fieldValue: String?
     public var id: Int?
 
-    public init(format: Format?, fieldName: String, fieldValue: String?, id: Int?) {
+    public init(format: Format? = nil, fieldName: String, fieldValue: String?, id: Int? = nil) {
         self.format = format
         self.fieldName = fieldName
         self.fieldValue = fieldValue
         self.id = id
     }
-
-    public enum CodingKeys: String, CodingKey, CaseIterable { 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
         case format
         case fieldName = "field_name"
         case fieldValue = "field_value"
         case id
     }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(format, forKey: .format)
+        try container.encode(fieldName, forKey: .fieldName)
+        try container.encode(fieldValue, forKey: .fieldValue)
+        try container.encodeIfPresent(id, forKey: .id)
+    }
+
+
 
 }
