@@ -7,7 +7,7 @@
 
 import Foundation
 
-/** Parameters required for updating or creating watchlist records */
+/** Parameters required for updating or creating watchlist records  */
 public struct WatchlistCreateParams: Codable { 
 
 
@@ -23,14 +23,17 @@ public struct WatchlistCreateParams: Codable {
     public var firstName: String?
     public var email: String?
     public var colour: Colour?
+    /** A base64 encoded image. base64_image should be strict encoded  */
+    public var base64Image: Data?
 
-    public init(aliases: [String]?, notes: String?, lastName: String?, firstName: String?, email: String?, colour: Colour?) {
+    public init(aliases: [String]?, notes: String?, lastName: String?, firstName: String?, email: String?, colour: Colour?, base64Image: Data?) {
         self.aliases = aliases
         self.notes = notes
         self.lastName = lastName
         self.firstName = firstName
         self.email = email
         self.colour = colour
+        self.base64Image = base64Image
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -40,6 +43,7 @@ public struct WatchlistCreateParams: Codable {
         case firstName = "first_name"
         case email
         case colour
+        case base64Image = "base64_image"
     }
 
 }
