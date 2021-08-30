@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **email** | **String** |  | [optional] 
 **colour** | **String** |  | [optional] 
 **base64Image** | **Data** | A base64 encoded image. base64_image should be strict encoded  | [optional] 
+**driverLicense** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

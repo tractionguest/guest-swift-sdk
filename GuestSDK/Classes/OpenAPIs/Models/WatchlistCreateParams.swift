@@ -25,8 +25,9 @@ public struct WatchlistCreateParams: Codable {
     public var colour: Colour?
     /** A base64 encoded image. base64_image should be strict encoded  */
     public var base64Image: Data?
+    public var driverLicense: String?
 
-    public init(aliases: [String]?, notes: String?, lastName: String?, firstName: String?, email: String?, colour: Colour?, base64Image: Data?) {
+    public init(aliases: [String]?, notes: String?, lastName: String?, firstName: String?, email: String?, colour: Colour?, base64Image: Data?, driverLicense: String?) {
         self.aliases = aliases
         self.notes = notes
         self.lastName = lastName
@@ -34,6 +35,7 @@ public struct WatchlistCreateParams: Codable {
         self.email = email
         self.colour = colour
         self.base64Image = base64Image
+        self.driverLicense = driverLicense
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -44,6 +46,7 @@ public struct WatchlistCreateParams: Codable {
         case email
         case colour
         case base64Image = "base64_image"
+        case driverLicense = "driver_license"
     }
 
 }
