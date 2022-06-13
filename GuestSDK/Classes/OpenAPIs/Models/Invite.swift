@@ -23,28 +23,34 @@ public struct Invite: Codable {
     public var mobileNumber: String?
     /**  */
     public var email: String?
-    /**  */
+    /** Deprecated. Use &#x60;end_date_utc&#x60; instead. */
     public var endDate: Date?
+    /**  */
+    public var endDateUtc: Date?
     public var inviteWatchlist: InviteWatchlist?
     public var hosts: [Host]?
     public var watchlistColour: WatchlistColour?
     public var location: Location?
+    /** Deprecated. Use &#x60;start_date_utc&#x60; instead. */
     public var startDate: Date?
+    public var startDateUtc: Date?
     public var lastName: String?
     public var firstName: String?
     public var groupVisit: GroupVisit?
 
-    public init(id: Int, registration: Registration?, mobileNumber: String?, email: String?, endDate: Date?, inviteWatchlist: InviteWatchlist?, hosts: [Host]?, watchlistColour: WatchlistColour?, location: Location?, startDate: Date?, lastName: String?, firstName: String?, groupVisit: GroupVisit?) {
+    public init(id: Int, registration: Registration?, mobileNumber: String?, email: String?, endDate: Date?, endDateUtc: Date?, inviteWatchlist: InviteWatchlist?, hosts: [Host]?, watchlistColour: WatchlistColour?, location: Location?, startDate: Date?, startDateUtc: Date?, lastName: String?, firstName: String?, groupVisit: GroupVisit?) {
         self.id = id
         self.registration = registration
         self.mobileNumber = mobileNumber
         self.email = email
         self.endDate = endDate
+        self.endDateUtc = endDateUtc
         self.inviteWatchlist = inviteWatchlist
         self.hosts = hosts
         self.watchlistColour = watchlistColour
         self.location = location
         self.startDate = startDate
+        self.startDateUtc = startDateUtc
         self.lastName = lastName
         self.firstName = firstName
         self.groupVisit = groupVisit
@@ -56,11 +62,13 @@ public struct Invite: Codable {
         case mobileNumber = "mobile_number"
         case email
         case endDate = "end_date"
+        case endDateUtc = "end_date_utc"
         case inviteWatchlist = "invite_watchlist"
         case hosts
         case watchlistColour = "watchlist_colour"
         case location
         case startDate = "start_date"
+        case startDateUtc = "start_date_utc"
         case lastName = "last_name"
         case firstName = "first_name"
         case groupVisit = "group_visit"

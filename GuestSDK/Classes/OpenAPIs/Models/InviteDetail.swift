@@ -29,17 +29,21 @@ public struct InviteDetail: Codable {
     public var watchlistColour: WatchlistColour?
     public var location: Location?
     public var hosts: [Host]?
+    /** Deprecated. Use &#x60;start_date_utc&#x60; instead. */
     public var startDate: Date?
+    public var startDateUtc: Date?
     public var lastName: String
     public var firstName: String
+    /** Deprecated. Use &#x60;end_date_utc&#x60; instead. */
     public var endDate: Date?
+    public var endDateUtc: Date?
     public var email: String
     public var createdAt: Date?
     public var company: String?
     public var checkedIn: Bool?
     public var groupVisit: GroupVisit?
 
-    public init(id: Int, registration: Registration?, mobileNumber: String?, emailTemplate: EmailTemplate?, inviteWatchlist: InviteWatchlist?, notificationTriggers: [NotificationTrigger]?, customFields: [CustomField]?, watchlistColour: WatchlistColour?, location: Location?, hosts: [Host]?, startDate: Date?, lastName: String, firstName: String, endDate: Date?, email: String, createdAt: Date?, company: String?, checkedIn: Bool?, groupVisit: GroupVisit?) {
+    public init(id: Int, registration: Registration?, mobileNumber: String?, emailTemplate: EmailTemplate?, inviteWatchlist: InviteWatchlist?, notificationTriggers: [NotificationTrigger]?, customFields: [CustomField]?, watchlistColour: WatchlistColour?, location: Location?, hosts: [Host]?, startDate: Date?, startDateUtc: Date?, lastName: String, firstName: String, endDate: Date?, endDateUtc: Date?, email: String, createdAt: Date?, company: String?, checkedIn: Bool?, groupVisit: GroupVisit?) {
         self.id = id
         self.registration = registration
         self.mobileNumber = mobileNumber
@@ -51,9 +55,11 @@ public struct InviteDetail: Codable {
         self.location = location
         self.hosts = hosts
         self.startDate = startDate
+        self.startDateUtc = startDateUtc
         self.lastName = lastName
         self.firstName = firstName
         self.endDate = endDate
+        self.endDateUtc = endDateUtc
         self.email = email
         self.createdAt = createdAt
         self.company = company
@@ -73,9 +79,11 @@ public struct InviteDetail: Codable {
         case location
         case hosts
         case startDate = "start_date"
+        case startDateUtc = "start_date_utc"
         case lastName = "last_name"
         case firstName = "first_name"
         case endDate = "end_date"
+        case endDateUtc = "end_date_utc"
         case email
         case createdAt = "created_at"
         case company

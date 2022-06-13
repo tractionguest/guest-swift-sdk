@@ -13,10 +13,12 @@ Name | Type | Description | Notes
 **watchlistColour** | **String** |  | [optional] 
 **location** | [**Location**](Location.md) |  | [optional] 
 **hosts** | [Host] |  | [optional] 
-**startDate** | **Date** |  | [optional] 
+**startDate** | **Date** | Deprecated. Use &#x60;start_date_utc&#x60; instead. | [optional] 
+**startDateUtc** | **Date** |  | [optional] 
 **lastName** | **String** |  | 
 **firstName** | **String** |  | 
-**endDate** | **Date** |  | [optional] 
+**endDate** | **Date** | Deprecated. Use &#x60;end_date_utc&#x60; instead. | [optional] 
+**endDateUtc** | **Date** |  | [optional] 
 **email** | **String** |  | 
 **createdAt** | **Date** |  | [optional] 
 **company** | **String** |  | [optional] 
