@@ -26,8 +26,10 @@ public struct Watchlist: Codable {
     public var email: String?
     public var colour: Colour?
     public var driverLicense: String?
+    public var createdAt: Date?
+    public var updatedAt: Date?
 
-    public init(id: Int, aliases: [String]?, photo: String?, notes: String?, lastName: String?, firstName: String?, email: String?, colour: Colour?, driverLicense: String?) {
+    public init(id: Int, aliases: [String]?, photo: String?, notes: String?, lastName: String?, firstName: String?, email: String?, colour: Colour?, driverLicense: String?, createdAt: Date?, updatedAt: Date?) {
         self.id = id
         self.aliases = aliases
         self.photo = photo
@@ -37,6 +39,8 @@ public struct Watchlist: Codable {
         self.email = email
         self.colour = colour
         self.driverLicense = driverLicense
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -49,6 +53,8 @@ public struct Watchlist: Codable {
         case email
         case colour
         case driverLicense = "driver_license"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
     }
 
 }
