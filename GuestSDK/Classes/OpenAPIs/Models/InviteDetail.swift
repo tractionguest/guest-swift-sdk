@@ -38,8 +38,10 @@ public struct InviteDetail: Codable {
     public var company: String?
     public var checkedIn: Bool?
     public var groupVisit: GroupVisit?
+    public var licensePlate: String?
+    public var invitesParkingLot: InviteDetailInvitesParkingLot?
 
-    public init(id: Int, registration: Registration?, mobileNumber: String?, emailTemplate: EmailTemplate?, inviteWatchlist: InviteWatchlist?, notificationTriggers: [NotificationTrigger]?, customFields: [CustomField]?, watchlistColour: WatchlistColour?, location: Location?, hosts: [Host]?, startDate: Date?, lastName: String, firstName: String, endDate: Date?, email: String, createdAt: Date?, company: String?, checkedIn: Bool?, groupVisit: GroupVisit?) {
+    public init(id: Int, registration: Registration?, mobileNumber: String?, emailTemplate: EmailTemplate?, inviteWatchlist: InviteWatchlist?, notificationTriggers: [NotificationTrigger]?, customFields: [CustomField]?, watchlistColour: WatchlistColour?, location: Location?, hosts: [Host]?, startDate: Date?, lastName: String, firstName: String, endDate: Date?, email: String, createdAt: Date?, company: String?, checkedIn: Bool?, groupVisit: GroupVisit?, licensePlate: String?, invitesParkingLot: InviteDetailInvitesParkingLot?) {
         self.id = id
         self.registration = registration
         self.mobileNumber = mobileNumber
@@ -59,6 +61,8 @@ public struct InviteDetail: Codable {
         self.company = company
         self.checkedIn = checkedIn
         self.groupVisit = groupVisit
+        self.licensePlate = licensePlate
+        self.invitesParkingLot = invitesParkingLot
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -81,6 +85,8 @@ public struct InviteDetail: Codable {
         case company
         case checkedIn = "checked_in"
         case groupVisit = "group_visit"
+        case licensePlate = "license_plate"
+        case invitesParkingLot = "invites_parking_lot"
     }
 
 }

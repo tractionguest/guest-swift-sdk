@@ -22,6 +22,8 @@ Name | Type | Description | Notes
 **company** | **String** |  | [optional] 
 **checkedIn** | **Bool** |  | [optional] 
 **groupVisit** | [**GroupVisit**](GroupVisit.md) |  | [optional] 
+**licensePlate** | **String** |  | [optional] 
+**invitesParkingLot** | [**InviteDetailInvitesParkingLot**](InviteDetailInvitesParkingLot.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

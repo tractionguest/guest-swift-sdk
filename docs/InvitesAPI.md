@@ -78,7 +78,7 @@ Creates a new `Invite` for a specific `Location`.
 import GuestSDK
 
 let locationId = "locationId_example" // String | 
-let inviteCreateParams = InviteCreateParams(mobileNumber: "mobileNumber_example", notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], watchlistColour: "watchlistColour_example", title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: 123) // InviteCreateParams | 
+let inviteCreateParams = InviteCreateParams(mobileNumber: "mobileNumber_example", notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], watchlistColour: "watchlistColour_example", title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: 123, parkingStall: InviteCreateParams_parking_stall(stallNumber: 123, parkingLotId: 123, parkingStallId: 123)) // InviteCreateParams | 
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
 
 // Create an Invite
@@ -236,7 +236,7 @@ Gets the details of a single instance of a `Invite`.
 import GuestSDK
 
 let inviteId = "inviteId_example" // String | 
-let include = "include_example" // String | A list of comma-separated related models to include (optional)
+let include = "include_example" // String | A list of comma-separated related models to include i.e., 'assigned_stall' (optional)
 
 // Get an Invite
 InvitesAPI.getInvite(inviteId: inviteId, include: include) { (response, error) in
@@ -256,7 +256,7 @@ InvitesAPI.getInvite(inviteId: inviteId, include: include) { (response, error) i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **inviteId** | **String** |  | 
- **include** | **String** | A list of comma-separated related models to include | [optional] 
+ **include** | **String** | A list of comma-separated related models to include i.e., &#39;assigned_stall&#39; | [optional] 
 
 ### Return type
 
@@ -295,7 +295,7 @@ let locationIds = "locationIds_example" // String | A comma separated list of Lo
 let sortBy = "sortBy_example" // String | Sorts by the field name and direction provided where the pattern is `FIELD_NAME_DIRECTION` (optional)
 let startsBefore = Date() // Date | Filters results to all those *before* the provided datetime (optional)
 let startsAfter = Date() // Date | Filters results to all those *after* the provided datetime (optional)
-let include = "include_example" // String | A list of comma-separated related models to include (optional)
+let include = "include_example" // String | A list of comma-separated related models to include i.e., 'assigned_stall' (optional)
 let isApproved = true // Bool | True to return approved and auto approved invites, False to return pending and rejected invites (optional)
 let activeAfter = Date() // Date | Checks that an invite hasn't yet started, or has started and is still active after a specified time (optional)
 let activeBefore = Date() // Date | Checks that an invite hasn't ended before a specified time (optional)
@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
  **sortBy** | **String** | Sorts by the field name and direction provided where the pattern is &#x60;FIELD_NAME_DIRECTION&#x60; | [optional] 
  **startsBefore** | **Date** | Filters results to all those *before* the provided datetime | [optional] 
  **startsAfter** | **Date** | Filters results to all those *after* the provided datetime | [optional] 
- **include** | **String** | A list of comma-separated related models to include | [optional] 
+ **include** | **String** | A list of comma-separated related models to include i.e., &#39;assigned_stall&#39; | [optional] 
  **isApproved** | **Bool** | True to return approved and auto approved invites, False to return pending and rejected invites | [optional] 
  **activeAfter** | **Date** | Checks that an invite hasn&#39;t yet started, or has started and is still active after a specified time | [optional] 
  **activeBefore** | **Date** | Checks that an invite hasn&#39;t ended before a specified time | [optional] 
@@ -360,7 +360,7 @@ Updates an existing `Invite`.
 import GuestSDK
 
 let inviteId = "inviteId_example" // String | 
-let inviteUpdateParams = InviteUpdateParams(mobileNumber: "mobileNumber_example", userId: 123, onPremise: false, notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: 123) // InviteUpdateParams | Updated `Invite` information.
+let inviteUpdateParams = InviteUpdateParams(mobileNumber: "mobileNumber_example", userId: 123, onPremise: false, notificationTriggers: [NotificationTriggerCreateParams(offsetUnit: "offsetUnit_example", notificationGroups: ["notificationGroups_example"], emailTemplateId: 123, offsetOrigin: "offsetOrigin_example", offsetAmount: 123, offsetDirection: "offsetDirection_example")], firstName: "firstName_example", emailTemplateId: 123, customFields: [CustomField(format: "format_example", fieldName: "fieldName_example", fieldValue: "fieldValue_example", id: 123)], hostIds: [123], title: "title_example", startDate: Date(), lastName: "lastName_example", endDate: Date(), email: "email_example", company: "company_example", groupVisitId: 123, licensePlate: "licensePlate_example") // InviteUpdateParams | Updated `Invite` information.
 let idempotencyKey = "idempotencyKey_example" // String | An optional idempotency key to allow for repeat API requests. Any API request with this key will only be executed once, no matter how many times it's submitted. We store idempotency keys for only 24 hours. Any `Idempotency-Key` shorter than 10 characters will be ignored (optional)
 
 // Update an Invite
