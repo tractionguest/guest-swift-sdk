@@ -32,8 +32,9 @@ public struct InviteCreateParams: Codable {
     public var email: String
     public var company: String?
     public var groupVisitId: Int?
+    public var parkingStall: InviteCreateParamsParkingStall?
 
-    public init(mobileNumber: String?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, watchlistColour: WatchlistColour?, title: String?, startDate: Date?, lastName: String, endDate: Date?, email: String, company: String?, groupVisitId: Int?) {
+    public init(mobileNumber: String?, notificationTriggers: [NotificationTriggerCreateParams]?, firstName: String, emailTemplateId: Int?, customFields: [CustomField]?, hostIds: [Int]?, watchlistColour: WatchlistColour?, title: String?, startDate: Date?, lastName: String, endDate: Date?, email: String, company: String?, groupVisitId: Int?, parkingStall: InviteCreateParamsParkingStall?) {
         self.mobileNumber = mobileNumber
         self.notificationTriggers = notificationTriggers
         self.firstName = firstName
@@ -48,6 +49,7 @@ public struct InviteCreateParams: Codable {
         self.email = email
         self.company = company
         self.groupVisitId = groupVisitId
+        self.parkingStall = parkingStall
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -65,6 +67,7 @@ public struct InviteCreateParams: Codable {
         case email
         case company
         case groupVisitId = "group_visit_id"
+        case parkingStall = "parking_stall"
     }
 
 }

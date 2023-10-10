@@ -16,6 +16,7 @@ public struct ExternalWatchlistResult: Codable {
         case green = "GREEN"
         case yellow = "YELLOW"
         case orange = "ORANGE"
+        case gray = "GRAY"
     }
     public var matches: [WatchlistMatch]?
     /**  */

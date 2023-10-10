@@ -203,7 +203,7 @@ open class InvitesAPI {
      Get an Invite
      
      - parameter inviteId: (path)  
-     - parameter include: (query) A list of comma-separated related models to include (optional)
+     - parameter include: (query) A list of comma-separated related models to include i.e., &#39;assigned_stall&#39; (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the result
      */
@@ -226,7 +226,7 @@ open class InvitesAPI {
        - type: openIdConnect
        - name: TractionGuestAuth
      - parameter inviteId: (path)  
-     - parameter include: (query) A list of comma-separated related models to include (optional)
+     - parameter include: (query) A list of comma-separated related models to include i.e., &#39;assigned_stall&#39; (optional)
      - returns: RequestBuilder<InviteDetail> 
      */
     open class func getInviteWithRequestBuilder(inviteId: String, include: String? = nil) -> RequestBuilder<InviteDetail> {
@@ -272,7 +272,7 @@ open class InvitesAPI {
      - parameter sortBy: (query) Sorts by the field name and direction provided where the pattern is &#x60;FIELD_NAME_DIRECTION&#x60; (optional)
      - parameter startsBefore: (query) Filters results to all those *before* the provided datetime (optional)
      - parameter startsAfter: (query) Filters results to all those *after* the provided datetime (optional)
-     - parameter include: (query) A list of comma-separated related models to include (optional)
+     - parameter include: (query) A list of comma-separated related models to include i.e., &#39;assigned_stall&#39; (optional)
      - parameter isApproved: (query) True to return approved and auto approved invites, False to return pending and rejected invites (optional)
      - parameter activeAfter: (query) Checks that an invite hasn&#39;t yet started, or has started and is still active after a specified time (optional)
      - parameter activeBefore: (query) Checks that an invite hasn&#39;t ended before a specified time (optional)
@@ -305,7 +305,7 @@ open class InvitesAPI {
      - parameter sortBy: (query) Sorts by the field name and direction provided where the pattern is &#x60;FIELD_NAME_DIRECTION&#x60; (optional)
      - parameter startsBefore: (query) Filters results to all those *before* the provided datetime (optional)
      - parameter startsAfter: (query) Filters results to all those *after* the provided datetime (optional)
-     - parameter include: (query) A list of comma-separated related models to include (optional)
+     - parameter include: (query) A list of comma-separated related models to include i.e., &#39;assigned_stall&#39; (optional)
      - parameter isApproved: (query) True to return approved and auto approved invites, False to return pending and rejected invites (optional)
      - parameter activeAfter: (query) Checks that an invite hasn&#39;t yet started, or has started and is still active after a specified time (optional)
      - parameter activeBefore: (query) Checks that an invite hasn&#39;t ended before a specified time (optional)

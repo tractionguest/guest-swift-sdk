@@ -14,10 +14,10 @@ public struct WatchlistMatch: Codable {
     public var id: String?
     public var altNames: [String]?
     public var federalRegisterNotice: String?
-    public var name: String
+    public var name: String?
     public var sourceInformationUrl: String?
     public var sourceListUrl: String?
-    public var list: String
+    public var list: String?
     /**  */
     public var type: String?
     /**  */
@@ -124,8 +124,10 @@ public struct WatchlistMatch: Codable {
     public var wrapperStatus: String?
     /**  */
     public var sourceLists: String?
+    /**  */
+    public var error: String?
 
-    public init(id: String?, altNames: [String]?, federalRegisterNotice: String?, name: String, sourceInformationUrl: String?, sourceListUrl: String?, list: String, type: String?, category: String?, street1: String?, street2: String?, city: String?, state: String?, country: String?, notes: String?, frc: String?, start: String?, end: String?, frserve: String?, optionalID: String?, alertType: String?, pairStatus: String?, pairReason: String?, pairComments: String?, applicationDisplayName: String?, applicationId: String?, clientId: String?, clientKey: String?, clientFullName: String?, listKey: String?, listName: String?, listId: String?, listVersion: String?, listModifyDate: String?, listProfileId: String?, listProfileKey: String?, linkSingleStringName: String?, listParentSingleStringName: String?, listCategory: String?, listPepCategory: String?, listDoBs: String?, listCountries: String?, rankString: String?, ranktype: String?, rankweight: String?, pairLoadDate: String?, eAddressTo: String?, eAddressCc: String?, origin: String?, secondsviewed: String?, initialUser: String?, isPairParentFlag: String?, pairMetSearchCriteriaFlag: String?, editableDueToAssignmentFlag: String?, modifyDate: String?, modifiedByUser: String?, pairReportType: String?, finscanCategory: String?, wrapperStatus: String?, sourceLists: String?) {
+    public init(id: String?, altNames: [String]?, federalRegisterNotice: String?, name: String?, sourceInformationUrl: String?, sourceListUrl: String?, list: String?, type: String?, category: String?, street1: String?, street2: String?, city: String?, state: String?, country: String?, notes: String?, frc: String?, start: String?, end: String?, frserve: String?, optionalID: String?, alertType: String?, pairStatus: String?, pairReason: String?, pairComments: String?, applicationDisplayName: String?, applicationId: String?, clientId: String?, clientKey: String?, clientFullName: String?, listKey: String?, listName: String?, listId: String?, listVersion: String?, listModifyDate: String?, listProfileId: String?, listProfileKey: String?, linkSingleStringName: String?, listParentSingleStringName: String?, listCategory: String?, listPepCategory: String?, listDoBs: String?, listCountries: String?, rankString: String?, ranktype: String?, rankweight: String?, pairLoadDate: String?, eAddressTo: String?, eAddressCc: String?, origin: String?, secondsviewed: String?, initialUser: String?, isPairParentFlag: String?, pairMetSearchCriteriaFlag: String?, editableDueToAssignmentFlag: String?, modifyDate: String?, modifiedByUser: String?, pairReportType: String?, finscanCategory: String?, wrapperStatus: String?, sourceLists: String?, error: String?) {
         self.id = id
         self.altNames = altNames
         self.federalRegisterNotice = federalRegisterNotice
@@ -186,6 +188,7 @@ public struct WatchlistMatch: Codable {
         self.finscanCategory = finscanCategory
         self.wrapperStatus = wrapperStatus
         self.sourceLists = sourceLists
+        self.error = error
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable { 
@@ -249,6 +252,7 @@ public struct WatchlistMatch: Codable {
         case finscanCategory = "finscan_category"
         case wrapperStatus = "wrapper_status"
         case sourceLists = "source_lists"
+        case error
     }
 
 }

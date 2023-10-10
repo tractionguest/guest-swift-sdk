@@ -6,10 +6,10 @@ Name | Type | Description | Notes
 **id** | **String** |  | [optional] 
 **altNames** | **[String]** |  | [optional] 
 **federalRegisterNotice** | **String** |  | [optional] 
-**name** | **String** |  | 
+**name** | **String** |  | [optional] 
 **sourceInformationUrl** | **String** |  | [optional] 
 **sourceListUrl** | **String** |  | [optional] 
-**list** | **String** |  | 
+**list** | **String** |  | [optional] 
 **type** | **String** |  | [optional] 
 **category** | **String** |  | [optional] 
 **street1** | **String** |  | [optional] 
@@ -63,6 +63,7 @@ Name | Type | Description | Notes
 **finscanCategory** | **String** |  | [optional] 
 **wrapperStatus** | **String** |  | [optional] 
 **sourceLists** | **String** |  | [optional] 
+**error** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
